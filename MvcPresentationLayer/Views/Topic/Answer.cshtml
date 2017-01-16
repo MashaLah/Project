@@ -1,0 +1,28 @@
+﻿@model MvcPresentationLayer.Models.PostsViewModel
+@using MvcPresentationLayer.HTMLHelpers
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { id = Model.Topic.Id, page = x }))
+</div>
+<table class="table" id="answer_text">
+    <tr class="success">
+        <td>
+            @Model.Topic.Title
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Model.Topic.Description
+        </td>
+    </tr>
+    @foreach (var tpc in Model.Posts)
+    {
+        <tr>
+            <td>
+                @tpc.Date
+            </td>
+            <td>
+                @tpc.Text
+            </td>
+        </tr>
+    }
+</table>

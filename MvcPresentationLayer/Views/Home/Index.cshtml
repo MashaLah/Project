@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MvcPresentationLayer.Models.Section>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr class="success">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Add Forum", "Create", "Forum", new { sectionId = item.Id }, null)
+            </td>
+        </tr>
+        if (item.Forums != null)
+        {
+            foreach (var frm in item.Forums)
+            {
+        <tr>
+            <td> 
+                @Html.ActionLink(frm.Title, "Index", "Forum", new { id = frm.Id }, null)            
+            </td>
+        </tr>
+            }
+        }
+    }
+
+</table>
+<p>
+    @Html.ActionLink("Add new section", "Create")
+</p>
