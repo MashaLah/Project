@@ -53,9 +53,22 @@ namespace DAL.Concrete
 
         public DALUser GetUserByEmail(string email)
         {
-            if (context.Set<User>().Any(u => u.Email == email) == true) return null;
+            if (context.Set<User>().Any(u => u.Email == email) == false) return null;
+
+
+
+
+
+
+
+
+
+
+
+
+
             var ormUser = context.Set<User>().FirstOrDefault(u => u.Email == email);
-            //if (ormUser == null) return null;
+            if (ormUser == null) return null;
             return new DALUser()
             {
                 Id = ormUser.Id,
