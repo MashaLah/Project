@@ -102,7 +102,7 @@ namespace MvcPresentationLayer.Providers
                 CreationDate = DateTime.Now
             };
 
-            var role = RoleService.GetRoleEntityByName("User");
+            var role = RoleService.GetRoleEntityByName("user");
             if (role != null)
             {
                 user.RoleId = role.Id;

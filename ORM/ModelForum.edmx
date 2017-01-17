@@ -64,7 +64,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Image" Type="varbinary" MaxLength="50" />
           <Property Name="RoleId" Type="int" Nullable="false" />
@@ -282,7 +282,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Image" Type="Binary" MaxLength="50" FixedLength="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
@@ -389,7 +389,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ForumEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ForumEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Forums" EntityType="Self.Forum" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
@@ -435,7 +435,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities2">
+        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities">
           <EntitySetMapping Name="Forums">
             <EntityTypeMapping TypeName="ForumModel.Forum">
               <MappingFragment StoreEntitySet="Forums">
