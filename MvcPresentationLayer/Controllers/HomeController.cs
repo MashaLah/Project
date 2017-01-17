@@ -34,7 +34,7 @@ namespace MvcPresentationLayer.Controllers
         {
             this.service = service;
         }
-
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var sections = service.GetAllSectionEntities().Select(section => section.ToMvcSection());
@@ -42,6 +42,7 @@ namespace MvcPresentationLayer.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +50,7 @@ namespace MvcPresentationLayer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Create(Section section)
         {
             service.CreateSection(section.ToBllSection());

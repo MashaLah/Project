@@ -81,12 +81,12 @@ namespace MvcPresentationLayer.Controllers
          }*/
 
         private readonly IForumService forumService;
-        //private readonly ISectionService sectionService;
+        private readonly ISectionService sectionService;
 
-        public ForumController(IForumService forumService/*, ISectionService sectionService*/)
+        public ForumController(IForumService forumService, ISectionService sectionService)
         {
             this.forumService = forumService;
-            //this.sectionService = sectionService;
+            this.sectionService = sectionService;
         }
 
         public ActionResult Index(int id)
@@ -99,8 +99,6 @@ namespace MvcPresentationLayer.Controllers
         [HttpGet]
         public ActionResult Create(int sectionId)
         {
-            ViewBag.SectionId = sectionId;
-            ViewBag.UserId = 2;
             return View();
         }
 

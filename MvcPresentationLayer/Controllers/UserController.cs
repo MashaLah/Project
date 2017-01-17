@@ -28,7 +28,7 @@ namespace MvcPresentationLayer.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit()
         {
             var model = service.GetAllUserEntities().Select(u => u.ToMvcUser());
