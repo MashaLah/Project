@@ -37,26 +37,34 @@ namespace MvcPresentationLayer.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var sections = service.GetAllSectionEntities().Select(section => section.ToMvcSection());
-            return View(sections);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "admin")]
-        public ActionResult Create()
-        {
+            //var sections = service.GetAllSectionEntities().Select(section => section.ToMvcSection());
+            //return View(sections);
             return View();
         }
 
-        [HttpPost]
+        [AllowAnonymous]
+        public PartialViewResult GetSections()
+        {
+            var sections = service.GetAllSectionEntities().Select(section => section.ToMvcSection());
+            return PartialView(sections);
+        }
+
+        /* [HttpGet]
+         [Authorize(Roles = "admin")]
+         public ActionResult Create()
+         {
+             return View();
+         }*/
+
+        //[HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public ActionResult Create(Section section)
         {
+            //if ajax request
             service.CreateSection(section.ToBllSection());
-            return RedirectToAction("Index");
+            return RedirectToAction("GetSections");
         }
-
 
         public ActionResult About()
         {
@@ -80,6 +88,15 @@ namespace MvcPresentationLayer.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult CreatePartial()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView();
+            }
             return View();
         }
     }
