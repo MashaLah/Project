@@ -43,10 +43,14 @@ namespace MvcPresentationLayer.Controllers
         }
 
         [AllowAnonymous]
-        public PartialViewResult GetSections()
+        public ActionResult GetSections()
         {
             var sections = service.GetAllSectionEntities().Select(section => section.ToMvcSection());
-            return PartialView(sections);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(sections);
+            }
+            return View(sections);
         }
 
         /* [HttpGet]

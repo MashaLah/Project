@@ -14,7 +14,7 @@
    <!--<p>
         Html.ActionLink("Add new section ajax", "CreatePartial")
     </p>--> 
-    using (Ajax.BeginForm("Create", new AjaxOptions { UpdateTargetId = "sections" }))
+    using (Ajax.BeginForm("Create",new AjaxOptions { UpdateTargetId = "sections"}))
     {
         @Html.AntiForgeryToken()
 
