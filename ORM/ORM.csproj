@@ -55,6 +55,9 @@
     <Compile Include="Forum.cs">
       <DependentUpon>ModelForum.tt</DependentUpon>
     </Compile>
+    <Compile Include="Massage.cs">
+      <DependentUpon>ModelForum.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelForum.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

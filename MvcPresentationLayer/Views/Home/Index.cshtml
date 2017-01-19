@@ -7,7 +7,8 @@
 <h2>Index</h2>
 <div id="sections">
     <!--Html.Partial("SectionPartial")-->
-    @Html.Action("GetSections")
+    <!--Html.Action("GetSections")-->
+    @{Html.RenderAction("GetSections");}
 </div>
 @if (Request.RequestContext.HttpContext.User.IsInRole("admin"))
 {

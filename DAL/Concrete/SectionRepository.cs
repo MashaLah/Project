@@ -1,5 +1,7 @@
-﻿using DAL.Interface.DTO;
+﻿using DAL.Concrete;
+using DAL.Interface.DTO;
 using DAL.Interface.Repository;
+using DAL.Mappers;
 using ORM;
 using System;
 using System.Collections.Generic;
@@ -22,28 +24,46 @@ namespace DAL.Concrete
 
         public IEnumerable<DALSection> GetAll()
         {
-            return context.Set<Section>().Select(section => new DALSection()
+             //var allSections = context.Set<Section>().Select(section => section.ToDalSection);           {
+             /*    Id = section.Id,
+                 Name = section.Name,
+             });
+             IEnumerable<DALSection> sects = new List<DALSection>();
+             foreach (var item in allSections)
+             {
+                 sects.Add(item);
+             }*/
+            var allSections = context.Set<Section>().Include(s => s.Forums);
+            List<DALSection> sections = new List<DALSection>();
+            foreach (var section in allSections)
             {
-                Id = section.Id,
-                Name = section.Name,
-            });
+                sections.Add(section.ToDalSection());
+            }
+            return sections;
+        }
+
+        public DALForum toDalForum(Forum forum)
+        {
+            return new DALForum()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                UserId = forum.UserId,
+                Date = forum.Date,
+            };
         }
 
         public DALSection GetById(int key)
         {
-            var ormForum = context.Set<Section>().FirstOrDefault(section => section.Id == key);
-            return new DALSection()
-            {
-                Id = ormForum.Id,
-                Name = ormForum.Name,
-            };
+            return context.Set<Section>().FirstOrDefault(section => section.Id == key).ToDalSection();           
         }
 
-       /* public IEnumerable<DALSection> GetByPredicate(Expression<Func<DALSection, bool>> f)
-        {
-            //Expression<Func<DalUser, bool>> -> Expression<Func<User, bool>> (!)
-            throw new NotImplementedException();
-        }*/
+        /* public IEnumerable<DALSection> GetByPredicate(Expression<Func<DALSection, bool>> f)
+         {
+             //Expression<Func<DalUser, bool>> -> Expression<Func<User, bool>> (!)
+             throw new NotImplementedException();
+         }*/
 
         public void Create(DALSection e)
         {
@@ -51,6 +71,18 @@ namespace DAL.Concrete
             {
                 Name = e.Name,
             };
+            /*var forums = e.Forums.Select(forum => new Forum()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                UserId = forum.UserId,
+                Date = forum.Date,
+            });
+            foreach (var forum in forums)
+            {
+                section.Forums.Add(forum);
+            }*/
             context.Set<Section>().Add(section);
         }
 
@@ -67,8 +99,20 @@ namespace DAL.Concrete
 
         public void Update(DALSection entity)
         {
-            var post = context.Set<Section>().Single(s => s.Id == entity.Id);
-            post.Name = entity.Name;
+            var section = context.Set<Section>().Single(s => s.Id == entity.Id);
+            section.Name = entity.Name;
+            /*var forums = entity.Forums.Select(forum => new Forum()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                UserId = forum.UserId,
+                Date = forum.Date,
+            });
+            foreach (var forum in forums)
+            {
+                section.Forums.Add(forum);
+            }*/
         }
     }
 }

@@ -12,13 +12,13 @@ namespace ORM
     using System;
     using System.Collections.Generic;
     
-    public partial class Profile
+    public partial class Massage
     {
         public int Id { get; set; }
-        public string Login { get; set; }
-        public System.DateTime LastUpdateDate { get; set; }
-        public int UserId { get; set; }
-        public byte[] Image { get; set; }
+        public string Text { get; set; }
+        public int IdUserFrom { get; set; }
+        public int IdUserTo { get; set; }
+        public System.DateTime Date { get; set; }
     
         public virtual User User { get; set; }
     }

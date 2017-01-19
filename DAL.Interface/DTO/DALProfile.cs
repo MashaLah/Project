@@ -9,9 +9,9 @@ namespace DAL.Interface.DTO
     public class DALProfile : IEntity 
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Login { get; set; }
         public DateTime LastUpdateDate { get; set; }
         public int UserId { get; set; }
-
+        public byte[] Image { get; set; }
     }
 }

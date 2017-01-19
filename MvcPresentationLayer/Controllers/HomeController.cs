@@ -103,5 +103,10 @@ namespace MvcPresentationLayer.Controllers
             }
             return View();
         }
+
+        public ActionResult CreateForumPartial()
+        {
+            return PartialView();
+        }
     }
 }

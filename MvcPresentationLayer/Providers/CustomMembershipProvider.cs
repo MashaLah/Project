@@ -21,6 +21,9 @@ namespace MvcPresentationLayer.Providers
         public IRoleService RoleService
           => (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService));
 
+        public IProfileService ProfileService
+        => (IProfileService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IProfileService));
+
         /*private readonly IUserService userService;
         private readonly IRoleService roleService;
 
@@ -110,6 +113,16 @@ namespace MvcPresentationLayer.Providers
 
             UserService.CreateUser(user);
             membershipUser = GetUser(email, false);
+
+
+            var createdUser = UserService.GetUserEntityByEmail(email);
+            var profile = new ProfileEntity
+            {
+                UserId = createdUser.Id,
+                LastUpdateDate = createdUser.CreationDate,
+                Login = createdUser.Id.ToString()
+            };
+            ProfileService.CreateProfile(profile);
             return membershipUser;
         }
 
@@ -128,7 +141,7 @@ namespace MvcPresentationLayer.Providers
         public override MembershipUser GetUser(string email, bool userIsOnline)
         {
             var user = UserService.GetUserEntityByEmail(email);
-
+            
             if (user == null) return null;
 
             var memberUser = new MembershipUser("CustomMembershipProvider", user.Email,

@@ -12,20 +12,50 @@ namespace BLL.Mappers
     {
         public static DALSection ToDalSection(this SectionEntity sectionEntity)
         {
-            return new DALSection()
+            DALSection dalSection = new DALSection()
             {
                 Id = sectionEntity.Id,
-                Name = sectionEntity.Name
+                Name = sectionEntity.Name,
+                Forums = new List<DALForum>(),
             };
+            var forums = sectionEntity.Forums.Select(forum => new DALForum()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                UserId = forum.UserId,
+                Date = forum.Date,
+            });
+
+            foreach (var forum in forums)
+            {
+                dalSection.Forums.Add(forum);
+            }
+            return dalSection;
         }
 
-        public static SectionEntity ToBllSection(this DALSection dalUser)
+        public static SectionEntity ToBllSection(this DALSection dalSection)
         {
-            return new SectionEntity()
+            SectionEntity section = new SectionEntity()
             {
-                Id = dalUser.Id,
-                Name = dalUser.Name
+                Id = dalSection.Id,
+                Name = dalSection.Name,
+                Forums=new List<ForumEntity>(),
             };
+            var forums = dalSection.Forums.Select(forum => new ForumEntity()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                UserId = forum.UserId,
+                Date = forum.Date,
+            });
+
+            foreach (var forum in forums)
+            {
+                section.Forums.Add(forum);
+            }
+            return section;
         }
 
         public static DALForum ToDalForum(this ForumEntity forumEntity)
@@ -151,9 +181,10 @@ namespace BLL.Mappers
             return new DALProfile()
             {
                 Id = profileEntity.Id,
-                Name = profileEntity.Login,
-                UserId=profileEntity.UserId,
-                LastUpdateDate=profileEntity.LastUpdateDate
+                Login = profileEntity.Login,
+                UserId = profileEntity.UserId,
+                LastUpdateDate = profileEntity.LastUpdateDate,
+                Image = profileEntity.Image
             };
         }
 
@@ -162,9 +193,10 @@ namespace BLL.Mappers
             return new ProfileEntity()
             {
                 Id = dalProfile.Id,
-                Login = dalProfile.Name,
+                Login = dalProfile.Login,
                 UserId = dalProfile.UserId,
-                LastUpdateDate = dalProfile.LastUpdateDate
+                LastUpdateDate = dalProfile.LastUpdateDate,
+                Image = dalProfile.Image
             };
         }
     }

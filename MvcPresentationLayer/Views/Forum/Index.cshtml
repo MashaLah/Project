@@ -1,4 +1,4 @@
-﻿@model MvcPresentationLayer.Models.Forum
+﻿@model MvcPresentationLayer.Models.Topic
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,21 +6,8 @@
 
 <h2>Index</h2>
 
-<table class="table">
-        <tr class="success">
-            <td>
-                @Model.Title
-            </td>
-        </tr>
-    @if (Model.Topics != null)
-    {
-        foreach (var tpc in Model.Topics)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink(tpc.Title, "Index", "Topic", new { id = tpc.Id }, null)
-                </td>
-            </tr>
-        }
+<div id="topics">
+    @{
+        Html.RenderPartial("GetTopics");
     }
-</table>
+</div>

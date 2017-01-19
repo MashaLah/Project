@@ -26,9 +26,20 @@ namespace BLL.Services
             return profileRepository.GetByUserId(id).ToBllProfile();
         }
 
+        public ProfileEntity GetByUserEmail(string email)
+        {
+            return profileRepository.GetByUserEmail(email).ToBllProfile();
+        }
+
         public void CreateProfile(ProfileEntity profile)
         {
             profileRepository.CreateProfile(profile.ToDalProfile());
+            uow.Commit();
+        }
+
+        public void UpdateProfile(ProfileEntity profile)
+        {
+            profileRepository.Update(profile.ToDalProfile());
             uow.Commit();
         }
     }

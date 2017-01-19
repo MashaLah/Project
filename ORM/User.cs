@@ -18,6 +18,7 @@ namespace ORM
         public User()
         {
             this.Forums = new HashSet<Forum>();
+            this.Massages = new HashSet<Massage>();
             this.Posts = new HashSet<Post>();
             this.Profiles = new HashSet<Profile>();
             this.Topics = new HashSet<Topic>();
@@ -26,12 +27,14 @@ namespace ORM
         public int Id { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public byte[] Image { get; set; }
         public int RoleId { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public Nullable<bool> ConfirmedEmail { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Forum> Forums { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Massage> Massages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,0 +1,19 @@
+﻿@model MvcPresentationLayer.Models.Forum
+<table class="table">
+    <tr class="success">
+        <td>
+            @Html.LabelFor(model => model.Title)
+        </td>
+    </tr>
+    @if (Model.Topics != null)
+    {
+        foreach (var tpc in Model.Topics)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(tpc.Title, "Index", "Topic", new { id = tpc.Id }, null)
+                </td>
+            </tr>
+        }
+    }
+</table>

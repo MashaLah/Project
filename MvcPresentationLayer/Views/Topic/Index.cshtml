@@ -1,9 +1,22 @@
-﻿
+﻿@model IEnumerable<MvcPresentationLayer.Models.Topic>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Index</h2> 
+<h2>@ViewBag</h2> 
+
+
+<table class="table">
+@foreach (var item in Model)
+{
+    <tr>
+        <th>
+            @Html.ActionLink(item.Title, "Index", "Forum", new { id = item.Id }, null)
+        </th>
+    </tr>
+    }
+</table>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

@@ -74,8 +74,8 @@ namespace DAL.Concrete
                 Title = e.Title,
                 UserId = e.UserId,
                // UserId = 2,
-                //Date = e.Date
-                Date = DateTime.Now
+                Date = e.Date
+                //Date = DateTime.Now
             };
             context.Set<Forum>().Add(forum);
         }

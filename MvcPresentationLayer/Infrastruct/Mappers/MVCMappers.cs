@@ -11,22 +11,51 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
     {
         public static Section ToMvcSection(this SectionEntity sectionEntity)
         {
-            return new Section()
+            Section section = new Section()
             {
                 Id = sectionEntity.Id,
                 Name = sectionEntity.Name,
-               // Forums = (Forum)sectionEntity
+                Forums = new List<Forum>()
             };
+            var forums = sectionEntity.Forums.Select(forum => new Forum()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                UserId = forum.UserId,
+                Date = forum.Date,
+            });
+
+            foreach (var forum in forums)
+            {
+                section.Forums.Add(forum);
+            }
+            return section;
         }
 
         public static SectionEntity ToBllSection(this Section section)
         {
-            return new SectionEntity()
+            SectionEntity sectionEntity = new SectionEntity()
             {
                 Id = section.Id,
                 Name = section.Name,
-               // RoleId = (int)userViewModel.Role
+                Forums= new List<ForumEntity>()
+                // RoleId = (int)userViewModel.Role
             };
+            var forums = sectionEntity.Forums.Select(forum => new ForumEntity()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                UserId = forum.UserId,
+                Date = forum.Date,
+            });
+
+            foreach (var forum in forums)
+            {
+                sectionEntity.Forums.Add(forum);
+            }
+            return sectionEntity;
         }
 
         public static Forum ToMvcForum(this ForumEntity forumEntity)
@@ -50,6 +79,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 SectionId = forum.SectionId,
                 Title = forum.Title,
                 Date = forum.Date,
+                UserId=forum.UserId
                 // RoleId = (int)userViewModel.Role
             };
         }
@@ -144,6 +174,30 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 //Email 
                 // public byte[] Image { get; set; }
                 //RoleId 
+            };
+        }
+
+        public static ProfileViewModel ToMvcProfile(this ProfileEntity profileEntity)
+        {
+            return new ProfileViewModel()
+            {
+                Id = profileEntity.Id,
+                Login = profileEntity.Login,
+                LastUpdateDate = profileEntity.LastUpdateDate,
+                UserId = profileEntity.UserId,
+                Image = profileEntity.Image
+            };
+        }
+
+        public static ProfileEntity ToBllProfile(this ProfileViewModel profile)
+        {
+            return new ProfileEntity()
+            {
+                Id = profile.Id,
+                Login = profile.Login,
+                LastUpdateDate = profile.LastUpdateDate,
+                UserId = profile.UserId,
+                Image = profile.Image
             };
         }
     }

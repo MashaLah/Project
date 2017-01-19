@@ -12,5 +12,6 @@ namespace BLL.Interface.Entities
         public string Login { get; set; }
         public DateTime LastUpdateDate { get; set; }
         public int UserId { get; set; }
+        public byte[] Image { get; set; }
     }
 }

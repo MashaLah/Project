@@ -11,5 +11,7 @@ namespace DAL.Interface.Repository
     {
         DALProfile GetByUserId(int key);
         void CreateProfile(DALProfile profile);
+        void Update(DALProfile profile);
+        DALProfile GetByUserEmail(string email);
     }
 }

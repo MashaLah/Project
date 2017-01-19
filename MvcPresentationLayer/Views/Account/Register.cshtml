@@ -35,8 +35,8 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Captcha, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control",AUTOCOMPLETE ="off" })
+            @Html.ValidationMessageFor(m => m.Captcha, null, new { @class = "text-danger" })
             <div class="img-responsive">
                 <img src="@Url.Action("Captcha", "Account")" alt="captcha" />
             </div>

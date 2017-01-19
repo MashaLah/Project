@@ -1,6 +1,7 @@
 ﻿using BLL.Interface.Services;
 using MvcPresentationLayer.Infrastruct.Mappers;
 using MvcPresentationLayer.Models;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -81,33 +82,63 @@ namespace MvcPresentationLayer.Controllers
          }*/
 
         private readonly IForumService forumService;
-        private readonly ISectionService sectionService;
+        //private readonly ISectionService sectionService;
+        private readonly IUserService userService;
 
-        public ForumController(IForumService forumService, ISectionService sectionService)
+        public ForumController(IForumService forumService, IUserService userService /*ISectionService sectionService*/)
         {
             this.forumService = forumService;
-            this.sectionService = sectionService;
+            this.userService = userService;
+           // this.sectionService = sectionService;
         }
 
-        public ActionResult Index(int id)
+        public ActionResult Index(/*int id*/)
         {
-            var forum = forumService.GetForumEntity(id);
+            //var forum = forumService.GetForumEntity(id).ToMvcForum();
             //var forums = forumService.GetAllForumEntitiesByParentId(id).Select(forum => forum.ToMvcForum());
-            return View(forum);
+            return View(/*forum*/);
         }
 
-        [HttpGet]
-        public ActionResult Create(int sectionId)
+        public ActionResult GetTopics(int id)
         {
-            return View();
+            var forum = forumService.GetForumEntity(id).ToMvcForum();
+            return PartialView(forum);
         }
+
+         [HttpGet]
+         public ActionResult Create(/*int sectionId*/)
+         {
+             return View();
+         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Forum forum)
         {
+            string userName = User.Identity.Name;
+            forum.UserId = userService.GetUserEntityByEmail(userName).Id;
+            //forum.SectionId = int.Parse(Request.Form["sectionId"]);
+            forum.Date = DateTime.Now;
             forumService.CreateForum(forum.ToBllForum());
             return RedirectToAction("Index");
         }
+
+       /* [HttpGet]
+        public ActionResult CreateForumPartial() 
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateForumPartial(Forum forum)
+        {
+            string userName = User.Identity.Name;
+            forum.UserId = userService.GetUserEntityByEmail(userName).Id;
+            //forum.SectionId = int.Parse(Request.Form["sectionId"]);
+            forum.Date = DateTime.Now;
+            forumService.CreateForum(forum.ToBllForum());
+            return RedirectToAction("Index");
+        }*/
     }
 }

@@ -4,17 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ec0fc56230d1468ca66986e36864ffb7" Name="Diagram1">
-        <EntityTypeShape EntityType="ForumModel.Forum" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Post" Width="1.5" PointX="9.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Profile" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Role" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Section" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Topic" Width="1.5" PointX="7.5" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.User" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+      <Diagram DiagramId="6085f2b4a42249c39c6eddb83d7ac2e6" Name="Diagram1">
+        <EntityTypeShape EntityType="ForumModel.Forum" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Massage" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Post" Width="1.5" PointX="9.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Profile" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Role" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Section" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Topic" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.User" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
         <AssociationConnector Association="ForumModel.FK_Forums_Sections" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Forums_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Topics_Forums" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumModel.FK_Massages_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Posts_Topics" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Posts_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Profiles_Users" ManuallyRouted="false" />

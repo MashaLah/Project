@@ -1,4 +1,5 @@
-﻿using MvcPresentationLayer.Models;
+﻿using BLL.Interface.Services;
+using MvcPresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace MvcPresentationLayer.Controllers
 {
     public class TopicController : Controller
     {
-        List<Topic> topics = new List<Topic>()
+        /*List<Topic> topics = new List<Topic>()
         {
             new Topic() { Id=1, Title="Fridge repair", Description="bla bla",
                 Date =DateTime.Now, ForumId=1, Posts=new List<Post>()
@@ -52,52 +53,68 @@ namespace MvcPresentationLayer.Controllers
                 Date =DateTime.Now, ForumId=4},
             new Topic() { Id=8, Title="Dishes", Description="bla bla dishes",
                 Date =DateTime.Now, ForumId=4},
-        };
+        };*/
 
         // GET: Topic
-        public ActionResult Index(int? id, int page = 1)
+        /* public ActionResult Index(int? id, int page = 1)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             int pageSize = 5;
+             var tpc = topics.Find(f => f.Id == id);
+             IEnumerable<Post> postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize);
+             //int postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize).Count();
+             PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tpc.Posts.Count };
+             PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage,Topic=tpc };
+             if (tpc == null)
+             {
+                 return HttpNotFound();
+             }
+             return View(pvm);
+            // Answer(id, page);
+         }*/
+
+        private readonly ITopicService topicService;
+        private readonly IForumService forumService;
+
+        public TopicController(ITopicService topicService, IForumService forumService)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            int pageSize = 5;
-            var tpc = topics.Find(f => f.Id == id);
-            IEnumerable<Post> postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize);
-            //int postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize).Count();
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tpc.Posts.Count };
-            PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage,Topic=tpc };
-            if (tpc == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pvm);
-           // Answer(id, page);
+            this.topicService = topicService;
+            this.forumService = forumService;
+        }
+
+        public ActionResult Index(int forumId)
+        {
+            var topics = topicService.GetAllTopicEntities().Where(t => t.ForumId == forumId);
+            ViewData["ForumForTopics"] = forumService.GetForumEntity(forumId).Title;
+            return View(topics);
         }
 
        /* public PartialViewResult Answer(int? id, int page)
         {*/
-            /*if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
-           /* int pageSize = 5;
-            var tpc = topics.Find(f => f.Id == id);
-            IEnumerable<Post> postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize);
-            //int postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize).Count();
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tpc.Posts.Count };
-            PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage, Topic = tpc };
-            */
-              /*if (tpc == null)
-            {
-                return HttpNotFound();
-            }*/
-            /*return PartialView(pvm);
-        }*/
+       /*if (id == null)
+       {
+           return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+       }*/
+       /* int pageSize = 5;
+        var tpc = topics.Find(f => f.Id == id);
+        IEnumerable<Post> postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize);
+        //int postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize).Count();
+        PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tpc.Posts.Count };
+        PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage, Topic = tpc };
+        */
+       /*if (tpc == null)
+     {
+         return HttpNotFound();
+     }*/
+       /*return PartialView(pvm);
+   }*/
 
         public ActionResult Add(string text)
         {
-            Post post = new Post()
+            /*Post post = new Post()
             {
                 Id = 13,
                 Text = text,
@@ -108,7 +125,7 @@ namespace MvcPresentationLayer.Controllers
             if (Request.IsAjaxRequest())
             {
                 return PartialView("Answer");
-            }
+            }*/
             //return View();
             return RedirectToAction("Index");
         }
@@ -143,19 +160,30 @@ namespace MvcPresentationLayer.Controllers
         // POST: Sellers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(/*[Bind(Include = "SellerID,SellerName,SellingPointID")]*/ Post post)
-        {
-            if (ModelState.IsValid)
-            {
-                topics[0].Posts.Add(post);
-               // db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        // [HttpPost]
+        //[ValidateAntiForgeryToken]
+        // public ActionResult Create(/*[Bind(Include = "SellerID,SellerName,SellingPointID")]*/ Post post)
+        /* {
+             if (ModelState.IsValid)
+             {
+                 topics[0].Posts.Add(post);
+                // db.SaveChanges();
+                 return RedirectToAction("Index");
+             }
 
-            //ViewBag.SellingPointID = new SelectList(db.SellingPoints, "SellingPointID", "Adress", seller.SellingPointID);
-            return View(post);
+             //ViewBag.SellingPointID = new SelectList(db.SellingPoints, "SellingPointID", "Adress", seller.SellingPointID);
+             return View(post);
+         }*/
+
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Topic topic)
+        {
+            /*string userName = User.Identity.Name;
+            forum.UserId = userService.GetUserEntityByEmail(userName).Id;
+            //forum.SectionId = int.Parse(Request.Form["sectionId"]);
+            forum.Date = DateTime.Now;
+            forumService.CreateForum(forum.ToBllForum());*/
+            return RedirectToAction("Index");
         }
     }
 }

@@ -13,7 +13,8 @@ namespace DAL.Interface.DTO
         public DateTime CreationDate { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-       // public byte[] Image { get; set; }
+        public bool ConfirmedEmail { get; set; }
+        // public byte[] Image { get; set; }
         public int RoleId { get; set; }
 
     }

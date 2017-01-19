@@ -10,6 +10,8 @@ namespace BLL.Interface.Services
     public interface IProfileService
     {
         ProfileEntity GetByUserId(int userId);
+        ProfileEntity GetByUserEmail(string email);
         void CreateProfile(ProfileEntity profile);
+        void UpdateProfile(ProfileEntity profile);
     }
 }

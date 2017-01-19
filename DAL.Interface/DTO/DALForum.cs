@@ -13,6 +13,6 @@ namespace DAL.Interface.DTO
         public string Title { get; set; }
         public int UserId { get; set; }
         public DateTime Date { get; set; }
-
+        public ICollection<DALTopic> Topics { get; set; }
     }
 }

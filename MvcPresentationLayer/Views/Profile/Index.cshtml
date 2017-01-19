@@ -1,0 +1,30 @@
+﻿@model MvcPresentationLayer.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="img-responsive">
+                <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
+            </div>
+            <div>
+                @Html.ActionLink("Change avatar", "ChangeAvatar")
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div>
+                @Html.DisplayFor(model => model.Login)
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="ChangeLogin" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
