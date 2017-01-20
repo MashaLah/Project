@@ -35,5 +35,14 @@ namespace MvcPresentationLayer.Controllers
         {
             throw new NotImplementedException();
         }
+
+        public ActionResult Edit(ProfileViewModel profileViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                profileService.UpdateProfile(profileViewModel.ToBllProfile());
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

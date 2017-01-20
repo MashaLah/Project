@@ -9,6 +9,6 @@ namespace MvcPresentationLayer.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Forum> Forums { get; set; }
+        public ICollection<Topic> Topics { get; set; }
     }
 }

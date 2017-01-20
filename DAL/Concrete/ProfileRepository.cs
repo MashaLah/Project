@@ -66,6 +66,7 @@ namespace DAL.Concrete
             newProfile.UserId = profile.UserId;
             newProfile.LastUpdateDate = profile.LastUpdateDate;
             newProfile.Image = profile.Image;
+            context.Entry(newProfile).State = EntityState.Modified;
         }
     }
 }

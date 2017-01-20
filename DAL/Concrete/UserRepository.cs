@@ -54,19 +54,6 @@ namespace DAL.Concrete
         public DALUser GetUserByEmail(string email)
         {
             if (context.Set<User>().Any(u => u.Email == email) == false) return null;
-
-
-
-
-
-
-
-
-
-
-
-
-
             var ormUser = context.Set<User>().FirstOrDefault(u => u.Email == email);
             if (ormUser == null) return null;
             return new DALUser()
@@ -91,6 +78,7 @@ namespace DAL.Concrete
             updatedUser.CreationDate = user.CreationDate;
             //Image = user.Image,
             updatedUser.RoleId = user.RoleId;
+            context.Entry(updatedUser).State = EntityState.Modified;
         }
 
         public /*bool*/void RemoveUser(/*int id*/DALUser user)

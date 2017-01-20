@@ -29,7 +29,8 @@ namespace DAL.Concrete
                 Description = topic.Description,
                 UserId = topic.UserId,
                 Date = topic.Date,
-                ForumId = topic.ForumId
+                SectionId = topic.SectionId,
+                LastUpdatedDate = topic.LastUpdatedDate
             });
         }
 
@@ -43,7 +44,8 @@ namespace DAL.Concrete
                 Description = ormTopic.Description,
                 UserId = ormTopic.UserId,
                 Date = ormTopic.Date,
-                ForumId = ormTopic.ForumId
+                SectionId = ormTopic.SectionId,
+                LastUpdatedDate = ormTopic.LastUpdatedDate
             };
         }
 
@@ -61,7 +63,8 @@ namespace DAL.Concrete
                 Description = e.Description,
                 UserId = e.UserId,
                 Date = e.Date,
-                ForumId = e.ForumId
+                SectionId = e.SectionId,
+                LastUpdatedDate = e.LastUpdatedDate
                 //ForumId = forumId
             };
             context.Set<Topic>().Add(topic);
@@ -76,7 +79,8 @@ namespace DAL.Concrete
                 Description = e.Description,
                 UserId = e.UserId,
                 Date = e.Date,
-                ForumId = e.ForumId
+                SectionId = e.SectionId,
+                LastUpdatedDate=e.LastUpdatedDate
             };
             topic = context.Set<Topic>().Single(t => t.Id == topic.Id);
             context.Set<Topic>().Remove(topic);
@@ -89,7 +93,9 @@ namespace DAL.Concrete
             topic.Description = entity.Description;
             topic.UserId = entity.UserId;
             topic.Date = entity.Date;
-            topic.ForumId = entity.ForumId;
+            topic.SectionId = entity.SectionId;
+            topic.LastUpdatedDate = entity.LastUpdatedDate;
+            context.Entry(topic).State = EntityState.Modified;
         }
 
     }

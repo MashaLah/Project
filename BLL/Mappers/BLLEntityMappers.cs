@@ -16,9 +16,9 @@ namespace BLL.Mappers
             {
                 Id = sectionEntity.Id,
                 Name = sectionEntity.Name,
-                Forums = new List<DALForum>(),
+                //Forums = new List<DALForum>(),
             };
-            var forums = sectionEntity.Forums.Select(forum => new DALForum()
+            /*var forums = sectionEntity.Forums.Select(forum => new DALForum()
             {
                 Id = forum.Id,
                 SectionId = forum.SectionId,
@@ -30,7 +30,7 @@ namespace BLL.Mappers
             foreach (var forum in forums)
             {
                 dalSection.Forums.Add(forum);
-            }
+            }*/
             return dalSection;
         }
 
@@ -40,9 +40,9 @@ namespace BLL.Mappers
             {
                 Id = dalSection.Id,
                 Name = dalSection.Name,
-                Forums=new List<ForumEntity>(),
+                //Forums=new List<ForumEntity>(),
             };
-            var forums = dalSection.Forums.Select(forum => new ForumEntity()
+            /*var forums = dalSection.Forums.Select(forum => new ForumEntity()
             {
                 Id = forum.Id,
                 SectionId = forum.SectionId,
@@ -54,7 +54,7 @@ namespace BLL.Mappers
             foreach (var forum in forums)
             {
                 section.Forums.Add(forum);
-            }
+            }*/
             return section;
         }
 
@@ -91,7 +91,8 @@ namespace BLL.Mappers
                 Description = topicEntity.Description,
                 UserId = topicEntity.UserId,
                 Date = topicEntity.Date,
-                ForumId = topicEntity.ForumId
+                SectionId = topicEntity.SectionId,
+                LastUpdatedDate = topicEntity.LastUpdatedDate,
             };
         }
 
@@ -104,7 +105,8 @@ namespace BLL.Mappers
                 Description = dalTopic.Description,
                 UserId = dalTopic.UserId,
                 Date = dalTopic.Date,
-                ForumId = dalTopic.ForumId
+                SectionId = dalTopic.SectionId,
+                LastUpdatedDate = dalTopic.LastUpdatedDate,
             };
         }
 

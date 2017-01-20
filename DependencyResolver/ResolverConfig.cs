@@ -25,7 +25,7 @@ namespace DependencyResolver
         private static void Configure(IKernel kernel)
         {
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
-            kernel.Bind<DbContext>().To<ForumEntities3>().InRequestScope();
+            kernel.Bind<DbContext>().To<ForumEntities4>().InRequestScope();
             kernel.Bind<ISectionService>().To<SectionService>();
             kernel.Bind<IForumService>().To<ForumService>();
             kernel.Bind<ITopicService>().To<TopicService>();
@@ -34,7 +34,7 @@ namespace DependencyResolver
             kernel.Bind<IRoleService>().To<RoleService>();
             kernel.Bind<IProfileService>().To<ProfileService>();
             kernel.Bind<ISectionRepository>().To<SectionRepository>();
-            kernel.Bind<IForumRepository>().To<ForumRepository>();
+            //kernel.Bind<IForumRepository>().To<ForumRepository>();
             kernel.Bind<ITopicRepository>().To<TopicRepository>();
             kernel.Bind<IPostRepository>().To<PostRepository>();
             kernel.Bind<IUserRepository>().To<UserRepository>();

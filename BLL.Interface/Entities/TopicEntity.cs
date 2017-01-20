@@ -13,6 +13,7 @@ namespace BLL.Interface.Entities
         public string Description { get; set; }
         public int UserId { get; set; }
         public DateTime Date { get; set; }
-        public int ForumId { get; set; }
+        public int SectionId { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
     }
 }

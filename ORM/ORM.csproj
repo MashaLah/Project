@@ -52,9 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Forum.cs">
-      <DependentUpon>ModelForum.tt</DependentUpon>
-    </Compile>
     <Compile Include="Massage.cs">
       <DependentUpon>ModelForum.tt</DependentUpon>
     </Compile>

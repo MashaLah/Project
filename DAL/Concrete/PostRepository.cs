@@ -85,6 +85,8 @@ namespace DAL.Concrete
             post.Text = entity.Text;
             post.UserId = entity.UserId;
             post.Date = entity.Date;
+
+            context.Entry(post).State = EntityState.Modified;
         }
 
     }

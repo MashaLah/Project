@@ -12,13 +12,13 @@
             </td>
             <!--<td>Html.Action("CreateForumPartial")</td>-->
         </tr>
-        if (item.Forums != null)
+        if (item.Topics != null)
         {
-            foreach (var frm in item.Forums)
+            foreach (var frm in item.Topics)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(frm.Title, "Index", "Forum", new { id = frm.Id }, null)
+                        @Html.ActionLink(frm.Title, "Index", "Topic", new { id = frm.Id }, null)
                     </td>
                 </tr>
             }

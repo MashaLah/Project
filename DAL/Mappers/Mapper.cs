@@ -16,10 +16,10 @@ namespace DAL.Mappers
             {
                 Id = ormSection.Id,
                 Name = ormSection.Name,
-                Forums = new List<DALForum>()
+                //Forums = new List<DALForum>()
             };
 
-            var forums = ormSection.Forums.Select(forum => new DALForum()
+            /*var forums = ormSection.Forums.Select(forum => new DALForum()
             {
                 Id = forum.Id,
                 SectionId = forum.SectionId,
@@ -31,7 +31,7 @@ namespace DAL.Mappers
             foreach (var forum in forums)
             {
                 dalSection.Forums.Add(forum);
-            }
+            }*/
             return dalSection;
         }
 
@@ -43,7 +43,7 @@ namespace DAL.Mappers
                 Name = dalSection.Name
             };
 
-            var forums = dalSection.Forums.Select(forum => new Forum()
+            /*var forums = dalSection.Forums.Select(forum => new Forum()
             {
                 Id = forum.Id,
                 SectionId = forum.SectionId,
@@ -55,7 +55,7 @@ namespace DAL.Mappers
             foreach (var forum in forums)
             {
                 section.Forums.Add(forum);
-            }
+            }*/
             return section;
         }
     }

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Concrete
 {
-    public class ForumRepository : IForumRepository
+    public class ForumRepository //: IForumRepository
     {
-        private readonly DbContext context;
+        /*private readonly DbContext context;
 
         public ForumRepository(DbContext uow)
         {
@@ -55,7 +55,7 @@ namespace DAL.Concrete
                 UserId = forum.UserId,
                 Date = forum.Date
             });
-        }
+        }*/
 
         /*public IEnumerable<DALForum> GetByPredicate(Expression<Func<DALForum, bool>> f)
         {
@@ -64,7 +64,7 @@ namespace DAL.Concrete
             //var forums = context.Set<Forum>().All(f);
         }*/
 
-        public void Create(DALForum e)
+        /*public void Create(DALForum e)
         {
             //проверить, сущ. ли sectionId
             var forum = new Forum()
@@ -103,7 +103,9 @@ namespace DAL.Concrete
             forum.Title = f.Title;
             forum.UserId = f.UserId;
             forum.Date = f.Date;
-        }
+
+            context.Entry(forum).State = EntityState.Modified;
+        }*/
 
     }
 }

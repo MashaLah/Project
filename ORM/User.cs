@@ -17,7 +17,6 @@ namespace ORM
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Forums = new HashSet<Forum>();
             this.Massages = new HashSet<Massage>();
             this.Posts = new HashSet<Post>();
             this.Profiles = new HashSet<Profile>();
@@ -31,8 +30,6 @@ namespace ORM
         public System.DateTime CreationDate { get; set; }
         public Nullable<bool> ConfirmedEmail { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Forum> Forums { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Massage> Massages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

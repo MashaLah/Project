@@ -33,16 +33,21 @@ namespace DAL.Concrete
              {
                  sects.Add(item);
              }*/
-            var allSections = context.Set<Section>().Include(s => s.Forums);
+            /*var allSections = context.Set<Section>().Include(s => s.Forums);
             List<DALSection> sections = new List<DALSection>();
             foreach (var section in allSections)
             {
                 sections.Add(section.ToDalSection());
             }
-            return sections;
+            return sections;*/
+            return context.Set<Section>().Select(section => new DALSection()
+            {
+                Id=section.Id,
+                Name=section.Name
+            });
         }
 
-        public DALForum toDalForum(Forum forum)
+        /*public DALForum toDalForum(Forum forum)
         {
             return new DALForum()
             {
@@ -52,7 +57,7 @@ namespace DAL.Concrete
                 UserId = forum.UserId,
                 Date = forum.Date,
             };
-        }
+        }*/
 
         public DALSection GetById(int key)
         {
@@ -101,6 +106,7 @@ namespace DAL.Concrete
         {
             var section = context.Set<Section>().Single(s => s.Id == entity.Id);
             section.Name = entity.Name;
+            context.Entry(section).State = EntityState.Modified;
             /*var forums = entity.Forums.Select(forum => new Forum()
             {
                 Id = forum.Id,

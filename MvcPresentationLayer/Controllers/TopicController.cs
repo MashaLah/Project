@@ -85,10 +85,10 @@ namespace MvcPresentationLayer.Controllers
             this.forumService = forumService;
         }
 
-        public ActionResult Index(int forumId)
+        public ActionResult Index(int sectionId)
         {
-            var topics = topicService.GetAllTopicEntities().Where(t => t.ForumId == forumId);
-            ViewData["ForumForTopics"] = forumService.GetForumEntity(forumId).Title;
+            var topics = topicService.GetAllTopicEntities().Where(t => t.SectionId == sectionId);
+            ViewData["ForumForTopics"] = forumService.GetForumEntity(sectionId).Title;
             return View(topics);
         }
 

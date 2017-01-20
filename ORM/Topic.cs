@@ -25,11 +25,12 @@ namespace ORM
         public string Description { get; set; }
         public int UserId { get; set; }
         public System.DateTime Date { get; set; }
-        public int ForumId { get; set; }
+        public int SectionId { get; set; }
+        public Nullable<System.DateTime> LastUpdatedDate { get; set; }
     
-        public virtual Forum Forum { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
+        public virtual Section Section { get; set; }
         public virtual User User { get; set; }
     }
 }

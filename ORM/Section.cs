@@ -17,13 +17,13 @@ namespace ORM
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Section()
         {
-            this.Forums = new HashSet<Forum>();
+            this.Topics = new HashSet<Topic>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Forum> Forums { get; set; }
+        public virtual ICollection<Topic> Topics { get; set; }
     }
 }
