@@ -19,6 +19,7 @@ namespace ORM
         public System.DateTime LastUpdateDate { get; set; }
         public int UserId { get; set; }
         public byte[] Image { get; set; }
+        public string ImageMimeType { get; set; }
     
         public virtual User User { get; set; }
     }

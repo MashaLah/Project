@@ -34,6 +34,7 @@
           <Property Name="LastUpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="ImageMimeType" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -230,6 +231,7 @@
           <Property Name="LastUpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Profiles_Users" FromRole="Profiles" ToRole="Users" />
         </EntityType>
         <EntityType Name="Role">
@@ -363,7 +365,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ForumEntities4" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ForumEntities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Massages" EntityType="Self.Massage" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
@@ -405,7 +407,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities4">
+        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities5">
           <EntitySetMapping Name="Massages">
             <EntityTypeMapping TypeName="ForumModel.Massage">
               <MappingFragment StoreEntitySet="Massages">
@@ -436,6 +438,7 @@
                 <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -9,9 +9,10 @@ namespace DAL.Interface.Repository
 {
     public interface IProfileRepository
     {
-        DALProfile GetByUserId(int key);
         void CreateProfile(DALProfile profile);
         void Update(DALProfile profile);
         DALProfile GetByUserEmail(string email);
+        DALProfile GetById(int key);
+        DALProfile GetByUserId(int key);
     }
 }

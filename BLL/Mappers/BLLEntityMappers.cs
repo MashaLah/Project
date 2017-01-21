@@ -186,7 +186,8 @@ namespace BLL.Mappers
                 Login = profileEntity.Login,
                 UserId = profileEntity.UserId,
                 LastUpdateDate = profileEntity.LastUpdateDate,
-                Image = profileEntity.Image
+                Image = profileEntity.Image,
+                ImageMimeType=profileEntity.ImageMimeType
             };
         }
 
@@ -198,7 +199,8 @@ namespace BLL.Mappers
                 Login = dalProfile.Login,
                 UserId = dalProfile.UserId,
                 LastUpdateDate = dalProfile.LastUpdateDate,
-                Image = dalProfile.Image
+                Image = dalProfile.Image,
+                ImageMimeType=dalProfile.ImageMimeType
             };
         }
     }

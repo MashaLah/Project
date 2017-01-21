@@ -95,7 +95,7 @@ namespace DAL.Concrete
             topic.Date = entity.Date;
             topic.SectionId = entity.SectionId;
             topic.LastUpdatedDate = entity.LastUpdatedDate;
-            context.Entry(topic).State = EntityState.Modified;
+           // context.Entry(topic).State = EntityState.Modified;
         }
 
     }

@@ -13,7 +13,7 @@ namespace MvcPresentationLayer.Models
 
         [Required(ErrorMessage = "Login can not be empty")]
         [Display(Name = "Login")]
-        [RegularExpression(@"(?=.*[A-Za-z0-9])", ErrorMessage ="Can contain only letters and digits.")]
+        [RegularExpression(@"(^[a-zA-Z0-9\s]*$)", ErrorMessage ="Can contain only letters and digits.")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Login must contain from 2 to 50 characters")]
         public string Login { get; set; }
 
@@ -24,5 +24,8 @@ namespace MvcPresentationLayer.Models
         public int UserId { get; set; }
 
         public byte[] Image { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string ImageMimeType { get; set; }
     }
 }

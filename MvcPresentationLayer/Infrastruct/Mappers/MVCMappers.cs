@@ -187,7 +187,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Login = profileEntity.Login,
                 LastUpdateDate = profileEntity.LastUpdateDate,
                 UserId = profileEntity.UserId,
-                Image = profileEntity.Image
+                Image = profileEntity.Image,
+                ImageMimeType=profileEntity.ImageMimeType
             };
         }
 
@@ -199,7 +200,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Login = profile.Login,
                 LastUpdateDate = profile.LastUpdateDate,
                 UserId = profile.UserId,
-                Image = profile.Image
+                Image = profile.Image,
+                ImageMimeType=profile.ImageMimeType
             };
         }
     }

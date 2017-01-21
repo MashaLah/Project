@@ -106,7 +106,7 @@ namespace DAL.Concrete
         {
             var section = context.Set<Section>().Single(s => s.Id == entity.Id);
             section.Name = entity.Name;
-            context.Entry(section).State = EntityState.Modified;
+            //context.Entry(section).State = EntityState.Modified;
             /*var forums = entity.Forums.Select(forum => new Forum()
             {
                 Id = forum.Id,

@@ -13,5 +13,6 @@ namespace DAL.Interface.DTO
         public DateTime LastUpdateDate { get; set; }
         public int UserId { get; set; }
         public byte[] Image { get; set; }
+        public string ImageMimeType { get; set; }
     }
 }

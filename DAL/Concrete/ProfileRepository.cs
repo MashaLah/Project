@@ -19,7 +19,7 @@ namespace DAL.Concrete
             context = uow;
         }
 
-        public DALProfile GetByUserId(int key)
+        public DALProfile GetById(int key)
         {
             var ormProfile = context.Set<Profile>().FirstOrDefault(p => p.Id == key);
             return new DALProfile()
@@ -28,7 +28,22 @@ namespace DAL.Concrete
                 Login = ormProfile.Login,
                 UserId = ormProfile.UserId,
                 LastUpdateDate = ormProfile.LastUpdateDate,
-                Image = ormProfile.Image
+                Image = ormProfile.Image,
+                ImageMimeType=ormProfile.ImageMimeType
+            };
+        }
+
+        public DALProfile GetByUserId(int key)
+        {
+            var ormProfile = context.Set<Profile>().FirstOrDefault(p => p.UserId == key);
+            return new DALProfile()
+            {
+                Id = ormProfile.Id,
+                Login = ormProfile.Login,
+                UserId = ormProfile.UserId,
+                LastUpdateDate = ormProfile.LastUpdateDate,
+                Image = ormProfile.Image,
+                ImageMimeType = ormProfile.ImageMimeType
             };
         }
 
@@ -42,7 +57,8 @@ namespace DAL.Concrete
                 Login = ormProfile.Login,
                 UserId = ormProfile.UserId,
                 LastUpdateDate = ormProfile.LastUpdateDate,
-                Image = ormProfile.Image
+                Image = ormProfile.Image,
+                ImageMimeType = ormProfile.ImageMimeType
             };
         }
 
@@ -54,7 +70,8 @@ namespace DAL.Concrete
                 Login = profile.Login,
                 UserId = profile.UserId,
                 LastUpdateDate = profile.LastUpdateDate,
-                Image = profile.Image
+                Image = profile.Image,
+                ImageMimeType = profile.ImageMimeType
             };
             context.Set<Profile>().Add(profileNew);
         }
@@ -66,7 +83,8 @@ namespace DAL.Concrete
             newProfile.UserId = profile.UserId;
             newProfile.LastUpdateDate = profile.LastUpdateDate;
             newProfile.Image = profile.Image;
-            context.Entry(newProfile).State = EntityState.Modified;
+            newProfile.ImageMimeType = profile.ImageMimeType;
+            //context.Entry(newProfile).State = EntityState.Modified;
         }
     }
 }

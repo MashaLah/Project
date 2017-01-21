@@ -78,7 +78,7 @@ namespace DAL.Concrete
             updatedUser.CreationDate = user.CreationDate;
             //Image = user.Image,
             updatedUser.RoleId = user.RoleId;
-            context.Entry(updatedUser).State = EntityState.Modified;
+           // context.Entry(updatedUser).State = EntityState.Modified;
         }
 
         public /*bool*/void RemoveUser(/*int id*/DALUser user)

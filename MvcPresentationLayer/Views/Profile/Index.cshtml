@@ -8,47 +8,55 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-6">
-            <div class="img-responsive">
-                <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
-            </div>
+        <div>
+    <div class="img-responsive">
+        @if (Model.Image != null)
+        {
+            <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { Model.Id })" />
+        }
+        else
+        {
+            <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
+        }
+    </div><br />
             <div>
-                @Html.ActionLink("Change avatar", "ChangeAvatar")
+                @Html.DisplayFor(model=>model.Login)
+            </div>
+
+@using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-inline">
+        @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Image)
+        @Html.HiddenFor(model => model.LastUpdateDate)
+        @Html.HiddenFor(model => model.UserId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Login, null, new { @class = "text-danger" })
             </div>
         </div>
-        <div class="col-xs-6">
-            <div>
-                @Html.DisplayFor(model => model.Login)
+        <br />
+        <div class="form-group">
+            <input type="file" name="image"/>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
-          <!--  <div class="form-group">
-                <div>
-                    <input type="submit" value="ChangeLogin" class="btn btn-default" />
-                </div>
-            </div>-->
-            @using (Html.BeginForm("Edit","Profile"))
-            {
-                @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.Image)
-                @Html.HiddenFor(model => model.LastUpdateDate)
-                @Html.HiddenFor(model => model.UserId)
-                <div class="form-inline">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
-            }
         </div>
     </div>
-</div>
+
+                    @section Scripts {
+                        @Scripts.Render("~/bundles/jqueryval")
+                    }
+}
+            </div>
+    </div>
+  </div>
+
+

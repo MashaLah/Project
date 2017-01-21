@@ -21,6 +21,11 @@ namespace BLL.Services
             profileRepository = repository;
         }
 
+        public ProfileEntity GetById(int id)
+        {
+            return profileRepository.GetById(id).ToBllProfile();
+        }
+
         public ProfileEntity GetByUserId(int id)
         {
             return profileRepository.GetByUserId(id).ToBllProfile();
