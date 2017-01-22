@@ -10,6 +10,6 @@ namespace DAL.Interface.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        //public ICollection<DALForum> Forums { get; set; }
+        public ICollection<DALTopic> Topics { get; set; }
     }
 }

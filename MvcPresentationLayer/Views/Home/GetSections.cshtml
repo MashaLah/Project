@@ -7,18 +7,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
+            @if (Request.RequestContext.HttpContext.User.IsInRole("admin"))
+            {
             <td>
-                @Html.ActionLink("Add Forum", "Create", "Forum", new { sectionId = item.Id }, null)
+                @Html.ActionLink("Add Topic", "Create", "Topic", new { sectionId = item.Id }, null)
             </td>
+            }
             <!--<td>Html.Action("CreateForumPartial")</td>-->
         </tr>
         if (item.Topics != null)
         {
-            foreach (var frm in item.Topics)
+            foreach (var topic in item.Topics)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(frm.Title, "Index", "Topic", new { id = frm.Id }, null)
+                        @Html.ActionLink(topic.Title, "Index", "Topic", new { id = topic.Id }, null)
                     </td>
                 </tr>
             }

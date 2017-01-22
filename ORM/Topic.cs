@@ -24,9 +24,9 @@ namespace ORM
         public string Title { get; set; }
         public string Description { get; set; }
         public int UserId { get; set; }
-        public System.DateTime Date { get; set; }
+        public DateTime Date { get; set; }
         public int SectionId { get; set; }
-        public Nullable<System.DateTime> LastUpdatedDate { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }

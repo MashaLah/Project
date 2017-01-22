@@ -15,21 +15,23 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = sectionEntity.Id,
                 Name = sectionEntity.Name,
-                //Topics = new List<Topic>()
+                Topics = new List<Topic>()
             };
-           /* var forums = sectionEntity.Forums.Select(forum => new Forum()
+            var topics = sectionEntity.Topics.Select(topic => new Topic()
             {
-                Id = forum.Id,
-                SectionId = forum.SectionId,
-                Title = forum.Title,
-                UserId = forum.UserId,
-                Date = forum.Date,
+                Id = topic.Id,
+                SectionId = topic.SectionId,
+                Title = topic.Title,
+                UserId = topic.UserId,
+                Date = topic.Date,
+                LastUpdatedDate=topic.LastUpdatedDate,
+                Description=topic.Description
             });
 
-            foreach (var forum in forums)
+            foreach (var topic in topics)
             {
-                section.Forums.Add(forum);
-            }*/
+                section.Topics.Add(topic);
+            }
             return section;
         }
 
@@ -39,22 +41,24 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = section.Id,
                 Name = section.Name,
-                //Forums= new List<ForumEntity>()
+                Topics= new List<TopicEntity>()
                 // RoleId = (int)userViewModel.Role
             };
-            /*var forums = sectionEntity.Forums.Select(forum => new ForumEntity()
+            var topics = sectionEntity.Topics.Select(topic => new TopicEntity()
             {
-                Id = forum.Id,
-                SectionId = forum.SectionId,
-                Title = forum.Title,
-                UserId = forum.UserId,
-                Date = forum.Date,
+                Id = topic.Id,
+                SectionId = topic.SectionId,
+                Title = topic.Title,
+                UserId = topic.UserId,
+                Date = topic.Date,
+                Description=topic.Description,
+                LastUpdatedDate=topic.LastUpdatedDate
             });
 
-            foreach (var forum in forums)
+            foreach (var topic in topics)
             {
-                sectionEntity.Forums.Add(forum);
-            }*/
+                sectionEntity.Topics.Add(topic);
+            }
             return sectionEntity;
         }
 
@@ -105,6 +109,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = topic.Id,
                 SectionId = topic.SectionId,
+                UserId=topic.UserId,
                 Title = topic.Title,
                 Date = topic.Date,
                 Description = topic.Description,

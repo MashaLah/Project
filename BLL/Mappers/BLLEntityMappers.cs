@@ -16,21 +16,23 @@ namespace BLL.Mappers
             {
                 Id = sectionEntity.Id,
                 Name = sectionEntity.Name,
-                //Forums = new List<DALForum>(),
+                Topics = new List<DALTopic>(),
             };
-            /*var forums = sectionEntity.Forums.Select(forum => new DALForum()
+            var topics = sectionEntity.Topics.Select(topic => new DALTopic()
             {
-                Id = forum.Id,
-                SectionId = forum.SectionId,
-                Title = forum.Title,
-                UserId = forum.UserId,
-                Date = forum.Date,
+                Id = topic.Id,
+                SectionId = topic.SectionId,
+                Title = topic.Title,
+                UserId = topic.UserId,
+                Date = topic.Date,
+                LastUpdatedDate= topic.LastUpdatedDate,
+                Description= topic.Description
             });
 
-            foreach (var forum in forums)
+            foreach (var topic in topics)
             {
-                dalSection.Forums.Add(forum);
-            }*/
+                dalSection.Topics.Add(topic);
+            }
             return dalSection;
         }
 
@@ -40,21 +42,23 @@ namespace BLL.Mappers
             {
                 Id = dalSection.Id,
                 Name = dalSection.Name,
-                //Forums=new List<ForumEntity>(),
+                Topics=new List<TopicEntity>(),
             };
-            /*var forums = dalSection.Forums.Select(forum => new ForumEntity()
+            var topics = dalSection.Topics.Select(topic => new TopicEntity()
             {
-                Id = forum.Id,
-                SectionId = forum.SectionId,
-                Title = forum.Title,
-                UserId = forum.UserId,
-                Date = forum.Date,
+                Id = topic.Id,
+                SectionId = topic.SectionId,
+                Title = topic.Title,
+                UserId = topic.UserId,
+                Date = topic.Date,
+                LastUpdatedDate=topic.LastUpdatedDate,
+                Description=topic.Description
             });
 
-            foreach (var forum in forums)
+            foreach (var topic in topics)
             {
-                section.Forums.Add(forum);
-            }*/
+                section.Topics.Add(topic);
+            }
             return section;
         }
 

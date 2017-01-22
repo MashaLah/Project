@@ -33,18 +33,18 @@ namespace DAL.Concrete
              {
                  sects.Add(item);
              }*/
-            /*var allSections = context.Set<Section>().Include(s => s.Forums);
+            var allSections = context.Set<Section>().Include(s => s.Topics);
             List<DALSection> sections = new List<DALSection>();
             foreach (var section in allSections)
             {
                 sections.Add(section.ToDalSection());
             }
-            return sections;*/
-            return context.Set<Section>().Select(section => new DALSection()
+            return sections;
+            /*return context.Set<Section>().Select(section => new DALSection()
             {
                 Id=section.Id,
                 Name=section.Name
-            });
+            });*/
         }
 
         /*public DALForum toDalForum(Forum forum)

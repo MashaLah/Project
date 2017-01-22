@@ -31,11 +31,13 @@ namespace MvcPresentationLayer.Controllers
             return View(profile);
         }
 
+        [Authorize]
         public ActionResult ChangeAvatar()
         {
             throw new NotImplementedException();
         }
 
+        [Authorize]
         public ActionResult Edit(ProfileViewModel profileViewModel, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
@@ -51,6 +53,7 @@ namespace MvcPresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public FileContentResult GetImage(int id)
         {
             /* byte[] imageData = null;

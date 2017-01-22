@@ -16,22 +16,24 @@ namespace DAL.Mappers
             {
                 Id = ormSection.Id,
                 Name = ormSection.Name,
-                //Forums = new List<DALForum>()
+                Topics = new List<DALTopic>()
             };
 
-            /*var forums = ormSection.Forums.Select(forum => new DALForum()
+            var topics = ormSection.Topics.Select(topic => new DALTopic()
             {
-                Id = forum.Id,
-                SectionId = forum.SectionId,
-                Title = forum.Title,
-                UserId = forum.UserId,
-                Date = forum.Date,
+                Id = topic.Id,
+                SectionId = topic.SectionId,
+                Title = topic.Title,
+                UserId = topic.UserId,
+                Date = topic.Date,
+                Description=topic.Description,
+                LastUpdatedDate=topic.LastUpdatedDate
             });
 
-            foreach (var forum in forums)
+            foreach (var topic in topics)
             {
-                dalSection.Forums.Add(forum);
-            }*/
+                dalSection.Topics.Add(topic);
+            }
             return dalSection;
         }
 
@@ -43,19 +45,21 @@ namespace DAL.Mappers
                 Name = dalSection.Name
             };
 
-            /*var forums = dalSection.Forums.Select(forum => new Forum()
+            var topics = dalSection.Topics.Select(topic => new Topic()
             {
-                Id = forum.Id,
-                SectionId = forum.SectionId,
-                Title = forum.Title,
-                UserId = forum.UserId,
-                Date = forum.Date,
+                Id = topic.Id,
+                SectionId = topic.SectionId,
+                Title = topic.Title,
+                UserId = topic.UserId,
+                Date = topic.Date,
+                Description = topic.Description,
+                LastUpdatedDate = topic.LastUpdatedDate
             });
 
-            foreach (var forum in forums)
+            foreach (var topic in topics)
             {
-                section.Forums.Add(forum);
-            }*/
+                section.Topics.Add(topic);
+            }
             return section;
         }
     }

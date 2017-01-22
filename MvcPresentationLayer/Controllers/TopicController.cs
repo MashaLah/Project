@@ -1,4 +1,5 @@
 ﻿using BLL.Interface.Services;
+using MvcPresentationLayer.Infrastruct.Mappers;
 using MvcPresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -77,19 +78,22 @@ namespace MvcPresentationLayer.Controllers
          }*/
 
         private readonly ITopicService topicService;
-        private readonly IForumService forumService;
+        //private readonly ISectionService sectionService;
+        private readonly IUserService userService;
 
-        public TopicController(ITopicService topicService, IForumService forumService)
+
+        public TopicController(ITopicService topicService, IUserService userService)
         {
             this.topicService = topicService;
-            this.forumService = forumService;
+            this.userService = userService;
         }
 
-        public ActionResult Index(int sectionId)
+        [AllowAnonymous]
+        public ActionResult Index(int id)
         {
-            var topics = topicService.GetAllTopicEntities().Where(t => t.SectionId == sectionId);
-            ViewData["ForumForTopics"] = forumService.GetForumEntity(sectionId).Title;
-            return View(topics);
+            Topic topic = topicService.GetTopicEntity(id).ToMvcTopic();
+            //ViewData["ForumForTopics"] = forumService.GetForumEntity(sectionId).Title;
+            return View(topic);
         }
 
        /* public PartialViewResult Answer(int? id, int page)
@@ -112,8 +116,8 @@ namespace MvcPresentationLayer.Controllers
        /*return PartialView(pvm);
    }*/
 
-        public ActionResult Add(string text)
-        {
+       // public ActionResult Add(string text)
+       // {
             /*Post post = new Post()
             {
                 Id = 13,
@@ -127,8 +131,8 @@ namespace MvcPresentationLayer.Controllers
                 return PartialView("Answer");
             }*/
             //return View();
-            return RedirectToAction("Index");
-        }
+         //   return RedirectToAction("Index");
+      //  }
 
         /* [HttpPost]
          public ActionResult Add(string text)
@@ -150,10 +154,10 @@ namespace MvcPresentationLayer.Controllers
              return RedirectToAction("Index");
          }*/
 
-        // GET: Sellers/Create
-        public ActionResult Create()
+        [HttpGet]
+        [Authorize]
+        public ActionResult Create(int sectionId)
         {
-            //ViewBag.SellingPointID = new SelectList(db.SellingPoints, "SellingPointID", "Adress");
             return View();
         }
 
@@ -175,15 +179,20 @@ namespace MvcPresentationLayer.Controllers
              return View(post);
          }*/
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Topic topic)
         {
-            /*string userName = User.Identity.Name;
-            forum.UserId = userService.GetUserEntityByEmail(userName).Id;
-            //forum.SectionId = int.Parse(Request.Form["sectionId"]);
-            forum.Date = DateTime.Now;
-            forumService.CreateForum(forum.ToBllForum());*/
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                string userName = User.Identity.Name;
+                topic.UserId = userService.GetUserEntityByEmail(userName).Id;
+                //forum.SectionId = int.Parse(Request.Form["sectionId"]);
+                topic.Date = DateTime.Now;
+                topicService.CreateTopic(topic.ToBllTopic());
+                return RedirectToAction("Index","Home",null);
+            }
+            return View(topic);
         }
     }
 }
