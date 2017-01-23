@@ -123,16 +123,16 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Date = topic.Date,
                 Description = topic.Description,
                 LastUpdatedDate = topic.LastUpdatedDate,
-                Posts = new List<PostEntity>()
+                //Posts = new List<PostEntity>()
                 // RoleId = (int)userViewModel.Role
             };
 
-            var posts = topic.Posts.Select(post => post.ToBllPost());
+            /*var posts = topic.Posts.Select(post => post.ToBllPost());
 
             foreach (var post in posts)
             {
                 topicEntity.Posts.Add(post);
-            }
+            }*/
             return topicEntity;
         }
 

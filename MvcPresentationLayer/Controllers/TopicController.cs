@@ -168,9 +168,9 @@ namespace MvcPresentationLayer.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult Create(int sectionId)
+        public ActionResult CreateTopic(int sectionId)
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Sellers/Create
@@ -193,7 +193,7 @@ namespace MvcPresentationLayer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Topic topic)
+        public ActionResult CreateTopic(Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -204,7 +204,7 @@ namespace MvcPresentationLayer.Controllers
                 topicService.CreateTopic(topic.ToBllTopic());
                 return RedirectToAction("Index","Home",null);
             }
-            return View(topic);
+            return PartialView(topic);
         }
     }
 }

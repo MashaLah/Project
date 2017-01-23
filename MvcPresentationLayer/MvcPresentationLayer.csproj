@@ -269,7 +269,6 @@
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\User\Enter.cshtml" />
     <Content Include="Views\Topic\Create.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Forum\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -284,6 +283,9 @@
     <Content Include="Views\Post\Index.cshtml" />
     <Content Include="Views\Post\GetPosts.cshtml" />
     <Content Include="Views\Home\EditSection.cshtml" />
+    <Content Include="Views\Home\DeleteSection.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Topic\CreateTopic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

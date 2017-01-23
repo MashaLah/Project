@@ -20,7 +20,7 @@ namespace MvcPresentationLayer.Controllers
             this.service = service;
         }
 
-        // GET: User
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             var model = service.GetAllUserEntities().Select(user => user.ToMvcUser());

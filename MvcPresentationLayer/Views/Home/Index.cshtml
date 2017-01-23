@@ -1,31 +1,36 @@
 ﻿@model MvcPresentationLayer.Models.Section
 
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+@Html.ActionLink("Create new section", "Create",null,new { @class = "createNewSection" })
 <div id="sections">
     <!--Html.Partial("SectionPartial")-->
     <!--Html.Action("GetSections")-->
     @{Html.RenderAction("GetSections");}
 </div>
-@if (Request.RequestContext.HttpContext.User.IsInRole("admin"))
+<!--if (Request.RequestContext.HttpContext.User.IsInRole("admin"))-->
 {
    <!--<p>
         Html.ActionLink("Add new section ajax", "CreatePartial")
     </p>--> 
-    using (Ajax.BeginForm("Create",new AjaxOptions { UpdateTargetId = "sections"}))
+   <!-- using (Ajax.BeginForm("Create",new AjaxOptions { UpdateTargetId = "sections"}))
     {
-        @Html.AntiForgeryToken()
+        Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            Html.ValidationSummary(true, "", new { class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                Html.LabelFor(model => model.Name, htmlAttributes: new { class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    Html.EditorFor(model => model.Name, new { htmlAttributes = new { class = "form-control" } })
+                    Html.ValidationMessageFor(model => model.Name, "", new { class = "text-danger" })
                 </div>
             </div>
 
@@ -36,8 +41,21 @@
             </div>
         </div>
     }
-}
+}-->
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(".createNewSection").click(function (e) {
+
+            e.preventDefault();
+            $.get(this.href, function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
+            });
+        });
+    })</script>
 }

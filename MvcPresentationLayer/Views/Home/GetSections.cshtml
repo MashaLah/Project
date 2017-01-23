@@ -16,8 +16,8 @@
             @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
             {
             <td>
-                @Html.ActionLink("Add Topic", "Create", "Topic", new { sectionId = item.Id }, null)|
-                @Html.ActionLink("Delete Section", "Delete", "Home", new { id = item.Id }, null)|
+                @Html.ActionLink("Add Topic", "CreateTopic", "Topic", new { sectionId = item.Id }, new {@class= "topicCreate" })|
+                @Html.ActionLink("Delete Section", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete" })|
                 @Html.ActionLink("Edit section", "EditSection", "Home", new { id = item.Id }, new { @class="sectionItem"})|
             </td>
             }
@@ -38,7 +38,8 @@
 
 </table>
 
-<script>
+@section scripts{
+<script type="text/javascript">
     $(function () {
         $.ajaxSetup({ cache: false });
         $(".sectionItem").click(function (e) {
@@ -51,4 +52,49 @@
         });
     })
 
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(".sectionDelete").click(function (e) {
+
+            e.preventDefault();
+            $.get(this.href, function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
+            });
+        });
+    })
+
+
+    $(document).ready(function () {
+ 
+        $.ajaxSetup({ cache: false });
+ 
+        $(".viewDialog").click( function (e) {
+            e.preventDefault();
+ 
+            $("#dialogContent")
+                .load(this.href)
+                .dialog({
+                    close: function () { $(this).remove() },
+                    modal: true,
+                    buttons: {
+                        "Save": function () {
+                            $.ajax({
+                                url: "@Url.Action("CreateTopic", "Topic")",
+                                type: "POST",
+                            data: $('form').serialize(),
+                            datatype: "json",
+                            success: function (result) {
+ 
+                                $("#dialogContent").html(result);
+                            }
+                        });
+        }
+        }
+    });
+    });
+    });
+
+
 </script>
+    }

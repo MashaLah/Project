@@ -104,10 +104,10 @@ namespace DAL.Mappers
                 Date = dalTopic.Date,
                 Description = dalTopic.Description,
                 LastUpdatedDate = dalTopic.LastUpdatedDate,
-                Posts = new List<Post>()
+                //Posts = new List<Post>()
             };
 
-            var posts = dalTopic.Posts.Select(post => new Post()
+           /* var posts = dalTopic.Posts.Select(post => new Post()
             {
                 Id = post.Id,
                 TopicId = post.TopicId,
@@ -119,7 +119,7 @@ namespace DAL.Mappers
             foreach (var post in posts)
             {
                 topic.Posts.Add(post);
-            }
+            }*/
             return topic;
         }
     }

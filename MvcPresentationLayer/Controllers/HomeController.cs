@@ -53,12 +53,12 @@ namespace MvcPresentationLayer.Controllers
             return View(sections);
         }
 
-        /* [HttpGet]
+         [HttpGet]
          [Authorize(Roles = "admin")]
          public ActionResult Create()
          {
-             return View();
-         }*/
+             return PartialView();
+         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -70,10 +70,17 @@ namespace MvcPresentationLayer.Controllers
             return RedirectToAction("GetSections");
         }
 
-        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult DeleteSection(int id)
+        {
+            Section section = service.GetSectionEntity(id).ToMvcSection();
+            return PartialView(section);
+        }
+
+        [HttpPost,ActionName("DeleteSection")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public ActionResult Delete(int id)
+        public ActionResult ConfirmDelete(int id)
         {
             SectionEntity section = service.GetSectionEntity(id);
             service.DeleteSection(section);

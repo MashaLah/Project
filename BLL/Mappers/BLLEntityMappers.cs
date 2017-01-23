@@ -97,9 +97,9 @@ namespace BLL.Mappers
                 Date = topicEntity.Date,
                 SectionId = topicEntity.SectionId,
                 LastUpdatedDate = topicEntity.LastUpdatedDate,
-                Posts = new List<DALPost>()
+                //Posts = new List<DALPost>()
             };
-            var posts = topicEntity.Posts.Select(post => post.ToDalPost());/*new DALPost()
+           /* var posts = topicEntity.Posts.Select(post => post.ToDalPost());new DALPost()
             {
                 Id = post.Id,
                 TopicId = post.TopicId,
@@ -108,10 +108,10 @@ namespace BLL.Mappers
                 Date = post.Date
             });*/
 
-            foreach (var post in posts)
+           /* foreach (var post in posts)
             {
                 dalTopic.Posts.Add(post);
-            }
+            }*/
             return dalTopic;
         }
 
