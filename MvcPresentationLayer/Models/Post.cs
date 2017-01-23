@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,10 +8,20 @@ namespace MvcPresentationLayer.Models
 {
     public class Post
     {
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
-        //public int UserId { get; set; }
+
+        [ScaffoldColumn(false)]
+        public int UserId { get; set; }
+
+        [Required(ErrorMessage = "You can't add empty message.")]
+        [StringLength(4000, ErrorMessage = "Message can't contain more than 4000 characters")]
         public string Text { get; set; }
-        public System.DateTime Date { get; set; }
+
+        [ScaffoldColumn(false)]
+        public DateTime Date { get; set; }
+
+        [ScaffoldColumn(false)]
         public int TopicId { get; set; }
 
         public Topic Topic { get; set; }

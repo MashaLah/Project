@@ -1,5 +1,6 @@
 ﻿using DAL.Interface.DTO;
 using DAL.Interface.Repository;
+using DAL.Mappers;
 using ORM;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace DAL.Concrete
 
         public IEnumerable<DALTopic> GetAll()
         {
-            return context.Set<Topic>().Select(topic => new DALTopic()
+            return context.Set<Topic>().Select(topic => topic.ToDalTopic());/* new DALTopic()
             {
                 Id = topic.Id,
                 Title = topic.Title,
@@ -31,13 +32,13 @@ namespace DAL.Concrete
                 Date = topic.Date,
                 SectionId = topic.SectionId,
                 LastUpdatedDate = topic.LastUpdatedDate
-            });
+            });*/
         }
 
         public DALTopic GetById(int key)
         {
-            var ormTopic = context.Set<Topic>().FirstOrDefault(topic => topic.Id == key);
-            return new DALTopic()
+            Topic ormTopic = context.Set<Topic>().FirstOrDefault(topic => topic.Id == key);
+            return ormTopic.ToDalTopic();/*new DALTopic()
             {
                 Id = ormTopic.Id,
                 Title = ormTopic.Title,
@@ -46,7 +47,7 @@ namespace DAL.Concrete
                 Date = ormTopic.Date,
                 SectionId = ormTopic.SectionId,
                 LastUpdatedDate = ormTopic.LastUpdatedDate
-            };
+            };*/
         }
 
         /*public IEnumerable<DALTopic> GetByPredicate(Expression<Func<DALTopic, bool>> f)
@@ -57,7 +58,7 @@ namespace DAL.Concrete
 
         public void Create(DALTopic e)
         {
-            var topic = new Topic()
+            Topic topic = e.ToOrmTopic();/*new Topic()
             {
                 Title = e.Title,
                 Description = e.Description,
@@ -66,13 +67,13 @@ namespace DAL.Concrete
                 SectionId = e.SectionId,
                 LastUpdatedDate = e.LastUpdatedDate
                 //ForumId = forumId
-            };
+            };*/
             context.Set<Topic>().Add(topic);
         }
 
         public void Delete(DALTopic e)
         {
-            var topic = new Topic()
+            var topic = e.ToOrmTopic();/*new Topic()
             {
                 Id = e.Id,
                 Title = e.Title,
@@ -81,7 +82,7 @@ namespace DAL.Concrete
                 Date = e.Date,
                 SectionId = e.SectionId,
                 LastUpdatedDate=e.LastUpdatedDate
-            };
+            };*/
             topic = context.Set<Topic>().Single(t => t.Id == topic.Id);
             context.Set<Topic>().Remove(topic);
         }

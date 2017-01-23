@@ -94,45 +94,57 @@ namespace MvcPresentationLayer.Controllers
             Topic topic = topicService.GetTopicEntity(id).ToMvcTopic();
             //ViewData["ForumForTopics"] = forumService.GetForumEntity(sectionId).Title;
             return View(topic);
+            //return View();
         }
 
-       /* public PartialViewResult Answer(int? id, int page)
-        {*/
-       /*if (id == null)
-       {
-           return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-       }*/
-       /* int pageSize = 5;
-        var tpc = topics.Find(f => f.Id == id);
-        IEnumerable<Post> postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize);
-        //int postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize).Count();
-        PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tpc.Posts.Count };
-        PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage, Topic = tpc };
-        */
-       /*if (tpc == null)
-     {
-         return HttpNotFound();
-     }*/
-       /*return PartialView(pvm);
-   }*/
+        [AllowAnonymous]
+        public ActionResult GetPosts(int topicId)
+        {
+            var posts = topicService.GetTopicEntity(topicId).Posts.Select(post=>post.ToMvcPost());
+            //if (Request.IsAjaxRequest())
+            //{
+                return PartialView(posts);
+           // }
+            //return View(topic);
+        }
 
-       // public ActionResult Add(string text)
-       // {
-            /*Post post = new Post()
-            {
-                Id = 13,
-                Text = text,
-                Date = DateTime.Now,
-                TopicId = 1
-            };
-            topics[0].Posts.Add(post);
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("Answer");
-            }*/
-            //return View();
-         //   return RedirectToAction("Index");
-      //  }
+        /* public PartialViewResult Answer(int? id, int page)
+         {*/
+        /*if (id == null)
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }*/
+        /* int pageSize = 5;
+         var tpc = topics.Find(f => f.Id == id);
+         IEnumerable<Post> postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize);
+         //int postsPerPage = tpc.Posts.Skip((page - 1) * pageSize).Take(pageSize).Count();
+         PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tpc.Posts.Count };
+         PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage, Topic = tpc };
+         */
+        /*if (tpc == null)
+      {
+          return HttpNotFound();
+      }*/
+        /*return PartialView(pvm);
+    }*/
+
+        // public ActionResult Add(string text)
+        // {
+        /*Post post = new Post()
+        {
+            Id = 13,
+            Text = text,
+            Date = DateTime.Now,
+            TopicId = 1
+        };
+        topics[0].Posts.Add(post);
+        if (Request.IsAjaxRequest())
+        {
+            return PartialView("Answer");
+        }*/
+        //return View();
+        //   return RedirectToAction("Index");
+        //  }
 
         /* [HttpPost]
          public ActionResult Add(string text)

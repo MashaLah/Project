@@ -60,7 +60,7 @@ namespace MvcPresentationLayer.Controllers
              return View();
          }*/
 
-        //[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public ActionResult Create(Section section)
@@ -68,6 +68,36 @@ namespace MvcPresentationLayer.Controllers
             //if ajax request
             service.CreateSection(section.ToBllSection());
             return RedirectToAction("GetSections");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
+        public ActionResult Delete(int id)
+        {
+            SectionEntity section = service.GetSectionEntity(id);
+            service.DeleteSection(section);
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult EditSection(int id)
+        {
+            Section section = service.GetSectionEntity(id).ToMvcSection();
+            return PartialView(section);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
+        public ActionResult EditSection(Section section)
+        {
+            if (ModelState.IsValid)
+            {
+                service.UpdateSection(section.ToBllSection());
+                return RedirectToAction("Index");
+            }
+            return View(section);
         }
 
         public ActionResult About()

@@ -1,0 +1,11 @@
+﻿@model IEnumerable<MvcPresentationLayer.Models.Post>
+
+
+
+    @foreach (var post in Model.Posts)
+    {
+        <div>
+            @Html.DisplayFor(item => post.Text)
+        </div>
+    }
+

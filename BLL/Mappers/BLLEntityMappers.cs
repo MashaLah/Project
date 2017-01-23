@@ -16,9 +16,9 @@ namespace BLL.Mappers
             {
                 Id = sectionEntity.Id,
                 Name = sectionEntity.Name,
-                Topics = new List<DALTopic>(),
+               // Topics = new List<DALTopic>(),
             };
-            var topics = sectionEntity.Topics.Select(topic => new DALTopic()
+           /* var topics = sectionEntity.Topics;*//*.Select(topic => new DALTopic()
             {
                 Id = topic.Id,
                 SectionId = topic.SectionId,
@@ -27,12 +27,12 @@ namespace BLL.Mappers
                 Date = topic.Date,
                 LastUpdatedDate= topic.LastUpdatedDate,
                 Description= topic.Description
-            });
+            });*/
 
-            foreach (var topic in topics)
+           /* foreach (var topic in topics)
             {
-                dalSection.Topics.Add(topic);
-            }
+                dalSection.Topics.Add(topic.ToDalTopic());
+            }*/
             return dalSection;
         }
 
@@ -44,7 +44,7 @@ namespace BLL.Mappers
                 Name = dalSection.Name,
                 Topics=new List<TopicEntity>(),
             };
-            var topics = dalSection.Topics.Select(topic => new TopicEntity()
+            var topics = dalSection.Topics;/*.Select(topic => new TopicEntity()
             {
                 Id = topic.Id,
                 SectionId = topic.SectionId,
@@ -53,11 +53,11 @@ namespace BLL.Mappers
                 Date = topic.Date,
                 LastUpdatedDate=topic.LastUpdatedDate,
                 Description=topic.Description
-            });
+            });*/
 
             foreach (var topic in topics)
             {
-                section.Topics.Add(topic);
+                section.Topics.Add(topic.ToBllTopic());
             }
             return section;
         }
@@ -88,7 +88,7 @@ namespace BLL.Mappers
 
         public static DALTopic ToDalTopic(this TopicEntity topicEntity)
         {
-            return new DALTopic()
+            DALTopic dalTopic = new DALTopic()
             {
                 Id = topicEntity.Id,
                 Title = topicEntity.Title,
@@ -97,12 +97,27 @@ namespace BLL.Mappers
                 Date = topicEntity.Date,
                 SectionId = topicEntity.SectionId,
                 LastUpdatedDate = topicEntity.LastUpdatedDate,
+                Posts = new List<DALPost>()
             };
+            var posts = topicEntity.Posts.Select(post => post.ToDalPost());/*new DALPost()
+            {
+                Id = post.Id,
+                TopicId = post.TopicId,
+                Text = post.Text,
+                UserId = post.UserId,
+                Date = post.Date
+            });*/
+
+            foreach (var post in posts)
+            {
+                dalTopic.Posts.Add(post);
+            }
+            return dalTopic;
         }
 
         public static TopicEntity ToBllTopic(this DALTopic dalTopic)
         {
-            return new TopicEntity()
+            TopicEntity topic = new TopicEntity()
             {
                 Id = dalTopic.Id,
                 Title = dalTopic.Title,
@@ -111,7 +126,16 @@ namespace BLL.Mappers
                 Date = dalTopic.Date,
                 SectionId = dalTopic.SectionId,
                 LastUpdatedDate = dalTopic.LastUpdatedDate,
+                Posts = new List<PostEntity>()
             };
+
+            var posts = dalTopic.Posts.Select(post => post.ToBllPost());
+
+            foreach (var post in posts)
+            {
+                topic.Posts.Add(post);
+            }
+            return topic;
         }
 
         public static DALPost ToDalPost(this PostEntity postEntity)

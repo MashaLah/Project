@@ -22,7 +22,7 @@
             <div>
                 @Html.DisplayFor(model=>model.Login)
             </div><br />
-
+           
 @using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()

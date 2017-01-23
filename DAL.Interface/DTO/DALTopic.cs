@@ -16,5 +16,6 @@ namespace DAL.Interface.DTO
         //public int ForumId { get; set; }
         public int SectionId { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
+        public ICollection<DALPost> Posts { get; set; }
     }
 }

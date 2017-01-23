@@ -40,6 +40,8 @@ namespace DAL.Concrete
                 sections.Add(section.ToDalSection());
             }
             return sections;
+            //return context.Set<Section>().Select(section => section.ToDalSection());
+
             /*return context.Set<Section>().Select(section => new DALSection()
             {
                 Id=section.Id,

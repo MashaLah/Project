@@ -1,4 +1,10 @@
 ﻿@model IEnumerable<MvcPresentationLayer.Models.Section>
+
+<div id="modDialog" class="modal fade" >
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
+
 <table class="table">
 
     @foreach (var item in Model)
@@ -7,10 +13,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            @if (Request.RequestContext.HttpContext.User.IsInRole("admin"))
+            @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
             {
             <td>
-                @Html.ActionLink("Add Topic", "Create", "Topic", new { sectionId = item.Id }, null)
+                @Html.ActionLink("Add Topic", "Create", "Topic", new { sectionId = item.Id }, null)|
+                @Html.ActionLink("Delete Section", "Delete", "Home", new { id = item.Id }, null)|
+                @Html.ActionLink("Edit section", "EditSection", "Home", new { id = item.Id }, new { @class="sectionItem"})|
             </td>
             }
             <!--<td>Html.Action("CreateForumPartial")</td>-->
@@ -21,7 +29,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(topic.Title, "Index", "Topic", new { id = topic.Id }, null)
+                        @Html.ActionLink(topic.Title, "Index", "Post", new { topicId = topic.Id }, null)
                     </td>
                 </tr>
             }
@@ -29,3 +37,18 @@
     }
 
 </table>
+
+<script>
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(".sectionItem").click(function (e) {
+
+            e.preventDefault();
+            $.get(this.href, function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
+            });
+        });
+    })
+
+</script>

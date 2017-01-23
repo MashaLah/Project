@@ -17,7 +17,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Name = sectionEntity.Name,
                 Topics = new List<Topic>()
             };
-            var topics = sectionEntity.Topics.Select(topic => new Topic()
+            var topics = sectionEntity.Topics.Select(topic => topic.ToMvcTopic());/*new Topic()
             {
                 Id = topic.Id,
                 SectionId = topic.SectionId,
@@ -26,7 +26,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Date = topic.Date,
                 LastUpdatedDate=topic.LastUpdatedDate,
                 Description=topic.Description
-            });
+            });*/
 
             foreach (var topic in topics)
             {
@@ -41,10 +41,10 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = section.Id,
                 Name = section.Name,
-                Topics= new List<TopicEntity>()
+               // Topics= new List<TopicEntity>()
                 // RoleId = (int)userViewModel.Role
             };
-            var topics = sectionEntity.Topics.Select(topic => new TopicEntity()
+           /* var topics = section.Topics.Select(topic => topic.ToBllTopic());*/ /*new TopicEntity()
             {
                 Id = topic.Id,
                 SectionId = topic.SectionId,
@@ -53,12 +53,12 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Date = topic.Date,
                 Description=topic.Description,
                 LastUpdatedDate=topic.LastUpdatedDate
-            });
+            });*/
 
-            foreach (var topic in topics)
+           /* foreach (var topic in topics)
             {
                 sectionEntity.Topics.Add(topic);
-            }
+            }*/
             return sectionEntity;
         }
 
@@ -90,32 +90,50 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
 
         public static Topic ToMvcTopic(this TopicEntity topicEntity)
         {
-            return new Topic()
+            Topic topic = new Topic()
             {
                 Id = topicEntity.Id,
                 SectionId = topicEntity.SectionId,
                 Title = topicEntity.Title,
                 Date = topicEntity.Date,
-                Description=topicEntity.Description,
-                LastUpdatedDate=topicEntity.LastUpdatedDate
+                Description = topicEntity.Description,
+                LastUpdatedDate = topicEntity.LastUpdatedDate,
+                Posts = new List<Post>()
                 //Section=(Section)forumEntity.SectionId
                 // Forums = (Forum)sectionEntity
             };
+
+            var posts = topicEntity.Posts.Select(post => post.ToMvcPost());
+
+            foreach (var post in posts)
+            {
+                topic.Posts.Add(post);
+            }
+            return topic;
         }
 
         public static TopicEntity ToBllTopic(this Topic topic)
         {
-            return new TopicEntity()
+            TopicEntity topicEntity = new TopicEntity()
             {
                 Id = topic.Id,
                 SectionId = topic.SectionId,
-                UserId=topic.UserId,
+                UserId = topic.UserId,
                 Title = topic.Title,
                 Date = topic.Date,
                 Description = topic.Description,
-                LastUpdatedDate=topic.LastUpdatedDate
+                LastUpdatedDate = topic.LastUpdatedDate,
+                Posts = new List<PostEntity>()
                 // RoleId = (int)userViewModel.Role
             };
+
+            var posts = topic.Posts.Select(post => post.ToBllPost());
+
+            foreach (var post in posts)
+            {
+                topicEntity.Posts.Add(post);
+            }
+            return topicEntity;
         }
 
         public static Post ToMvcPost(this PostEntity postEntity)
