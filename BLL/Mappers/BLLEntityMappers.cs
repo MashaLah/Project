@@ -158,7 +158,8 @@ namespace BLL.Mappers
                 TopicId = dalPost.TopicId,
                 Text = dalPost.Text,
                 UserId = dalPost.UserId,
-                Date = dalPost.Date
+                Date = dalPost.Date,
+                User = dalPost.User.ToBllUser()
             };
         }
 
@@ -184,7 +185,8 @@ namespace BLL.Mappers
                 Email = dalUser.Email,
                 CreationDate = dalUser.CreationDate,
                 //Image = user.Image,
-                RoleId = dalUser.RoleId
+                RoleId = dalUser.RoleId,
+                Profile=dalUser.Profile.ToBllProfile()
             };
         }
 

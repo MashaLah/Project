@@ -92,9 +92,9 @@ namespace DAL.Concrete
             var topic = context.Set<Topic>().FirstOrDefault(t => t.Id == entity.Id);
             topic.Title = entity.Title;
             topic.Description = entity.Description;
-            topic.UserId = entity.UserId;
-            topic.Date = entity.Date;
-            topic.SectionId = entity.SectionId;
+            //topic.UserId = entity.UserId;
+            //topic.Date = entity.Date;
+            //topic.SectionId = entity.SectionId;
             topic.LastUpdatedDate = entity.LastUpdatedDate;
            // context.Entry(topic).State = EntityState.Modified;
         }

@@ -1,5 +1,6 @@
 ﻿using DAL.Interface.DTO;
 using DAL.Interface.Repository;
+using DAL.Mappers;
 using ORM;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,8 @@ namespace DAL.Concrete
                 Email = ormUser.Email,
                 CreationDate = ormUser.CreationDate,
                 //Image = user.Image,
-                RoleId = ormUser.RoleId
+                RoleId = ormUser.RoleId,
+                Profile=ormUser.Profiles.FirstOrDefault().ToDalProfile()
             };
             //return null;
         }

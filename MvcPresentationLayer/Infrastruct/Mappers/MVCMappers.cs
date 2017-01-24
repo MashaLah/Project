@@ -144,6 +144,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 TopicId = postEntity.TopicId,
                 Text = postEntity.Text,
                 Date = postEntity.Date,
+                UserId=postEntity.UserId,
+                User=postEntity.User.ToMvcUser()
                 //Section=(Section)forumEntity.SectionId
                 // Forums = (Forum)sectionEntity
             };
@@ -157,6 +159,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 TopicId = post.TopicId,
                 Text = post.Text,
                 Date = post.Date,
+                UserId =post.UserId
                 // RoleId = (int)userViewModel.Role
             };
         }
@@ -184,6 +187,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
                 //Role = userEntity.RoleId
+                Profile=userEntity.Profile.ToMvcProfile()
             };
         }
 

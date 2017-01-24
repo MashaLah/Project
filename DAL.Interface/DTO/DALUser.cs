@@ -16,6 +16,6 @@ namespace DAL.Interface.DTO
         public bool ConfirmedEmail { get; set; }
         // public byte[] Image { get; set; }
         public int RoleId { get; set; }
-
+        public DALProfile Profile { get; set; }
     }
 }

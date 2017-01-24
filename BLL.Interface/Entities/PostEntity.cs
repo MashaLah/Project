@@ -13,5 +13,6 @@ namespace BLL.Interface.Entities
         public string Text { get; set; }
         public DateTime Date { get; set; }
         public int TopicId { get; set; }
+        public UserEntity User { get; set; }
     }
 }

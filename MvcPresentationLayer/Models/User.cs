@@ -16,5 +16,7 @@ namespace MvcPresentationLayer.Models
 
         [Display(Name = "User's role in the system")]
         public string Role { get; set; }
+
+        public ProfileViewModel Profile { get; set; }
     }
 }

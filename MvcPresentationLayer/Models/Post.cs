@@ -14,6 +14,8 @@ namespace MvcPresentationLayer.Models
         [ScaffoldColumn(false)]
         public int UserId { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [UIHint("MultilineText")]
         [Required(ErrorMessage = "You can't add empty message.")]
         [StringLength(4000, ErrorMessage = "Message can't contain more than 4000 characters")]
         public string Text { get; set; }
@@ -25,6 +27,6 @@ namespace MvcPresentationLayer.Models
         public int TopicId { get; set; }
 
         public Topic Topic { get; set; }
-       // public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }

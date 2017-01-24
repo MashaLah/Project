@@ -45,21 +45,21 @@ namespace DAL.Mappers
                 Name = dalSection.Name
             };
 
-           /* var topics = dalSection.Topics;*//*.Select(topic => new Topic()
-            {
-                Id = topic.Id,
-                SectionId = topic.SectionId,
-                Title = topic.Title,
-                UserId = topic.UserId,
-                Date = topic.Date,
-                Description = topic.Description,
-                LastUpdatedDate = topic.LastUpdatedDate
-            });*/
+            /* var topics = dalSection.Topics;*//*.Select(topic => new Topic()
+             {
+                 Id = topic.Id,
+                 SectionId = topic.SectionId,
+                 Title = topic.Title,
+                 UserId = topic.UserId,
+                 Date = topic.Date,
+                 Description = topic.Description,
+                 LastUpdatedDate = topic.LastUpdatedDate
+             });*/
 
-          /*  foreach (var topic in topics)
-            {
-                section.Topics.Add(topic.ToOrmTopic());
-            }*/
+            /*  foreach (var topic in topics)
+              {
+                  section.Topics.Add(topic.ToOrmTopic());
+              }*/
             return section;
         }
 
@@ -77,20 +77,27 @@ namespace DAL.Mappers
                 Posts = new List<DALPost>()
             };
 
-            var posts = ormTopic.Posts.Select(post => new DALPost()
-            {
-                Id = post.Id,
-                TopicId = post.TopicId,
-                Text = post.Text,
-                UserId = post.UserId,
-                Date = post.Date
-            });
+            var posts = ormTopic.Posts.Select(post =>post.ToDALPost());
 
             foreach (var post in posts)
             {
                 dalTopic.Posts.Add(post);
             }
             return dalTopic;
+        }
+
+        public static DALPost ToDALPost(this Post post)
+        {
+            DALPost dalPost = new DALPost()
+            {
+                Id = post.Id,
+                TopicId = post.TopicId,
+                Text = post.Text,
+                UserId = post.UserId,
+                Date = post.Date,
+                User = post.User.ToDalUser()
+            };
+            return dalPost;
         }
 
         public static Topic ToOrmTopic(this DALTopic dalTopic)
@@ -107,20 +114,48 @@ namespace DAL.Mappers
                 //Posts = new List<Post>()
             };
 
-           /* var posts = dalTopic.Posts.Select(post => new Post()
-            {
-                Id = post.Id,
-                TopicId = post.TopicId,
-                Text = post.Text,
-                UserId = post.UserId,
-                Date = post.Date
-            });
+            /* var posts = dalTopic.Posts.Select(post => new Post()
+             {
+                 Id = post.Id,
+                 TopicId = post.TopicId,
+                 Text = post.Text,
+                 UserId = post.UserId,
+                 Date = post.Date
+             });
 
-            foreach (var post in posts)
-            {
-                topic.Posts.Add(post);
-            }*/
+             foreach (var post in posts)
+             {
+                 topic.Posts.Add(post);
+             }*/
             return topic;
+        }
+
+        public static DALUser ToDalUser(this User ormUser)
+        {
+            DALUser dalUser = new DALUser()
+            {
+                Id = ormUser.Id,
+                Password = ormUser.Password,
+                Email = ormUser.Email,
+                CreationDate = ormUser.CreationDate,
+                RoleId = ormUser.RoleId,
+                Profile=ormUser.Profiles.FirstOrDefault().ToDalProfile()
+            };
+            return dalUser;
+        }
+
+        public static DALProfile ToDalProfile(this Profile ormProfile)
+        {
+            DALProfile dalProfile = new DALProfile()
+            {
+                Id = ormProfile.Id,
+                Login = ormProfile.Login,
+                UserId = ormProfile.UserId,
+                LastUpdateDate = ormProfile.LastUpdateDate,
+                Image = ormProfile.Image,
+                ImageMimeType = ormProfile.ImageMimeType
+            };
+            return dalProfile;
         }
     }
 }

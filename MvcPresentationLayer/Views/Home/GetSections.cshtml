@@ -64,12 +64,24 @@
         });
     })
 
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(".topicCreate").click(function (e) {
 
-    $(document).ready(function () {
+            e.preventDefault();
+            $.get(this.href, function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
+            });
+        });
+    })
+
+
+   /* $(document).ready(function () {
  
         $.ajaxSetup({ cache: false });
  
-        $(".viewDialog").click( function (e) {
+        $(".topicCreate").click(function (e) {
             e.preventDefault();
  
             $("#dialogContent")
@@ -80,7 +92,7 @@
                     buttons: {
                         "Save": function () {
                             $.ajax({
-                                url: "@Url.Action("CreateTopic", "Topic")",
+                                url: "Url.Action("CreateTopic", "Topic")",
                                 type: "POST",
                             data: $('form').serialize(),
                             datatype: "json",
@@ -93,7 +105,7 @@
         }
     });
     });
-    });
+    });*/
 
 
 </script>

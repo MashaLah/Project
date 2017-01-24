@@ -1,5 +1,6 @@
 ﻿using DAL.Interface.DTO;
 using DAL.Interface.Repository;
+using DAL.Mappers;
 using ORM;
 using System;
 using System.Collections.Generic;
@@ -22,27 +23,30 @@ namespace DAL.Concrete
 
         public IEnumerable<DALPost> GetAll()
         {
-            return context.Set<Post>().Select(post => new DALPost()
+            // return context.Set<Post>().Select(post => post.ToDALPost());
+
+            var allPosts = context.Set<Post>();
+            List<DALPost> posts = new List<DALPost>();
+            foreach (var post in allPosts)
             {
-                Id = post.Id,
-                TopicId = post.TopicId,
-                Text = post.Text,
-                UserId = post.UserId,
-                Date = post.Date
-            });
+                posts.Add(post.ToDALPost());
+            }
+            return posts;
         }
 
         public DALPost GetById(int key)
         {
-            var post = context.Set<Post>().FirstOrDefault(p => p.Id == key);
-            return new DALPost()
+            var post = context.Set<Post>().FirstOrDefault(p => p.Id == key).ToDALPost();
+            return post;
+           /* return new DALPost()
             {
                 Id = post.Id,
                 TopicId = post.TopicId,
                 Text = post.Text,
                 UserId = post.UserId,
-                Date = post.Date
-            };
+                Date = post.Date,
+                User = post.User.ToDalUser()
+            };*/
         }
 
         /* public IEnumerable<DALPost> GetByPredicate(Expression<Func<DALPost, bool>> f)

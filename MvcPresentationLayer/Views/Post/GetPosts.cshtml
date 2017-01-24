@@ -1,35 +1,61 @@
 ﻿@model IEnumerable<MvcPresentationLayer.Models.Post>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <!--<th>
-            Html.DisplayNameFor(model => model.TopicId)
-        </th>-->
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+    @if (Model != null)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <!--<td>
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <time class="timeago">@item.Date</time>
+                            </div>
+                            <!--<td>
                 Html.DisplayFor(modelItem => item.TopicId)
             </td>-->
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+                            <div class="col-md-4">
+                                @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated && Request.RequestContext.HttpContext.User.Identity.Name == item.User.Email)
+                                {
+                                    <div>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </div>
+                                }
+                                @if (Request.RequestContext.HttpContext.User.IsInRole("admin"))
+                                {
+                                    @Html.ActionLink("Edit by moderator", "EditByModerator", new { id = item.Id })
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="img-responsive">
+                                    @if (item.User.Profile.Image != null)
+                                    {
+                                        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                @Html.DisplayFor(modelItem => item.Text)
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
     }
+@section Scripts {
 
-</table>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        jQuery("time.timeago").timeago();
+    });
+
+</script>
+}

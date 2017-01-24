@@ -13,5 +13,6 @@ namespace DAL.Interface.DTO
         public string Text { get; set; }
         public DateTime Date { get; set; }
         public int TopicId { get; set; }
+        public DALUser User { get; set; }
     }
 }
