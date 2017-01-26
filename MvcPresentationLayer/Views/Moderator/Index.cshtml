@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MvcPresentationLayer.Models.Post>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Edit", "Moderator", FormMethod.Post))
+{
+    if (Model != null)
+    {
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @item.Date
+                            </div>
+                            <!--<td>
+                                Html.DisplayFor(modelItem => item.TopicId)
+                            </td>-->
+                            <div class="col-md-4">
+                                @Html.CheckBox("IsDenied", false)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="img-responsive">
+                                    @if (item.User.Profile.Image != null)
+                                    {
+                                        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                @Html.DisplayFor(modelItem => item.Text)
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    }
+}

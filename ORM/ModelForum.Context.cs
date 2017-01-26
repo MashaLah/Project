@@ -13,10 +13,10 @@ namespace ORM
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ForumEntities5 : DbContext
+    public partial class ForumEntities6 : DbContext
     {
-        public ForumEntities5()
-            : base("name=ForumEntities5")
+        public ForumEntities6()
+            : base("name=ForumEntities6")
         {
         }
     
@@ -30,6 +30,7 @@ namespace ORM
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Section> Sections { get; set; }
+        public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

@@ -14,5 +14,7 @@ namespace DAL.Interface.DTO
         public DateTime Date { get; set; }
         public int TopicId { get; set; }
         public DALUser User { get; set; }
+        public int StateId { get; set; }
+        public DALState State { get; set; }
     }
 }

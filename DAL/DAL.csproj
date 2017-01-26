@@ -60,6 +60,7 @@
     <Compile Include="Concrete\ProfileRepository.cs" />
     <Compile Include="Concrete\RoleRepositoty.cs" />
     <Compile Include="Concrete\SectionRepository.cs" />
+    <Compile Include="Concrete\StateRepository.cs" />
     <Compile Include="Concrete\TopicRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Concrete\UserRepository.cs" />

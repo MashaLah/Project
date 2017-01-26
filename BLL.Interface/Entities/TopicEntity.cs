@@ -16,5 +16,6 @@ namespace BLL.Interface.Entities
         public int SectionId { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public ICollection<PostEntity> Posts { get; set; }
+        public UserEntity User { get; set; }
     }
 }

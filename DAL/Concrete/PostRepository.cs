@@ -34,6 +34,19 @@ namespace DAL.Concrete
             return posts;
         }
 
+        public IEnumerable<DALPost> GetApprovedPosts()
+        {
+            // return context.Set<Post>().Select(post => post.ToDALPost());
+
+            var allPosts = context.Set<Post>().Where(post => post.StateId == 1);
+            List<DALPost> posts = new List<DALPost>();
+            foreach (var post in allPosts)
+            {
+                posts.Add(post.ToDALPost());
+            }
+            return posts;
+        }
+
         public DALPost GetById(int key)
         {
             var post = context.Set<Post>().FirstOrDefault(p => p.Id == key).ToDALPost();
@@ -63,7 +76,8 @@ namespace DAL.Concrete
                 //TopicId = topicId,
                 Text = e.Text,
                 UserId = e.UserId,
-                Date = e.Date
+                Date = e.Date,
+                StateId=e.StateId
             };
             context.Set<Post>().Add(post);
         }
@@ -76,7 +90,8 @@ namespace DAL.Concrete
                 TopicId = e.TopicId,
                 Text = e.Text,
                 UserId = e.UserId,
-                Date = e.Date
+                Date = e.Date,
+                StateId=e.StateId
             };
             post = context.Set<Post>().Single(p => p.Id == post.Id);
             context.Set<Post>().Remove(post);
@@ -89,6 +104,7 @@ namespace DAL.Concrete
             post.Text = entity.Text;
             post.UserId = entity.UserId;
             post.Date = entity.Date;
+            post.StateId = entity.StateId;
 
            // context.Entry(post).State = EntityState.Modified;
         }

@@ -17,5 +17,6 @@ namespace DAL.Interface.DTO
         public int SectionId { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public ICollection<DALPost> Posts { get; set; }
+        public DALUser User { get; set; }
     }
 }

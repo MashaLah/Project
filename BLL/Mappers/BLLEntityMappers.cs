@@ -126,7 +126,8 @@ namespace BLL.Mappers
                 Date = dalTopic.Date,
                 SectionId = dalTopic.SectionId,
                 LastUpdatedDate = dalTopic.LastUpdatedDate,
-                Posts = new List<PostEntity>()
+                Posts = new List<PostEntity>(),
+                User=dalTopic.User.ToBllUser()
             };
 
             var posts = dalTopic.Posts.Select(post => post.ToBllPost());
@@ -146,7 +147,8 @@ namespace BLL.Mappers
                 TopicId = postEntity.TopicId,
                 Text = postEntity.Text,
                 UserId = postEntity.UserId,
-                Date = postEntity.Date
+                Date = postEntity.Date,
+                StateId = postEntity.StateId
             };
         }
 
@@ -159,7 +161,9 @@ namespace BLL.Mappers
                 Text = dalPost.Text,
                 UserId = dalPost.UserId,
                 Date = dalPost.Date,
-                User = dalPost.User.ToBllUser()
+                User = dalPost.User.ToBllUser(),
+                StateId=dalPost.StateId,
+                State=dalPost.State.ToBllState()
             };
         }
 
@@ -173,6 +177,15 @@ namespace BLL.Mappers
                 CreationDate = userEntity.CreationDate,
                 //Image = userEntity.Image,
                 RoleId = userEntity.RoleId
+            };
+        }
+
+        public static StateEntity ToBllState(this DALState state)
+        {
+            return new StateEntity()
+            {
+                Id = state.Id,
+                State = state.State
             };
         }
 

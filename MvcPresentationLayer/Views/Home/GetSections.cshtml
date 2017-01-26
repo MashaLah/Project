@@ -1,112 +1,135 @@
 ﻿@model IEnumerable<MvcPresentationLayer.Models.Section>
 
-<div id="modDialog" class="modal fade" >
+<div id="modDialog" class="modal fade">
     <div id="dialogContent" class="modal-dialog"></div>
 </div>
 
-
-<table class="table">
-
+<ul>
     @foreach (var item in Model)
     {
-        <tr class="success">
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
-            {
-            <td>
-                @Html.ActionLink("Add Topic", "CreateTopic", "Topic", new { sectionId = item.Id }, new {@class= "topicCreate" })|
-                @Html.ActionLink("Delete Section", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete" })|
-                @Html.ActionLink("Edit section", "EditSection", "Home", new { id = item.Id }, new { @class="sectionItem"})|
-            </td>
-            }
-            <!--<td>Html.Action("CreateForumPartial")</td>-->
-        </tr>
-        if (item.Topics != null)
-        {
-            foreach (var topic in item.Topics)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink(topic.Title, "Index", "Post", new { topicId = topic.Id }, null)
-                    </td>
-                </tr>
-            }
-        }
-    }
+        <li>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </div>
+                    @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        <div class="col-md-4">
+                            @Html.ActionLink("Add Topic", "CreateTopic", "Topic", new { sectionId = item.Id }, new { @class = "topicCreate" })|
+                            @Html.ActionLink("Delete Section", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete" })|
+                            @Html.ActionLink("Edit section", "EditSection", "Home", new { id = item.Id }, new { @class = "sectionItem" })|
+                        </div>
+                    }
+                </div>
+                @if (item.Topics != null)
+                {
+                    <ul>
+                        @foreach (var topic in item.Topics)
+                        {
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.ActionLink(topic.Title, "Index", "Post", new { topicId = topic.Id }, null)
+                                    </div>
+                                    <div class="col-md-3">
+                                        @topic.User.Profile.Login
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
 
-</table>
+            </div>
+        </li>
+    }
+</ul>
 
 @section scripts{
-<script type="text/javascript">
-    $(function () {
-        $.ajaxSetup({ cache: false });
-        $(".sectionItem").click(function (e) {
+    <script type="text/javascript">
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".sectionItem").click(function (e) {
 
-            e.preventDefault();
-            $.get(this.href, function (data) {
-                $('#dialogContent').html(data);
-                $('#modDialog').modal('show');
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                    $.validator.unobtrusive.parse("#editSection");
+                });
             });
-        });
-    })
+        })
 
-    $(function () {
-        $.ajaxSetup({ cache: false });
-        $(".sectionDelete").click(function (e) {
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".sectionDelete").click(function (e) {
 
-            e.preventDefault();
-            $.get(this.href, function (data) {
-                $('#dialogContent').html(data);
-                $('#modDialog').modal('show');
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
             });
-        });
-    })
+        })
 
-    $(function () {
-        $.ajaxSetup({ cache: false });
-        $(".topicCreate").click(function (e) {
+        /*  $(function () {
+              $.ajaxSetup({ cache: false });
+              $(".topicCreate").click(function (e) {
 
-            e.preventDefault();
-            $.get(this.href, function (data) {
-                $('#dialogContent').html(data);
-                $('#modDialog').modal('show');
+                  e.preventDefault();
+                  $.get(this.href, function (data) {
+                      $('#dialogContent').html(data);
+                      $('#modDialog').modal('show');
+                  });
+              });
+          })*/
+
+
+        $(document).ready(function () {
+
+            $.ajaxSetup({ cache: false });
+
+            $(".topicCreate").click(function (e) {
+                e.preventDefault();
+
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+
+                    $.validator.unobtrusive.parse("#createTopic");
+
+                    //$.validator.unobtusive.parse('form[action="/Topic/CreateTopic?sectionId=1&amp;_=1485351129648"]');
+
+
+                });
+
+                /* $("#dialogContent")
+                     .load(this.href)
+                     .dialog({
+                         close: function () { $(this).remove() },
+                         modal: true,
+                         buttons: {
+                             "Save": function () {
+                                 $.ajax({
+                                     url: "Url.Action("CreateTopic", "Topic")",
+                                     type: "POST",
+                                     data: $('form').serialize(),
+                                     datatype: "json",
+                                     success: function (result) {
+
+                                         $("#dialogContent").html(result);
+                                     }
+                                 });
+                             }
+                         }
+                     });*/
             });
+
+
+            //$('#modDialog').modal('show');
         });
-    })
 
 
-   /* $(document).ready(function () {
- 
-        $.ajaxSetup({ cache: false });
- 
-        $(".topicCreate").click(function (e) {
-            e.preventDefault();
- 
-            $("#dialogContent")
-                .load(this.href)
-                .dialog({
-                    close: function () { $(this).remove() },
-                    modal: true,
-                    buttons: {
-                        "Save": function () {
-                            $.ajax({
-                                url: "Url.Action("CreateTopic", "Topic")",
-                                type: "POST",
-                            data: $('form').serialize(),
-                            datatype: "json",
-                            success: function (result) {
- 
-                                $("#dialogContent").html(result);
-                            }
-                        });
-        }
-        }
-    });
-    });
-    });*/
-
-
-</script>
-    }
+    </script>
+}

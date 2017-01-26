@@ -12,25 +12,18 @@ namespace ORM
     using System;
     using System.Collections.Generic;
     
-    public partial class Topic
+    public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Topic()
+        public State()
         {
             this.Posts = new HashSet<Post>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int UserId { get; set; }
-        public System.DateTime Date { get; set; }
-        public int SectionId { get; set; }
-        public Nullable<System.DateTime> LastUpdatedDate { get; set; }
+        public string State1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual Section Section { get; set; }
-        public virtual User User { get; set; }
     }
 }

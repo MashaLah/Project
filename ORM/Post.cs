@@ -19,7 +19,9 @@ namespace ORM
         public string Text { get; set; }
         public System.DateTime Date { get; set; }
         public int TopicId { get; set; }
+        public int StateId { get; set; }
     
+        public virtual State State { get; set; }
         public virtual Topic Topic { get; set; }
         public virtual User User { get; set; }
     }

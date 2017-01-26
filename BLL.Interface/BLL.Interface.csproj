@@ -45,6 +45,7 @@
     <Compile Include="Entities\ProfileEntity.cs" />
     <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\SectionEntity.cs" />
+    <Compile Include="Entities\StateEntity.cs" />
     <Compile Include="Entities\TopicEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,10 +54,16 @@
     <Compile Include="Services\IProfileService.cs" />
     <Compile Include="Services\IRoleService.cs" />
     <Compile Include="Services\ISectionService.cs" />
+    <Compile Include="Services\IStateService.cs" />
     <Compile Include="Services\ITopicService.cs" />
     <Compile Include="Services\IUserService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DAL.Interface\DAL.Interface.csproj">
+      <Project>{532CFDE2-B28A-486C-A18F-3349F0FAB43C}</Project>
+      <Name>DAL.Interface</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -41,24 +41,24 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = section.Id,
                 Name = section.Name,
-               // Topics= new List<TopicEntity>()
+                // Topics= new List<TopicEntity>()
                 // RoleId = (int)userViewModel.Role
             };
-           /* var topics = section.Topics.Select(topic => topic.ToBllTopic());*/ /*new TopicEntity()
-            {
-                Id = topic.Id,
-                SectionId = topic.SectionId,
-                Title = topic.Title,
-                UserId = topic.UserId,
-                Date = topic.Date,
-                Description=topic.Description,
-                LastUpdatedDate=topic.LastUpdatedDate
-            });*/
+            /* var topics = section.Topics.Select(topic => topic.ToBllTopic());*/ /*new TopicEntity()
+             {
+                 Id = topic.Id,
+                 SectionId = topic.SectionId,
+                 Title = topic.Title,
+                 UserId = topic.UserId,
+                 Date = topic.Date,
+                 Description=topic.Description,
+                 LastUpdatedDate=topic.LastUpdatedDate
+             });*/
 
-           /* foreach (var topic in topics)
-            {
-                sectionEntity.Topics.Add(topic);
-            }*/
+            /* foreach (var topic in topics)
+             {
+                 sectionEntity.Topics.Add(topic);
+             }*/
             return sectionEntity;
         }
 
@@ -68,8 +68,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = forumEntity.Id,
                 SectionId = forumEntity.SectionId,
-                Title=forumEntity.Title,
-                Date=forumEntity.Date,
+                Title = forumEntity.Title,
+                Date = forumEntity.Date,
                 //Section=(Section)forumEntity.SectionId
                 // Forums = (Forum)sectionEntity
             };
@@ -83,7 +83,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 SectionId = forum.SectionId,
                 Title = forum.Title,
                 Date = forum.Date,
-                UserId=forum.UserId
+                UserId = forum.UserId
                 // RoleId = (int)userViewModel.Role
             };
         }
@@ -98,7 +98,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Date = topicEntity.Date,
                 Description = topicEntity.Description,
                 LastUpdatedDate = topicEntity.LastUpdatedDate,
-                Posts = new List<Post>()
+                Posts = new List<Post>(),
+                User = topicEntity.User.ToMvcUser()
                 //Section=(Section)forumEntity.SectionId
                 // Forums = (Forum)sectionEntity
             };
@@ -144,13 +145,23 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 TopicId = postEntity.TopicId,
                 Text = postEntity.Text,
                 Date = postEntity.Date,
-                UserId=postEntity.UserId,
-                User=postEntity.User.ToMvcUser()
+                UserId = postEntity.UserId,
+                User = postEntity.User.ToMvcUser(),
+                StateId = postEntity.StateId,
+                State = postEntity.State.ToMvcState()
                 //Section=(Section)forumEntity.SectionId
                 // Forums = (Forum)sectionEntity
             };
         }
 
+        public static State ToMvcState(this StateEntity stateEntity)
+        {
+            return new State()
+            {
+                Id=stateEntity.Id,
+                Name=stateEntity.State
+            };
+        }
         public static PostEntity ToBllPost(this Post post)
         {
             return new PostEntity()
@@ -159,7 +170,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 TopicId = post.TopicId,
                 Text = post.Text,
                 Date = post.Date,
-                UserId =post.UserId
+                UserId = post.UserId,
+                StateId = post.StateId
                 // RoleId = (int)userViewModel.Role
             };
         }

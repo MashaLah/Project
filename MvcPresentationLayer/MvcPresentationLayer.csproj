@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ModeratorController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\Topic.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -330,6 +332,7 @@
     <Content Include="Views\Home\DeleteSection.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Topic\CreateTopic.cshtml" />
+    <Content Include="Views\Moderator\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

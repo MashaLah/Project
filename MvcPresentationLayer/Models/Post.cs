@@ -26,7 +26,11 @@ namespace MvcPresentationLayer.Models
         [ScaffoldColumn(false)]
         public int TopicId { get; set; }
 
+        [ScaffoldColumn(false)]
+        public int StateId { get; set; }
+
         public Topic Topic { get; set; }
         public User User { get; set; }
+        public State State { get; set; }
     }
 }

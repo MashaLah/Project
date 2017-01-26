@@ -9,7 +9,7 @@
             <!--<p>
                  Html.ActionLink("Add new section ajax", "CreatePartial")
              </p>-->
-            using (Ajax.BeginForm("Create", new AjaxOptions { UpdateTargetId = "sections" }))
+            using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "sections" }, null, new { id = "myform" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -33,6 +33,4 @@
         }
         </div>
     </div>
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+        

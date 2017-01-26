@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interface.Repository
+namespace BLL.Interface.Entities
 {
-    public interface IPostRepository : IRepository<DALPost> 
+    public class StateEntity : IEntity 
     {
-        IEnumerable<DALPost> GetApprovedPosts();
+        public int Id { get; set; }
+        public string State { get; set; }
     }
 }

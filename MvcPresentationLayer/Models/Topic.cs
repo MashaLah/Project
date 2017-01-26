@@ -33,6 +33,7 @@ namespace MvcPresentationLayer.Models
         public DateTime? LastUpdatedDate { get; set; }
 
         public Section Section { get; set; }
+        public User User { get; set; }
         public ICollection<Post> Posts { get; set; }
         //public virtual User User { get; set; }
     }

@@ -87,12 +87,19 @@ namespace MvcPresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "admin")]
+         [Authorize(Roles = "admin")]
+         public ActionResult EditSection(int id)
+         {
+             Section section = service.GetSectionEntity(id).ToMvcSection();
+             return PartialView(section);
+         }
+
+        /*[Authorize(Roles = "admin")]
         public ActionResult EditSection(int id)
         {
             Section section = service.GetSectionEntity(id).ToMvcSection();
-            return PartialView(section);
-        }
+            return Json(section, JsonRequestBehavior.AllowGet);
+        }*/
 
         [HttpPost]
         [ValidateAntiForgeryToken]

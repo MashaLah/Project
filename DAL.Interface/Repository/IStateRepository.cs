@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Interface.Repository
 {
-    public interface IPostRepository : IRepository<DALPost> 
+    public interface IStateRepository
     {
-        IEnumerable<DALPost> GetApprovedPosts();
+        IEnumerable<DALState> GetAll();
+        DALState GetById(int key);
     }
 }

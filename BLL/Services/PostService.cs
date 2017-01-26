@@ -32,6 +32,11 @@ namespace BLL.Services
             return postRepository.GetAll().Select(post => post.ToBllPost());
         }
 
+        public IEnumerable<PostEntity> GetApprovedPostEntities()
+        {
+            return postRepository.GetApprovedPosts().Select(post => post.ToBllPost());
+        }
+
         public IEnumerable<PostEntity> GetPostsByPredicate(Expression<Func<PostEntity, bool>> f)
         {
             throw new NotImplementedException();

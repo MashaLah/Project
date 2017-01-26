@@ -53,6 +53,7 @@
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\SectionService.cs" />
+    <Compile Include="Services\StateService.cs" />
     <Compile Include="Services\TopicService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>

@@ -74,7 +74,8 @@ namespace DAL.Mappers
                 Date = ormTopic.Date,
                 Description = ormTopic.Description,
                 LastUpdatedDate = ormTopic.LastUpdatedDate,
-                Posts = new List<DALPost>()
+                Posts = new List<DALPost>(),
+                User=ormTopic.User.ToDalUser()
             };
 
             var posts = ormTopic.Posts.Select(post =>post.ToDALPost());
@@ -95,9 +96,21 @@ namespace DAL.Mappers
                 Text = post.Text,
                 UserId = post.UserId,
                 Date = post.Date,
-                User = post.User.ToDalUser()
+                User = post.User.ToDalUser(),
+                StateId = post.StateId,
+                State =post.State.ToDALState()
             };
             return dalPost;
+        }
+
+        public static DALState ToDALState(this State state)
+        {
+            DALState dalState = new DALState()
+            {
+                Id = state.Id,
+                State = state.State1,
+            };
+            return dalState;
         }
 
         public static Topic ToOrmTopic(this DALTopic dalTopic)

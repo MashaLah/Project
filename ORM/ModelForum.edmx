@@ -24,6 +24,7 @@
           <Property Name="Text" Type="nvarchar(max)" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="TopicId" Type="int" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Profiles">
           <Key>
@@ -49,6 +50,13 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Topics">
           <Key>
@@ -82,6 +90,18 @@
             </Principal>
             <Dependent Role="Massages">
               <PropertyRef Name="IdUserTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posts_States">
+          <End Role="States" Type="Self.States" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -163,11 +183,16 @@
           <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sections" EntityType="Self.Sections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Massages_Users" Association="Self.FK_Massages_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Massages" EntitySet="Massages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posts_States" Association="Self.FK_Posts_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
           <AssociationSet Name="FK_Posts_Topics" Association="Self.FK_Posts_Topics">
             <End Role="Topics" EntitySet="Topics" />
@@ -219,6 +244,8 @@
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TopicId" Type="Int32" Nullable="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="State" Relationship="Self.FK_Posts_States" FromRole="Posts" ToRole="States" />
           <NavigationProperty Name="Topic" Relationship="Self.FK_Posts_Topics" FromRole="Posts" ToRole="Topics" />
           <NavigationProperty Name="User" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
         </EntityType>
@@ -249,6 +276,14 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Topics" Relationship="Self.FK_Topics_Sections" FromRole="Sections" ToRole="Topics" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="State1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_States" FromRole="States" ToRole="Posts" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -290,6 +325,18 @@
             </Principal>
             <Dependent Role="Massages">
               <PropertyRef Name="IdUserTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posts_States">
+          <End Role="States" Type="Self.State" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -365,17 +412,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ForumEntities5" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ForumEntities6" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Massages" EntityType="Self.Massage" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Sections" EntityType="Self.Section" />
+          <EntitySet Name="States" EntityType="Self.State" />
           <EntitySet Name="Topics" EntityType="Self.Topic" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_Massages_Users" Association="Self.FK_Massages_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Massages" EntitySet="Massages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posts_States" Association="Self.FK_Posts_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
           <AssociationSet Name="FK_Posts_Topics" Association="Self.FK_Posts_Topics">
             <End Role="Topics" EntitySet="Topics" />
@@ -407,7 +459,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities5">
+        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities6">
           <EntitySetMapping Name="Massages">
             <EntityTypeMapping TypeName="ForumModel.Massage">
               <MappingFragment StoreEntitySet="Massages">
@@ -427,6 +479,7 @@
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="TopicId" ColumnName="TopicId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -455,6 +508,14 @@
               <MappingFragment StoreEntitySet="Sections">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="ForumModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="State1" ColumnName="State" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

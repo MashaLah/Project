@@ -53,6 +53,7 @@
     <Compile Include="DTO\DALPost.cs" />
     <Compile Include="DTO\DALProfile.cs" />
     <Compile Include="DTO\DALRole.cs" />
+    <Compile Include="DTO\DALState.cs" />
     <Compile Include="DTO\DALTopic.cs" />
     <Compile Include="DTO\DALUser.cs" />
     <Compile Include="DTO\IEntity.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IRoleRepository.cs" />
     <Compile Include="Repository\ISectionRepository.cs" />
+    <Compile Include="Repository\IStateRepository.cs" />
     <Compile Include="Repository\ITopicRepository.cs" />
     <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\IUserRepository.cs" />

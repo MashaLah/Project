@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Massage.cs">
       <DependentUpon>ModelForum.tt</DependentUpon>
     </Compile>
@@ -81,6 +80,9 @@
       <DependentUpon>ModelForum.tt</DependentUpon>
     </Compile>
     <Compile Include="Section.cs">
+      <DependentUpon>ModelForum.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State.cs">
       <DependentUpon>ModelForum.tt</DependentUpon>
     </Compile>
     <Compile Include="Topic.cs">
