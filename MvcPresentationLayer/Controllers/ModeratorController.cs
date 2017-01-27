@@ -25,15 +25,33 @@ namespace MvcPresentationLayer.Controllers
         // GET: Moderator
         public ActionResult Index()
         {
-            var sections = postService.GetAllPostEntities()
+            var posts = postService.GetAllPostEntities()
                 .Where(post=>post.StateId==3)
                 .Select(post => post.ToMvcPost());
-            return View(sections);
+            var states = stateService.GetAllStateEntities().Select(s=>s.ToMvcState());
+            foreach (var post in posts)
+            {
+                ViewBag.StateId = new SelectList(states, "Id", "Name", post.StateId);
+            }
+            List<Post> p = new List<Post>();
+ 
+            foreach (var post in posts)
+            {
+                p.Add(post);
+            }
+            return View(p);
         }
 
-        public void Edit(IEnumerable<Post> posts)
+        public void Edit(List<Post> posts)
         {
-           // if(isDenied)
+            var editedPosts = posts.Where(p => p.StateId != 3);
+            foreach (var p in editedPosts)
+            {
+                if (p.StateId == 2)
+                    p.Text = "Sensored by moderator";
+                postService.UpdatePost(p.ToBllPost());
+            }
+
         }
     }
 }
