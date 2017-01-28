@@ -1,60 +1,67 @@
-﻿@model IEnumerable<MvcPresentationLayer.Models.Post>
-@if (Model != null)
-{
-    <ul class="list-group table-striped">
-        @foreach (var item in Model)
-        {
-            <li class="list-group-item @(item.StateId == 2 ? "list-group-item-danger" : "")">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="row">
-                                <small>@Html.DisplayFor(m => item.Date)</small>
-                            </div>
-                            <div class="row">
-                                <small>@Html.DisplayFor(m => item.User.Profile.Login)</small>
-                            </div>
-                            <div class="row">
-                                <div class="img-responsive">
-                                    @if (item.User.Profile.Image != null)
-                                    {
-                                        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <!--<td>
-                            Html.DisplayFor(modelItem => item.TopicId)
-                        </td>-->
-                        <div class="col-md-10">
-                            @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated && Request.RequestContext.HttpContext.User.Identity.Name == item.User.Email)
-                            {
-                                <div class="row text-right">
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                </div>
-                            }
-                            <div class="row">
-                                <div style="word-wrap:break-word;">
-                                    @Html.DisplayFor(modelItem => item.Text)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </li>
-        }
-    </ul>
-}
-
-@section scripts
+﻿<!--model IEnumerable<MvcPresentationLayer.Models.Post>-->
+@model MvcPresentationLayer.Models.PostsViewModel
+@using MvcPresentationLayer.HTMLHelpers
+    @if (Model != null)
     {
-    <script>
-       // $('.list-group-item').filter(':odd:not(.list-group-item-danger)').css("background-color", "#e1f0f7");
-        $('.list-group-item').filter(':even:not(.list-group-item-danger)').css("background-color", "#f7f9fa");
-    </script>
+        <ul class="list-group table-striped">
+            @foreach (var item in Model.Posts)
+            {
+                <li class="list-group-item @(item.StateId == 2 ? "list-group-item-danger" : "")">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <small>@Html.DisplayFor(m => item.Date)</small>
+                                </div>
+                                <div class="row">
+                                    <small>@Html.DisplayFor(m => item.User.Profile.Login)</small>
+                                </div>
+                                <div class="row">
+                                    <div class="img-responsive">
+                                        @if (item.User.Profile.Image != null)
+                                        {
+                                            <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<td>
+                                Html.DisplayFor(modelItem => item.TopicId)
+                            </td>-->
+                            <div class="col-md-10">
+                                @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated && Request.RequestContext.HttpContext.User.Identity.Name == item.User.Email)
+                                {
+                                    <div class="row text-right">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                    </div>
+                                }
+                                <div class="row">
+                                    <div style="word-wrap:break-word;">
+                                        @Html.DisplayFor(modelItem => item.Text)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <div class="btn-group">
+            @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new {topicId=Model.Posts.Select(p=>p.TopicId).FirstOrDefault(), page = x }))
+        </div>
+
+    }
+
+    @section scripts
+    {
+        <script>
+            // $('.list-group-item').filter(':odd:not(.list-group-item-danger)').css("background-color", "#e1f0f7");
+            $('.list-group-item').filter(':even:not(.list-group-item-danger)').css("background-color", "#f7f9fa");
+        </script>
     }

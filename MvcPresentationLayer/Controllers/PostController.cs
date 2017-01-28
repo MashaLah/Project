@@ -36,14 +36,19 @@ namespace MvcPresentationLayer.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult GetPosts(int topicId)
+        public ActionResult GetPosts(int topicId, int page=1)
         {
             var posts = postService.GetModeratoredPostEntities().Where(post => post.TopicId == topicId).Select(post => post.ToMvcPost());
+
+            int pageSize = 5;
+            IEnumerable<Post> postsPerPage = posts.Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = posts.Count() };
+            PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage };
             if (Request.IsAjaxRequest())
             {
-                return PartialView(posts);
+                return PartialView(/*posts*/pvm);
             }
-            return View(posts);
+            return View(/*posts*/pvm);
         }
 
         [Authorize]
