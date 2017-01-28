@@ -32,9 +32,9 @@ namespace BLL.Services
             return postRepository.GetAll().Select(post => post.ToBllPost());
         }
 
-        public IEnumerable<PostEntity> GetApprovedPostEntities()
+        public IEnumerable<PostEntity> GetModeratoredPostEntities()
         {
-            return postRepository.GetApprovedPosts().Select(post => post.ToBllPost());
+            return postRepository.GetModeratoredPosts().Select(post => post.ToBllPost());
         }
 
         public IEnumerable<PostEntity> GetPostsByPredicate(Expression<Func<PostEntity, bool>> f)

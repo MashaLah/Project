@@ -16,6 +16,6 @@ namespace BLL.Interface.Services
         void CreatePost(PostEntity post);
         void DeletePost(PostEntity post);
         void UpdatePost(PostEntity post);
-        IEnumerable<PostEntity> GetApprovedPostEntities();
+        IEnumerable<PostEntity> GetModeratoredPostEntities();
     }
 }

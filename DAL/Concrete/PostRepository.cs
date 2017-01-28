@@ -34,11 +34,11 @@ namespace DAL.Concrete
             return posts;
         }
 
-        public IEnumerable<DALPost> GetApprovedPosts()
+        public IEnumerable<DALPost> GetModeratoredPosts()
         {
             // return context.Set<Post>().Select(post => post.ToDALPost());
 
-            var allPosts = context.Set<Post>().Where(post => post.StateId == 1);
+            var allPosts = context.Set<Post>().Where(post => post.StateId != 3);
             List<DALPost> posts = new List<DALPost>();
             foreach (var post in allPosts)
             {

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BLL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MvcPresentationLayer.Models
 {
@@ -21,6 +23,7 @@ namespace MvcPresentationLayer.Models
         public string Text { get; set; }
 
         [ScaffoldColumn(false)]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy at hh:mm}")]
         public DateTime Date { get; set; }
 
         [ScaffoldColumn(false)]
@@ -32,5 +35,9 @@ namespace MvcPresentationLayer.Models
         public Topic Topic { get; set; }
         public User User { get; set; }
         public State State { get; set; }
+
+        // private static List<State> states;
+
+      //  public IEnumerable<SelectListItem> stateItems;
     }
 }

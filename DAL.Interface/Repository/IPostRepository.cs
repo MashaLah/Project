@@ -9,6 +9,6 @@ namespace DAL.Interface.Repository
 {
     public interface IPostRepository : IRepository<DALPost> 
     {
-        IEnumerable<DALPost> GetApprovedPosts();
+        IEnumerable<DALPost> GetModeratoredPosts();
     }
 }

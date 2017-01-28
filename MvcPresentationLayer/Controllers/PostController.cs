@@ -38,7 +38,7 @@ namespace MvcPresentationLayer.Controllers
         [AllowAnonymous]
         public ActionResult GetPosts(int topicId)
         {
-            var posts = postService.GetApprovedPostEntities().Where(post => post.TopicId == topicId).Select(post => post.ToMvcPost());
+            var posts = postService.GetModeratoredPostEntities().Where(post => post.TopicId == topicId).Select(post => post.ToMvcPost());
             if (Request.IsAjaxRequest())
             {
                 return PartialView(posts);

@@ -17,10 +17,12 @@ namespace MvcPresentationLayer.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService service;
+        private readonly IPostService postService;
 
-        public AccountController(IUserService service)
+        public AccountController(IUserService service, IPostService postService)
         {
             this.service = service;
+            this.postService = postService;
         }
 
         [AllowAnonymous]
@@ -50,6 +52,7 @@ namespace MvcPresentationLayer.Controllers
                     }
                     else
                     {
+                        ViewBag.ItemsToApprove = postService.GetAllPostEntities().Where(p => p.StateId == 3).Count();
                         return RedirectToAction("Index", "Home");
                     }
                 }

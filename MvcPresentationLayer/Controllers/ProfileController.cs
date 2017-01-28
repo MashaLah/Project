@@ -56,14 +56,6 @@ namespace MvcPresentationLayer.Controllers
         [Authorize]
         public FileContentResult GetImage(int id)
         {
-            /* byte[] imageData = null;
-             // считываем переданный файл в массив байтов
-             using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-             {
-                 imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-             }
-             // установка массива байтов
-             pic.Image = imageData;*/
             ProfileViewModel profile = profileService.GetById(id).ToMvcProfile();
             if (profile.Image != null)
             {

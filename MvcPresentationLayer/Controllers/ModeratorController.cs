@@ -31,7 +31,8 @@ namespace MvcPresentationLayer.Controllers
             var states = stateService.GetAllStateEntities().Select(s=>s.ToMvcState());
             foreach (var post in posts)
             {
-                ViewBag.StateId = new SelectList(states, "Id", "Name", post.StateId);
+               ViewBag.States = 
+                    new SelectList(states, "Id", "Name", post.StateId);
             }
             List<Post> p = new List<Post>();
  
@@ -42,7 +43,7 @@ namespace MvcPresentationLayer.Controllers
             return View(p);
         }
 
-        public void Edit(List<Post> posts)
+        public ActionResult Edit(List<Post> posts)
         {
             var editedPosts = posts.Where(p => p.StateId != 3);
             foreach (var p in editedPosts)
@@ -51,7 +52,7 @@ namespace MvcPresentationLayer.Controllers
                     p.Text = "Sensored by moderator";
                 postService.UpdatePost(p.ToBllPost());
             }
-
+            return RedirectToAction("Index");
         }
     }
 }

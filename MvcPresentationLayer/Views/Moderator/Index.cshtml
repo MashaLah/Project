@@ -15,8 +15,10 @@
             @Html.HiddenFor(m => m[i].Id)
             @Html.HiddenFor(m => m[i].TopicId)
             @Html.HiddenFor(m => m[i].UserId)
+            @Html.HiddenFor(m => m[i].Date)
+            @Html.HiddenFor(m => m[i].Text)
             @Html.DisplayFor(m => m[i].Date)
-            @Html.DropDownList("StateId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(m=>m[i].StateId,ViewBag.States as SelectList)
             @Html.DisplayFor(m => m[i].Text)
 
             /* <li>
