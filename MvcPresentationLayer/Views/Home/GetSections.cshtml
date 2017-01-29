@@ -10,21 +10,23 @@
         <div class="list-group-item list-group-item-info">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-7 text-muted">
+                    <div class="col-md-9 text-muted">
                         @Html.DisplayFor(modelItem => item.Name)
                     </div>
                         @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated
 && Request.RequestContext.HttpContext.User.IsInRole("admin"))
                         {
-                            <div class="col-md-4 text-right">
-                                @Html.ActionLink("Delete Section", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete" })|
-                                @Html.ActionLink("Edit section", "EditSection", "Home", new { id = item.Id }, new { @class = "sectionItem" })
+                            <div class="col-md-1">
+                                @Html.ActionLink("Delete", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete btn btn-default" })
+                               </div>
+                               <div class="col-md-1">
+                                 @Html.ActionLink("Edit", "EditSection", "Home", new { id = item.Id }, new { @class = "sectionItem btn btn-default" })
                             </div>
                         }
                         @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
                         {
                             <div class="col-md-1">
-                                @Html.ActionLink("Add Topic", "CreateTopic", "Topic", new { sectionId = item.Id }, new { @class = "topicCreate btn btn-primary" })
+                                @Html.ActionLink("Add Topic", "CreateTopic", "Topic", new { sectionId = item.Id }, new { @class = "topicCreate btn btn-default" })
                             </div>
                         }
 
@@ -50,7 +52,7 @@
                             <div class="col-md-2 text-right">
                                 <small>
                                     @topic.LastUpdatedDate
-                                    @topic.Posts.Count
+                                    @topic.Posts.Count posts
                                 </small>
                             </div>
                         </div>
