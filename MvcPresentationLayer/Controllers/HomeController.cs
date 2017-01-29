@@ -65,9 +65,16 @@ namespace MvcPresentationLayer.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create(Section section)
         {
-            //if ajax request
-            service.CreateSection(section.ToBllSection());
-            return RedirectToAction("GetSections");
+            if (ModelState.IsValid)
+            {
+                service.CreateSection(section.ToBllSection());
+                if (Request.IsAjaxRequest())
+                {
+                    return RedirectToAction("GetSections");
+                }
+                return RedirectToAction("Index");
+            }
+            return View(section);
         }
 
         [Authorize(Roles = "admin")]
@@ -84,6 +91,10 @@ namespace MvcPresentationLayer.Controllers
         {
             SectionEntity section = service.GetSectionEntity(id);
             service.DeleteSection(section);
+            if (Request.IsAjaxRequest())
+            {
+                return RedirectToAction("GetSections");
+            }
             return RedirectToAction("Index");
         }
 
@@ -93,13 +104,6 @@ namespace MvcPresentationLayer.Controllers
              Section section = service.GetSectionEntity(id).ToMvcSection();
              return PartialView(section);
          }
-
-        /*[Authorize(Roles = "admin")]
-        public ActionResult EditSection(int id)
-        {
-            Section section = service.GetSectionEntity(id).ToMvcSection();
-            return Json(section, JsonRequestBehavior.AllowGet);
-        }*/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -112,45 +116,6 @@ namespace MvcPresentationLayer.Controllers
                 return RedirectToAction("Index");
             }
             return View(section);
-        }
-
-        public ActionResult About()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                ViewBag.AuthType = User.Identity.AuthenticationType;
-            }
-            ViewBag.Login = User.Identity.Name;
-            ViewBag.IsAdminInRole = User.IsInRole("Administrator") ?
-                "You have administrator rights." : "You do not have administrator rights.";
-
-            return View();
-            //HttpContext.Profile["FirstName"] = "Вася";
-            //HttpContext.Profile["LastName"] = "Иванов";
-            //HttpContext.Profile.SetPropertyValue("Age",23);
-            //Response.Write(HttpContext.Profile.GetPropertyValue("FirstName"));
-            //Response.Write(HttpContext.Profile.GetPropertyValue("LastName"));
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult CreatePartial()
-        {
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView();
-            }
-            return View();
-        }
-
-        public ActionResult CreateForumPartial()
-        {
-            return PartialView();
         }
     }
 }
