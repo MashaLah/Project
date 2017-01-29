@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-9 text-muted">
-                        @Html.DisplayFor(modelItem => item.Name)
+                        <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
                     </div>
                         @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated
 && Request.RequestContext.HttpContext.User.IsInRole("admin"))
@@ -19,7 +19,7 @@
                             <div class="col-md-1">
                                 @Html.ActionLink("Delete", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete btn btn-default" })
                                </div>
-                               <div class="col-md-1">
+                               <div class="col-md-1 text-right">
                                  @Html.ActionLink("Edit", "EditSection", "Home", new { id = item.Id }, new { @class = "sectionItem btn btn-default" })
                             </div>
                         }

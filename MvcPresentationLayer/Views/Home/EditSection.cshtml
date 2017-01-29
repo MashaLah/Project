@@ -2,10 +2,11 @@
 <div class="modal-content">
     <div class="modal-header">
         <button class="close" data-dismiss="modal" area-hidden="true">X</button>
-        </div>
+        <h4>Edit section</h4>
+    </div>
     <div class="modal-body">
-       @using (Html.BeginForm("EditSection","Home", FormMethod.Post, new { id="editSection"}))
-       {
+        @using (Ajax.BeginForm("EditSection", null, new AjaxOptions { UpdateTargetId = "sections" }, new { id = "editSection" }))
+        {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
@@ -28,14 +29,10 @@
                 </div>
             </div>
         }
-
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-        </div>
     </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 
