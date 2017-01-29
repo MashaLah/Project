@@ -152,8 +152,9 @@ namespace DAL.Mappers
                 Email = ormUser.Email,
                 CreationDate = ormUser.CreationDate,
                 RoleId = ormUser.RoleId,
-                Profile=ormUser.Profiles.FirstOrDefault().ToDalProfile()
             };
+            if (ormUser.Profiles != null)
+                dalUser.Profile = ormUser.Profiles.FirstOrDefault().ToDalProfile();
             return dalUser;
         }
 

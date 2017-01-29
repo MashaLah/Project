@@ -5,10 +5,10 @@
 </div>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Forum";
 }
 
-<h2>Index</h2>
+<h2>Forum</h2>
 @Html.ActionLink("Create new section", "Create", null, new { @class = "createNewSection" })
 <div id="sections">
     <!--Html.Partial("SectionPartial")-->
@@ -18,7 +18,7 @@
 
 </div>
 <!--if (Request.RequestContext.HttpContext.User.IsInRole("admin"))-->
-{
+
 <!--<p>
      Html.ActionLink("Add new section ajax", "CreatePartial")
  </p>-->

@@ -29,7 +29,7 @@ namespace MvcPresentationLayer.HTMLHelpers
                 tag.Attributes.Add("Value", i.ToString());
                 if (i == pageInfo.PageNumber)
                 {
-                    tag.AddCssClass("btn-primary");
+                   // tag.AddCssClass("btn-primary");
                     tag.AddCssClass("selected");
                 }
                 tag.AddCssClass("btn btn-default");

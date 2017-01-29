@@ -175,7 +175,6 @@ namespace BLL.Mappers
                 Password = userEntity.Password,
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
-                //Image = userEntity.Image,
                 RoleId = userEntity.RoleId
             };
         }
@@ -191,16 +190,17 @@ namespace BLL.Mappers
 
         public static UserEntity ToBllUser(this DALUser dalUser)
         {
-            return new UserEntity()
+            UserEntity userEntity= new UserEntity()
             {
                 Id = dalUser.Id,
                 Password = dalUser.Password,
                 Email = dalUser.Email,
                 CreationDate = dalUser.CreationDate,
-                //Image = user.Image,
                 RoleId = dalUser.RoleId,
-                Profile=dalUser.Profile.ToBllProfile()
             };
+            if (dalUser.Profile != null)
+                userEntity.Profile = dalUser.Profile.ToBllProfile();
+            return userEntity;
         }
 
         public static DALRole ToDalRole(this RoleEntity roleEntity)

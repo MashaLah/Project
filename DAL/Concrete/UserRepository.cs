@@ -34,19 +34,14 @@ namespace DAL.Concrete
             });
         }
 
-        public /*bool*/void CreateUser(DALUser user)
+        public void CreateUser(DALUser user)
         {
-            /* if (user.Id != 0) return false;
-             context.Users.Add(user);
-             context.SaveChanges();
-             return true;*/
             var newUser = new User()
             {
                 Id = user.Id,
                 Password = user.Password,
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                //Image = user.Image,
                 RoleId = user.RoleId
             };
             context.Set<User>().Add(newUser);
@@ -57,17 +52,17 @@ namespace DAL.Concrete
             if (context.Set<User>().Any(u => u.Email == email) == false) return null;
             var ormUser = context.Set<User>().FirstOrDefault(u => u.Email == email);
             if (ormUser == null) return null;
-            return new DALUser()
+            DALUser dalUser = new DALUser()
             {
                 Id = ormUser.Id,
                 Password = ormUser.Password,
                 Email = ormUser.Email,
                 CreationDate = ormUser.CreationDate,
-                //Image = user.Image,
                 RoleId = ormUser.RoleId,
-                Profile=ormUser.Profiles.FirstOrDefault().ToDalProfile()
             };
-            //return null;
+            if (ormUser.Profiles.FirstOrDefault() != null)
+                dalUser.Profile = ormUser.Profiles.FirstOrDefault().ToDalProfile();
+            return dalUser;
         }
 
         public /*bool*/void UpdateUser(DALUser user)
