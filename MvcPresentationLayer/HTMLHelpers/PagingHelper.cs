@@ -12,16 +12,21 @@ namespace MvcPresentationLayer.HTMLHelpers
     {
         public static MvcHtmlString PageLinks(
           this HtmlHelper html,
-          PageInfo pageInfo,
-          Func<int, string> pageUrl)
+          //int totalPages,
+          //int pageNumber
+          PageInfo pageInfo
+          /*Func<int, string> pageUrl
+          int topicId,int page*/)
         {
             StringBuilder result = new StringBuilder();
 
             for (int i = 1; i <= pageInfo.TotalPages; i++)
             {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                tag.MergeAttribute("href", pageUrl(i));
+                TagBuilder tag = new TagBuilder("button"); // Construct an <a> tag
+                //tag.MergeAttribute("href", pageUrl(i));
                 tag.InnerHtml = i.ToString();
+                tag.Attributes.Add("Name", "page");
+                tag.Attributes.Add("Value", i.ToString());
                 if (i == pageInfo.PageNumber)
                 {
                     tag.AddCssClass("btn-primary");

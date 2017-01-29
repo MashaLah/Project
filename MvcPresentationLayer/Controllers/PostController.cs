@@ -15,6 +15,7 @@ namespace MvcPresentationLayer.Controllers
         private readonly ITopicService topicService;
         private readonly IUserService userService;
         private readonly IStateService stateService;
+        const int PageSize = 5;
         //private readonly IProfileService profieService;
 
         public PostController(IPostService postService, ITopicService topicService, IUserService userService, IStateService stateService)
@@ -28,27 +29,63 @@ namespace MvcPresentationLayer.Controllers
 
         // GET: Post
         [AllowAnonymous]
-        public ActionResult Index(int topicId)
+        public ActionResult Index(int topicId, int page = 1)
         {
             ViewBag.TopicTitle = topicService.GetTopicEntity(topicId).Title;
             ViewBag.TopicDescription = topicService.GetTopicEntity(topicId).Description;
-            return View();
+            ViewBag.topicId = topicId;
+            PageInfo pageInfo = new PageInfo
+            {
+                PageNumber = page,
+                PageSize = PageSize,
+                TotalItems = getNumberOfPosts(topicId)
+            };
+
+            //IEnumerable<Post> posts = getPosts(topicId,page);
+            return View(pageInfo);
         }
 
         [AllowAnonymous]
+       // [HttpGet]
         public ActionResult GetPosts(int topicId, int page=1)
         {
-            var posts = postService.GetModeratoredPostEntities().Where(post => post.TopicId == topicId).Select(post => post.ToMvcPost());
-
-            int pageSize = 5;
-            IEnumerable<Post> postsPerPage = posts.Skip((page - 1) * pageSize).Take(pageSize);
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = posts.Count() };
-            PostsViewModel pvm = new PostsViewModel { PageInfo = pageInfo, Posts = postsPerPage };
+            IEnumerable<Post> posts = postService.GetModeratoredPostEntities()
+                .Where(post => post.TopicId == topicId)
+                .OrderBy(post => post.Date)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .Select(post => post.ToMvcPost());
             if (Request.IsAjaxRequest())
             {
-                return PartialView(/*posts*/pvm);
+                // return PartialView(posts);
+                return Json(posts, JsonRequestBehavior.AllowGet);
             }
-            return View(/*posts*/pvm);
+            return View(posts);
+           // return Json(pvm, JsonRequestBehavior.AllowGet);
+       }
+
+        /*private IEnumerable<Post> getPosts(int page)
+        {
+            var posts = postService.GetModeratoredPostEntities()
+                .Where(post => post.TopicId == currentTopicId)
+                .OrderBy(post=>post.Date)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .Select(post => post.ToMvcPost());
+            return posts;
+        }*/
+
+        private int getTotalPages(int topicId)
+        {
+            int totalItems = postService.GetModeratoredPostEntities()
+                .Where(post => post.TopicId == topicId).Count();
+            return (int)Math.Ceiling((decimal)totalItems / PageSize);
+        }
+
+        private int getNumberOfPosts(int topicId)
+        {
+            return postService.GetModeratoredPostEntities()
+                .Where(post => post.TopicId == topicId).Count();
         }
 
         [Authorize]
