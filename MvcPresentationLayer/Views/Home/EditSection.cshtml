@@ -2,7 +2,9 @@
 <div class="modal-content">
     <div class="modal-header">
         <button class="close" data-dismiss="modal" area-hidden="true">X</button>
-        <h4>Edit section</h4>
+        <div>
+            <h3>Edit section</h3>
+        </div>
     </div>
     <div class="modal-body">
         @using (Ajax.BeginForm("EditSection", null, new AjaxOptions { UpdateTargetId = "sections" }, new { id = "editSection" }))

@@ -2,14 +2,14 @@
 <div class="modal-content">
     <div class="modal-header">
         <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <div>
+            <h3>Create new section</h3>
+        </div>
     </div>
     <div class="modal-body">
         @if (Request.RequestContext.HttpContext.User.IsInRole("admin"))
         {
-            <!--<p>
-                 Html.ActionLink("Add new section ajax", "CreatePartial")
-             </p>-->
-            using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "sections" }, null, new { id = "myform" }))
+            using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "sections" }, null, new { id = "createNewSecton" }))
             {
                 @Html.AntiForgeryToken()
 

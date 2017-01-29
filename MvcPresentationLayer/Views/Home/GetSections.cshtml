@@ -13,28 +13,22 @@
                     <div class="col-md-9 text-muted">
                         <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
                     </div>
-                        @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated
+                    @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated
 && Request.RequestContext.HttpContext.User.IsInRole("admin"))
-                        {
-                            if (item.Topics == null)
-                            {
-                            <div class="col-md-1">
-                                @Html.ActionLink("Delete", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete btn btn-default" })
-                               </div>
-                            }
-                               <div class="col-md-1 text-right">
-                                 @Html.ActionLink("Edit", "EditSection", "Home", new { id = item.Id }, new { @class = "sectionItem btn btn-default" })
-                            </div>
-                        }
-                        @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
-                        {
-                            <div class="col-md-1">
-                                @Html.ActionLink("Add Topic", "CreateTopic", "Topic", new { sectionId = item.Id }, new { @class = "topicCreate btn btn-default" })
-                            </div>
-                        }
-
-
-
+                    {
+                        <div class="col-md-1 text-right">
+                            @Html.ActionLink("Edit", "EditSection", "Home", new { id = item.Id }, new { @class = "sectionItem btn btn-default" })
+                        </div>
+                        <div class="col-md-1">
+                            @Html.ActionLink("Delete", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete btn btn-default" })
+                        </div>
+                    }             
+                    @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        <div class="col-md-1">
+                            @Html.ActionLink("Add Topic", "CreateTopic", "Topic", new { sectionId = item.Id }, new { @class = "topicCreate btn btn-default" })
+                        </div>
+                    }
                 </div>
             </div>
         </div>
