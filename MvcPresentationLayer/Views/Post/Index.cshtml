@@ -64,7 +64,8 @@
             for (var i = 0; i < data.length; i++) {
                 var post = data[i];
                 $('#posts>ul').append('<li class="list-group-item">' + ' <div class="container-fluid">' +
-                    '<div class="row">' + '<div class="col-md-2">' + '<div class="row">' + '<small>' + formatDate(post.Date.substring(6, post.Date.length - 2)) + '</small>'
+                    '<div class="row">' + '<div class="col-md-2">' + '<div class="row">' + '<small>' + formatDate(post.Date.substring(6, post.Date.length - 2))
++ '</small>'
                 + '</div> <div class="row">' + '<small>' + post.User.Profile.Login + '</small>'
                 + '<div class="row"> <div class="img-responsive"> <img width="75" height="75" src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />'
                 + ' </div> </div> </div> </div> <div class="col-md-10"> '
@@ -76,42 +77,31 @@
             .css("background-color", "#f7f9fa");
         }
 
-       /* function ToJavaScriptDate(value) {
-            var pattern = /Date\(([^)]+)\)/;
-            var results = pattern.exec(value);
-            var dt = new Date(parseFloat(results[1]));
-            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-        }*/
-
-        //  new Date(parseInt(post.Date.replace("/Date(", "").replace(")/", ""), 10))
-
         function formatDate(ms) {
 
             var date = new Date(parseInt(ms));
+            var day = date.getDate();
+            var month = date.getMonth()+1;
             var hour = date.getHours();
             var mins = date.getMinutes() + '';
-            var time = "AM";
 
-            // find time 
-            if (hour >= 12) {
-                time = "PM";
+            if (day.length == 1)
+            {
+                day = "0" + day;
             }
-            // fix hours format
-            if (hour > 12) {
-                hour -= 12;
+
+            if (month.length == 1) {
+                month = "0" + month;
             }
-            else if (hour == 0) {
-                hour = 12;
-            }
-            // fix minutes format
+
             if (mins.length == 1) {
                 mins = "0" + mins;
             }
 
-
-            // return formatted date time string
-            return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + hour + ":" + mins + " " + time;
+           return month + "/" + day + "/" + date.getFullYear() + " " + hour + ":" + mins;
         }
+
+
 
     </script>
 
