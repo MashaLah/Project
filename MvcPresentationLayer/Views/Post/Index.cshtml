@@ -1,38 +1,39 @@
 ﻿@model MvcPresentationLayer.Models.PageInfo
-    @{
-        ViewBag.Title = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-    <h2>Index</h2>
-    <div>
-        @Html.DisplayFor(modelItem=>modelItem.Topic.Title)
-    </div>
+<h2>Index</h2>
+<div>
+    @Html.DisplayFor(modelItem => modelItem.Topic.Title)
+</div>
 
-    <div>
-        @Html.DisplayFor(modelItem => modelItem.Topic.Description)
-    </div>
-    <div id="indicator" style="display:none">
-        Wait...
-    </div>
-    <div id="posts">
-        @{Html.RenderAction("GetPosts"); }
-    </div>
+<div>
+    @Html.DisplayFor(modelItem => modelItem.Topic.Description)
+    @Html.Hidden("topicId", Model.Topic.Id)
+</div>
+<div id="indicator" style="display:none">
+    Wait...
+</div>
+<div id="posts">
+    @{Html.RenderAction("GetPosts"); }
+</div>
 
-    @using (Ajax.BeginForm("GetPosts", new AjaxOptions { UpdateTargetId = "posts" ,OnSuccess= "processData" }))
-    {
-        @Html.Hidden("topicId", Model.Topic.Id)
-        <div class="btn-group">
-            @Html.PageLinks(Model)
-        </div>
-    }
+@using (Ajax.BeginForm("GetPosts", new AjaxOptions { UpdateTargetId = "posts", OnSuccess = "processData" }))
+{
+    @Html.Hidden("topicId", Model.Topic.Id)
+    <div class="btn-group">
+        @Html.PageLinks(Model)
+    </div>
+}
 
 @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
 {
-    using (Html.BeginForm("Create","Post",FormMethod.Post))
+    using (Html.BeginForm("Create", "Post", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        @Html.Hidden("topicId",Model.Topic.Id)
+        @Html.Hidden("topicId", Model.Topic.Id)
         <div class="form-horizontal center-block col-md-10">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -57,49 +58,59 @@
             .filter(':even:not(.list-group-item-danger)')
             .css("background-color", "#f7f9fa");
 
-    /*    $(document).ready(function ()
-        {
-            $(".btn-group").click(function (e)
-            {
-                e.preventDefault();
-                $("#indicator").show();
-                var target = $("#posts");
-                target.empty();
-
-            })
-        })*/
-
         function processData(data) {
-            /*var target = $("#posts");
-            target.empty();
-            for (var i = 0; i < data.Count(); i++) {
-                var post = data[i];
-                target.append("<tr><td>" + post.Text + "</td><td>"
-                    + post.UserId + "</td><td>" + post.TopicId
-                    + "</td></tr>");
-            }*/
-            //alert(data);
-            /*$.each(data, function (key, val) {
-                $('#countries').append('<option value="' + val + '">' + key + '</option>');
-            });*/
             $("#posts").empty();
             $('#posts').append('<ul class="list-group table-striped"></ul>');
-            for (var i = 0; i < data.length; i++)
-            {
+            for (var i = 0; i < data.length; i++) {
                 var post = data[i];
-                // alert(post.Text);
                 $('#posts>ul').append('<li class="list-group-item">' + ' <div class="container-fluid">' +
-                    '<div class="row">' + '<div class="col-md-2">' + '<div class="row">'+'<small>'+post.Date+'</small>'
-                +'</div> <div class="row">'+'<small>'+post.User.Profile.Login+'</small>'
+                    '<div class="row">' + '<div class="col-md-2">' + '<div class="row">' + '<small>' + formatDate(post.Date.substring(6, post.Date.length - 2)) + '</small>'
+                + '</div> <div class="row">' + '<small>' + post.User.Profile.Login + '</small>'
                 + '<div class="row"> <div class="img-responsive"> <img width="75" height="75" src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />'
                 + ' </div> </div> </div> </div> <div class="col-md-10"> '
-                +'<div class="row"> <div style="word-wrap:break-word;">'+ post.Text + '</div>'
-                +'</div> </div></div> </div></li>');
+                + '<div class="row"> <div style="word-wrap:break-word;">' + post.Text + '</div>'
+                + '</div> </div></div> </div></li>');
             }
             $('.list-group-item')
             .filter(':even:not(.list-group-item-danger)')
             .css("background-color", "#f7f9fa");
+        }
 
+       /* function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+        }*/
+
+        //  new Date(parseInt(post.Date.replace("/Date(", "").replace(")/", ""), 10))
+
+        function formatDate(ms) {
+
+            var date = new Date(parseInt(ms));
+            var hour = date.getHours();
+            var mins = date.getMinutes() + '';
+            var time = "AM";
+
+            // find time 
+            if (hour >= 12) {
+                time = "PM";
+            }
+            // fix hours format
+            if (hour > 12) {
+                hour -= 12;
+            }
+            else if (hour == 0) {
+                hour = 12;
+            }
+            // fix minutes format
+            if (mins.length == 1) {
+                mins = "0" + mins;
+            }
+
+
+            // return formatted date time string
+            return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + hour + ":" + mins + " " + time;
         }
 
     </script>
