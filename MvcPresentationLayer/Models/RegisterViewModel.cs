@@ -18,7 +18,6 @@ namespace MvcPresentationLayer.Models
 
         [Required(ErrorMessage = "Enter your password")]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "The password must contain from 6 to 50 characters")]
-        //[RegularExpression(@"^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])$", ErrorMessage ="Password must contail at least one letter, one digit and one spesial character.")]
         [RegularExpression(@"(?=.*[#?!@$%^&*-])(?=.*[0-9])(?=.*[A-Za-z]).*$", ErrorMessage ="Password must contail at least one letter, one digit and one spesial character.")]
         [DataType(DataType.Password)]
         [Display(Name = "Enter your password")]

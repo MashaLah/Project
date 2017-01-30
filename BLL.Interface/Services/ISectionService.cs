@@ -16,11 +16,5 @@ namespace BLL.Interface.Services
         void CreateSection(SectionEntity section);
         void DeleteSection(SectionEntity section);
         void UpdateSection(SectionEntity section);
-
-        /*void MakeOrder(OrderDTO orderDto);
-        PhoneDTO GetPhone(int? id);
-        IEnumerable<PhoneDTO> GetPhones();
-        void Dispose();*/
-
     }
 }

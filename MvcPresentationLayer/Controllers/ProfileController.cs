@@ -21,20 +21,12 @@ namespace MvcPresentationLayer.Controllers
             this.userService = userService;
         }
 
-        // GET: Profile
         [Authorize]
         public ActionResult Index()
         {
-            //в репозиторий get profile by user id get user id be email
             string userEmail = User.Identity.Name;
             var profile = profileService.GetByUserEmail(userEmail).ToMvcProfile();      
             return View(profile);
-        }
-
-        [Authorize]
-        public ActionResult ChangeAvatar()
-        {
-            throw new NotImplementedException();
         }
 
         [Authorize]

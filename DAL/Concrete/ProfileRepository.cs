@@ -84,7 +84,6 @@ namespace DAL.Concrete
             newProfile.LastUpdateDate = profile.LastUpdateDate;
             newProfile.Image = profile.Image;
             newProfile.ImageMimeType = profile.ImageMimeType;
-            //context.Entry(newProfile).State = EntityState.Modified;
         }
     }
 }

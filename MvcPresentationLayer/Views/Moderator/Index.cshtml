@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Posts To Moderate <span class="badge">@Model.Count</span></h2>
 @using (Html.BeginForm("Edit", "Moderator", FormMethod.Post))
 {
     if (Model != null)
@@ -18,8 +18,6 @@
                     @Html.HiddenFor(m => m[i].UserId)
                     @Html.HiddenFor(m => m[i].Date)
                     @Html.HiddenFor(m => m[i].Text)
-                    @*@Html.DisplayFor(m => m[i].Date)
-                    @Html.DisplayFor(m => m[i].Text)*@
                     @Html.DropDownListFor(m => m[i].StateId, ViewBag.States as SelectList)
                     <div class="container-fluid">
                         <div class="row">
@@ -32,14 +30,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="img-responsive">
-                                        @if (Model[i].User.Profile.Image != null)
-                                        {
-                                            <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { Model[i].User.Profile.Id })" />
-                                        }
-                                        else
-                                        {
-                                            <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
-                                        }
+                                        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { Model[i].User.Profile.Id })" />
                                     </div>
                                 </div>
                             </div>
@@ -57,11 +48,11 @@
                 </li>
             }
         </ul>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                </div>
-               
-            }
-            }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+
+    }
+}

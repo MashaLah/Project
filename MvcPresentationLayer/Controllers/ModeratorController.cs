@@ -22,7 +22,7 @@ namespace MvcPresentationLayer.Controllers
             this.stateService = stateService;
         }
 
-        // GET: Moderator
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             var posts = postService.GetAllPostEntities()

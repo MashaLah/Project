@@ -10,7 +10,7 @@ namespace DAL.Interface.Repository
     public interface IRoleRepository
     {
         IEnumerable<DALRole> GetAllRoles();
-        /*bool*/void CreateNewRole(DALRole role);
+        void CreateNewRole(DALRole role);
         DALRole GetById(int? roleId);
         DALRole GetByName(string name);
     }

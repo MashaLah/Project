@@ -18,25 +18,11 @@
                             </div>
                             <div class="row">
                                 <div class="img-responsive">
-                                   @* @if (item.User.Profile.Image != null)
-    {
-        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
-    }
-    else
-    {
-        <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
-    }*@
                                     <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-10">
-                            @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated && Request.RequestContext.HttpContext.User.Identity.Name == item.User.Email)
-                            {
-                                <div class="row text-right">
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                </div>
-                            }
                             <div class="row">
                                 <div style="word-wrap:break-word;">
                                     @Html.DisplayFor(modelItem => item.Text)

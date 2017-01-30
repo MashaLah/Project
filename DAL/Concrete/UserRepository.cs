@@ -28,7 +28,6 @@ namespace DAL.Concrete
                 Password = user.Password,
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                //Image = user.Image,
                 RoleId = user.RoleId,
 
             });
@@ -65,7 +64,7 @@ namespace DAL.Concrete
             return dalUser;
         }
 
-        public /*bool*/void UpdateUser(DALUser user)
+        public void UpdateUser(DALUser user)
         {
             var updatedUser = context.Set<User>().FirstOrDefault(u => u.Id == user.Id);
 
@@ -73,28 +72,17 @@ namespace DAL.Concrete
             updatedUser.Password = user.Password;
             updatedUser.Email = user.Email;
             updatedUser.CreationDate = user.CreationDate;
-            //Image = user.Image,
             updatedUser.RoleId = user.RoleId;
-           // context.Entry(updatedUser).State = EntityState.Modified;
         }
 
-        public /*bool*/void RemoveUser(/*int id*/DALUser user)
+        public void RemoveUser(DALUser user)
         {
-            /*User user = _context.Users.FirstOrDefault(u => u.Id == id);
-            if (user != null)
-            {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
-                return true;
-            }
-            return false;*/
             var userToRemove = new User()
             {
                 Id = user.Id,
                 Password = user.Password,
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                //Image = user.Image,
                 RoleId = user.RoleId
             };
             userToRemove = context.Set<User>().FirstOrDefault(frm => frm.Id == user.Id);

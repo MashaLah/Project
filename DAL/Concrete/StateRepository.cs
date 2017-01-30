@@ -34,7 +34,6 @@ namespace DAL.Concrete
         public DALState GetById(int key)
         {
             return context.Set<State>().FirstOrDefault(state => state.Id == key).ToDALState();
-            //return state;
         }
     }
 }

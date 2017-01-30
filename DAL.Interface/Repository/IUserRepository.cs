@@ -10,10 +10,10 @@ namespace DAL.Interface.Repository
     public interface IUserRepository
     {
         IEnumerable<DALUser> GetAllUsers();
-        /*bool*/void CreateUser(DALUser user);
+        void CreateUser(DALUser user);
         DALUser GetUserByEmail(string email);
-        /*bool*/void UpdateUser(DALUser user);
-        /*bool*/void RemoveUser(/*int id*/DALUser user);
+        void UpdateUser(DALUser user);
+        void RemoveUser(DALUser user);
 
 
     }

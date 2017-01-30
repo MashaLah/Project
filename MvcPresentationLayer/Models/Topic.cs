@@ -24,6 +24,7 @@ namespace MvcPresentationLayer.Models
         public int UserId { get; set; }
 
         [ScaffoldColumn(false)]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy at HH:mm}")]
         public DateTime Date { get; set; }
 
         [ScaffoldColumn(false)]
@@ -35,6 +36,5 @@ namespace MvcPresentationLayer.Models
         public Section Section { get; set; }
         public User User { get; set; }
         public ICollection<Post> Posts { get; set; }
-        //public virtual User User { get; set; }
     }
 }

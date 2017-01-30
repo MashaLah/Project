@@ -19,12 +19,10 @@ namespace DAL.Concrete
             context = uow;
         }
 
-        public /*bool*/void CreateNewRole(DALRole role)
+        public void CreateNewRole(DALRole role)
         {
-            //throw new NotImplementedException();
             var newRole = new Role()
             {
-                //Id = user.Id,
                 Name = role.Name,
             };
             context.Set<Role>().Add(newRole);
@@ -32,7 +30,6 @@ namespace DAL.Concrete
 
         public IEnumerable<DALRole> GetAllRoles()
         {
-            //return context.Roles.ToList();
             return context.Set<Role>().Select(role => new DALRole()
             {
                 Id = role.Id,
@@ -42,7 +39,6 @@ namespace DAL.Concrete
 
         public DALRole GetById(int? roleId)
         {
-            //return context.Roles.Find(roleId);
             var ormRole = context.Set<Role>().FirstOrDefault(r => r.Id == roleId);
             return new DALRole()
             {

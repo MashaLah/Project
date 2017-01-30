@@ -19,16 +19,7 @@ namespace DAL.Mappers
                 Topics = new List<DALTopic>()
             };
 
-            var topics = ormSection.Topics;/*.Select(topic => new DALTopic()
-            {
-                Id = topic.Id,
-                SectionId = topic.SectionId,
-                Title = topic.Title,
-                UserId = topic.UserId,
-                Date = topic.Date,
-                Description=topic.Description,
-                LastUpdatedDate=topic.LastUpdatedDate
-            });*/
+            var topics = ormSection.Topics;
 
             foreach (var topic in topics)
             {
@@ -44,22 +35,6 @@ namespace DAL.Mappers
                 Id = dalSection.Id,
                 Name = dalSection.Name
             };
-
-            /* var topics = dalSection.Topics;*//*.Select(topic => new Topic()
-             {
-                 Id = topic.Id,
-                 SectionId = topic.SectionId,
-                 Title = topic.Title,
-                 UserId = topic.UserId,
-                 Date = topic.Date,
-                 Description = topic.Description,
-                 LastUpdatedDate = topic.LastUpdatedDate
-             });*/
-
-            /*  foreach (var topic in topics)
-              {
-                  section.Topics.Add(topic.ToOrmTopic());
-              }*/
             return section;
         }
 
@@ -124,22 +99,7 @@ namespace DAL.Mappers
                 Date = dalTopic.Date,
                 Description = dalTopic.Description,
                 LastUpdatedDate = dalTopic.LastUpdatedDate,
-                //Posts = new List<Post>()
             };
-
-            /* var posts = dalTopic.Posts.Select(post => new Post()
-             {
-                 Id = post.Id,
-                 TopicId = post.TopicId,
-                 Text = post.Text,
-                 UserId = post.UserId,
-                 Date = post.Date
-             });
-
-             foreach (var post in posts)
-             {
-                 topic.Posts.Add(post);
-             }*/
             return topic;
         }
 

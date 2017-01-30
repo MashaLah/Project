@@ -177,7 +177,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModeratorController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -191,11 +190,9 @@
     <Compile Include="Infrastruct\CaptchaImage.cs" />
     <Compile Include="Infrastruct\Mappers\MVCMappers.cs" />
     <Compile Include="Infrastruct\NinjectDependencyResolver.cs" />
-    <Compile Include="Models\Forum.cs" />
     <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\PostsViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\Role.cs" />
@@ -305,7 +302,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Forum\Index.cshtml" />
     <Content Include="Views\Topic\Index.cshtml" />
     <Content Include="Views\Topic\Add.cshtml" />
     <Content Include="Views\Topic\Answer.cshtml" />
@@ -313,12 +309,10 @@
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\User\Enter.cshtml" />
     <Content Include="Views\Topic\Create.cshtml" />
-    <Content Include="Views\Forum\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Forum\GetTopics.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\ServerError.cshtml" />
@@ -331,11 +325,9 @@
     <Content Include="Views\Topic\CreateTopic.cshtml" />
     <Content Include="Views\Moderator\Index.cshtml" />
     <Content Include="Views\Home\GetSections.cshtml" />
-    <Content Include="Views\Shared\_PostAddConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

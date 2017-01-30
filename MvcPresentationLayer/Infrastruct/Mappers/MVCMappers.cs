@@ -62,32 +62,6 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             return sectionEntity;
         }
 
-        public static Forum ToMvcForum(this ForumEntity forumEntity)
-        {
-            return new Forum()
-            {
-                Id = forumEntity.Id,
-                SectionId = forumEntity.SectionId,
-                Title = forumEntity.Title,
-                Date = forumEntity.Date,
-                //Section=(Section)forumEntity.SectionId
-                // Forums = (Forum)sectionEntity
-            };
-        }
-
-        public static ForumEntity ToBllForum(this Forum forum)
-        {
-            return new ForumEntity()
-            {
-                Id = forum.Id,
-                SectionId = forum.SectionId,
-                Title = forum.Title,
-                Date = forum.Date,
-                UserId = forum.UserId
-                // RoleId = (int)userViewModel.Role
-            };
-        }
-
         public static Topic ToMvcTopic(this TopicEntity topicEntity)
         {
             Topic topic = new Topic()
@@ -100,8 +74,6 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 LastUpdatedDate = topicEntity.LastUpdatedDate,
                 Posts = new List<Post>(),
                 User = topicEntity.User.ToMvcUser()
-                //Section=(Section)forumEntity.SectionId
-                // Forums = (Forum)sectionEntity
             };
 
             var posts = topicEntity.Posts.Select(post => post.ToMvcPost());
@@ -124,16 +96,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Date = topic.Date,
                 Description = topic.Description,
                 LastUpdatedDate = topic.LastUpdatedDate,
-                //Posts = new List<PostEntity>()
-                // RoleId = (int)userViewModel.Role
             };
-
-            /*var posts = topic.Posts.Select(post => post.ToBllPost());
-
-            foreach (var post in posts)
-            {
-                topicEntity.Posts.Add(post);
-            }*/
             return topicEntity;
         }
 
@@ -149,8 +112,6 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 User = postEntity.User.ToMvcUser(),
                 StateId = postEntity.StateId,
                 State = postEntity.State.ToMvcState()
-                //Section=(Section)forumEntity.SectionId
-                // Forums = (Forum)sectionEntity
             };
         }
 
@@ -172,23 +133,6 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Date = post.Date,
                 UserId = post.UserId,
                 StateId = post.StateId
-                // RoleId = (int)userViewModel.Role
-            };
-        }
-
-        public static Role ToMvcRole(this RoleEntity roleEntity)
-        {
-            return new Role()
-            {
-                
-            };
-        }
-
-        public static RoleEntity ToBllRole(this Role usroleer)
-        {
-            return new RoleEntity()
-            {
-                
             };
         }
 
@@ -211,12 +155,6 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                // Id = user.Id,
-                //  Login =user.Login,
-                //Password 
-                //Email 
-                // public byte[] Image { get; set; }
-                //RoleId 
             };
         }
 

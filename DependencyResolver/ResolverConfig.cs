@@ -27,7 +27,6 @@ namespace DependencyResolver
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
             kernel.Bind<DbContext>().To<ForumEntities6>().InRequestScope();
             kernel.Bind<ISectionService>().To<SectionService>();
-            kernel.Bind<IForumService>().To<ForumService>();
             kernel.Bind<ITopicService>().To<TopicService>();
             kernel.Bind<IPostService>().To<PostService>();
             kernel.Bind<IUserService>().To<UserService>();
@@ -35,7 +34,6 @@ namespace DependencyResolver
             kernel.Bind<IStateService>().To<StateService>();
             kernel.Bind<IProfileService>().To<ProfileService>();
             kernel.Bind<ISectionRepository>().To<SectionRepository>();
-            //kernel.Bind<IForumRepository>().To<ForumRepository>();
             kernel.Bind<ITopicRepository>().To<TopicRepository>();
             kernel.Bind<IPostRepository>().To<PostRepository>();
             kernel.Bind<IUserRepository>().To<UserRepository>();

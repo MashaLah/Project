@@ -25,7 +25,6 @@ namespace MvcPresentationLayer.Controllers
             this.stateService = stateService;
         }
 
-        // GET: Post
         [AllowAnonymous]
         public ActionResult Index(int topicId, int page = 1)
         {

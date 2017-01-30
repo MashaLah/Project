@@ -11,8 +11,6 @@ namespace MvcPresentationLayer.Controllers
 {
     public class UserController : Controller
     {
-        //List<User> users = new List<User>() { };
-
         private readonly IUserService service;
 
         public UserController(IUserService service)

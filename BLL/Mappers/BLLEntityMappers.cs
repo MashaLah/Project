@@ -16,23 +16,7 @@ namespace BLL.Mappers
             {
                 Id = sectionEntity.Id,
                 Name = sectionEntity.Name,
-               // Topics = new List<DALTopic>(),
             };
-           /* var topics = sectionEntity.Topics;*//*.Select(topic => new DALTopic()
-            {
-                Id = topic.Id,
-                SectionId = topic.SectionId,
-                Title = topic.Title,
-                UserId = topic.UserId,
-                Date = topic.Date,
-                LastUpdatedDate= topic.LastUpdatedDate,
-                Description= topic.Description
-            });*/
-
-           /* foreach (var topic in topics)
-            {
-                dalSection.Topics.Add(topic.ToDalTopic());
-            }*/
             return dalSection;
         }
 
@@ -44,46 +28,13 @@ namespace BLL.Mappers
                 Name = dalSection.Name,
                 Topics=new List<TopicEntity>(),
             };
-            var topics = dalSection.Topics;/*.Select(topic => new TopicEntity()
-            {
-                Id = topic.Id,
-                SectionId = topic.SectionId,
-                Title = topic.Title,
-                UserId = topic.UserId,
-                Date = topic.Date,
-                LastUpdatedDate=topic.LastUpdatedDate,
-                Description=topic.Description
-            });*/
+            var topics = dalSection.Topics;
 
             foreach (var topic in topics)
             {
                 section.Topics.Add(topic.ToBllTopic());
             }
             return section;
-        }
-
-        public static DALForum ToDalForum(this ForumEntity forumEntity)
-        {
-            return new DALForum()
-            {
-                Id = forumEntity.Id,
-                SectionId = forumEntity.SectionId,
-                Title = forumEntity.Title,
-                UserId = forumEntity.UserId,
-                Date = forumEntity.Date
-            };
-        }
-
-        public static ForumEntity ToBllForum(this DALForum dalForum)
-        {
-            return new ForumEntity()
-            {
-                Id = dalForum.Id,
-                SectionId = dalForum.SectionId,
-                Title = dalForum.Title,
-                UserId = dalForum.UserId,
-                Date = dalForum.Date
-            };
         }
 
         public static DALTopic ToDalTopic(this TopicEntity topicEntity)
@@ -97,21 +48,7 @@ namespace BLL.Mappers
                 Date = topicEntity.Date,
                 SectionId = topicEntity.SectionId,
                 LastUpdatedDate = topicEntity.LastUpdatedDate,
-                //Posts = new List<DALPost>()
             };
-           /* var posts = topicEntity.Posts.Select(post => post.ToDalPost());new DALPost()
-            {
-                Id = post.Id,
-                TopicId = post.TopicId,
-                Text = post.Text,
-                UserId = post.UserId,
-                Date = post.Date
-            });*/
-
-           /* foreach (var post in posts)
-            {
-                dalTopic.Posts.Add(post);
-            }*/
             return dalTopic;
         }
 

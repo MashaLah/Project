@@ -23,7 +23,7 @@ namespace MvcPresentationLayer.Models
         public string Text { get; set; }
 
         [ScaffoldColumn(false)]
-        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy at hh:mm}")]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy hh:mm}")]
         public DateTime Date { get; set; }
 
         [ScaffoldColumn(false)]
@@ -35,9 +35,5 @@ namespace MvcPresentationLayer.Models
         public Topic Topic { get; set; }
         public User User { get; set; }
         public State State { get; set; }
-
-        // private static List<State> states;
-
-      //  public IEnumerable<SelectListItem> stateItems;
     }
 }
