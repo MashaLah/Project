@@ -81,18 +81,8 @@ namespace MvcPresentationLayer.Controllers
                 post.Date = DateTime.Now;
                 post.StateId = stateService.GetStateEntity(3).Id;
                 postService.CreatePost(post.ToBllPost());
-                return RedirectToAction("Index",new { topicId=post.TopicId});
             }
-            return View("Index");
-        }
-
-        [Authorize(Roles = "admin")]
-        public ActionResult EditByAdmin(int id)
-        {
-            Post post = postService.GetPostEntity(id).ToMvcPost();
-            post.Text = "Sensored by moderator";
-            postService.UpdatePost(post.ToBllPost());
-            return RedirectToAction("GetPosts");
+            return RedirectToAction("Index", new { topicId = post.TopicId });
         }
     }
 }

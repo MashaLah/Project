@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
 <h2>Index</h2>
 <div>
     @Html.DisplayFor(modelItem => modelItem.Topic.Title)
@@ -23,14 +27,16 @@
 @using (Ajax.BeginForm("GetPosts", new AjaxOptions { UpdateTargetId = "posts", OnSuccess = "processData" }))
 {
     @Html.Hidden("topicId", Model.Topic.Id)
-    <div class="btn-group">
-        @Html.PageLinks(Model)
+    <div class="col-md-12">
+        <div class="btn-group">
+            @Html.PageLinks(Model)
+        </div>
     </div>
 }
 
 @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
 {
-    using (Html.BeginForm("Create", "Post", FormMethod.Post))
+    using (Ajax.BeginForm("Create", new AjaxOptions { OnSuccess = "showModal" }))
     {
         @Html.AntiForgeryToken()
         @Html.Hidden("topicId", Model.Topic.Id)
@@ -58,35 +64,65 @@
             .filter(':even:not(.list-group-item-danger)')
             .css("background-color", "#f7f9fa");
 
+        function showModal()
+        {
+            $.ajaxSetup({ cache: false });
+                $('#dialogContent').html();
+                $('#modDialog').modal('show');
+        }
+
         function processData(data) {
             $("#posts").empty();
             $('#posts').append('<ul class="list-group table-striped"></ul>');
             for (var i = 0; i < data.length; i++) {
                 var post = data[i];
-                $('#posts>ul').append('<li class="list-group-item">' + ' <div class="container-fluid">' +
-                    '<div class="row">' + '<div class="col-md-2">' + '<div class="row">' + '<small>' + formatDate(post.Date.substring(6, post.Date.length - 2))
-+ '</small>'
-                + '</div> <div class="row">' + '<small>' + post.User.Profile.Login + '</small>'
-                + '<div class="row"> <div class="img-responsive"> <img width="75" height="75" src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />'
-                + ' </div> </div> </div> </div> <div class="col-md-10"> '
-                + '<div class="row"> <div style="word-wrap:break-word;">' + post.Text + '</div>'
-                + '</div> </div></div> </div></li>');
+                $('#posts>ul').append('<li class="list-group-item ' + isSensored(post.StateId) + ' ">' +
+                     ' <div class="container-fluid">' +
+                          '<div class="row">' +
+                               '<div class="col-md-2">' +
+                                   '<div class="row">' + '<small>'
+                                        + formatDate(post.Date.substring(6, post.Date.length - 2))
+                                        + '</small>'
+                                   + '</div> '
+                                   +'<div class="row">' + '<small>' + post.User.Profile.Login + '</small>'
+                                         + '<div class="row media-right"> '
+                                                +' <div class="img-responsive"> <img width="75" height="75" src="/Profile/GetImage/?id='
+                                                    + post.User.Profile.Id + '"/>'
+                                                + ' </div> '
+                                         + ' </div>' +
+                                   +' </div>' +
+                                 +'</div>' +
+                                 +' <div class="col-md-10"> '
+                                         + '<div class="row"> ' +
+                                                      +'<div style="word-wrap:break-word;">' + post.Text + '</div>'
+                                         + '</div>' +
+                                 +' </div>' +
+                           +'</div>' +
+                      +' </div></li>');
             }
             $('.list-group-item')
             .filter(':even:not(.list-group-item-danger)')
             .css("background-color", "#f7f9fa");
         }
 
+        function isSensored(stateId) {
+            var result;
+            if (stateId == 2) {
+                result = "list-group-item-danger";
+            }
+            result = "";
+            return result;
+        }
+
         function formatDate(ms) {
 
             var date = new Date(parseInt(ms));
             var day = date.getDate();
-            var month = date.getMonth()+1;
+            var month = date.getMonth() + 1;
             var hour = date.getHours();
             var mins = date.getMinutes() + '';
 
-            if (day.length == 1)
-            {
+            if (day.length == 1) {
                 day = "0" + day;
             }
 
@@ -98,7 +134,7 @@
                 mins = "0" + mins;
             }
 
-           return month + "/" + day + "/" + date.getFullYear() + " " + hour + ":" + mins;
+            return month + "/" + day + "/" + date.getFullYear() + " " + hour + ":" + mins;
         }
 
 

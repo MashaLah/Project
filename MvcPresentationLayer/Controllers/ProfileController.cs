@@ -54,14 +54,14 @@ namespace MvcPresentationLayer.Controllers
         }
 
         [Authorize]
-        public FileContentResult GetImage(int id)
+        public FileResult GetImage(int id)
         {
             ProfileViewModel profile = profileService.GetById(id).ToMvcProfile();
             if (profile.Image != null)
             {
                 return File(profile.Image, profile.ImageMimeType);
             }
-            return null;
+            return new FilePathResult(HttpContext.Server.MapPath("~/Content/AvatarImage/2112715.png"), "image/jpeg");
         }
     }
 }

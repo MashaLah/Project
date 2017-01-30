@@ -3,19 +3,22 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<h4>
+    Your profile
+</h4>
 <div class="container-fluid">
     <div class="row">
         <div>
     <div class="img-responsive">
-        @if (Model.Image != null)
+        @*@if (Model.Image != null)
         {
             <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { Model.Id })" />
         }
         else
         {
             <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
-        }
+        }*@
+        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { Model.Id })" />
     </div><br />
             <div>
                 @Html.DisplayFor(model=>model.Login)
