@@ -31,12 +31,13 @@ namespace MvcPresentationLayer.Controllers
         [AllowAnonymous]
         public ActionResult Index(int topicId, int page = 1)
         {
-            ViewBag.TopicTitle = topicService.GetTopicEntity(topicId).Title;
-            ViewBag.TopicDescription = topicService.GetTopicEntity(topicId).Description;
+            // ViewBag.TopicTitle = topicService.GetTopicEntity(topicId).Title;
+            //ViewBag.TopicDescription = topicService.GetTopicEntity(topicId).Description;
             //ViewBag.topicId = topicId;
+            Topic topic = topicService.GetTopicEntity(topicId).ToMvcTopic();
             PageInfo pageInfo = new PageInfo
             {
-                topicId = topicId,
+                Topic = topic,
                 PageNumber = page,
                 PageSize = PageSize,
                 TotalItems = getNumberOfPosts(topicId)
@@ -94,13 +95,11 @@ namespace MvcPresentationLayer.Controllers
         public ActionResult Create(Post post)
         {
             if (ModelState.IsValid)
-           // if (!string.IsNullOrEmpty(post))
             {
                 string userName = User.Identity.Name;
                 post.UserId = userService.GetUserEntityByEmail(userName).Id;
-                //post.TopicId = int.Parse(Request.Form["topicId"]);
                 post.Date = DateTime.Now;
-                post.StateId = stateService.GetStateEntity(3).Id;//возможно перенести это ниже
+                post.StateId = stateService.GetStateEntity(3).Id;
                 postService.CreatePost(post.ToBllPost());
                 return RedirectToAction("Index",new { topicId=post.TopicId});
             }
