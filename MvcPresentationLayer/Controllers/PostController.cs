@@ -102,7 +102,7 @@ namespace MvcPresentationLayer.Controllers
                 post.Date = DateTime.Now;
                 post.StateId = stateService.GetStateEntity(3).Id;//возможно перенести это ниже
                 postService.CreatePost(post.ToBllPost());
-                return RedirectToAction("GetPosts",new { topicId=post.TopicId});
+                return RedirectToAction("Index",new { topicId=post.TopicId});
             }
             return View("Index");
         }
