@@ -13,9 +13,11 @@
 {
 @Html.ActionLink("Create new section", "Create", null, new { @class = "createNewSection btn btn-default" })
 }
+<p>
+
+</p>
 <div id="sections">
     @{Html.RenderAction("GetSections");}
-
 </div>
 
 @section Scripts {

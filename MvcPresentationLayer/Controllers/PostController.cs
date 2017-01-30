@@ -33,14 +33,14 @@ namespace MvcPresentationLayer.Controllers
         {
             ViewBag.TopicTitle = topicService.GetTopicEntity(topicId).Title;
             ViewBag.TopicDescription = topicService.GetTopicEntity(topicId).Description;
-            ViewBag.topicId = topicId;
+            //ViewBag.topicId = topicId;
             PageInfo pageInfo = new PageInfo
             {
+                topicId = topicId,
                 PageNumber = page,
                 PageSize = PageSize,
                 TotalItems = getNumberOfPosts(topicId)
             };
-
             //IEnumerable<Post> posts = getPosts(topicId,page);
             return View(pageInfo);
         }
@@ -90,9 +90,11 @@ namespace MvcPresentationLayer.Controllers
 
         [Authorize]
         [ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult Create(Post post)
         {
             if (ModelState.IsValid)
+           // if (!string.IsNullOrEmpty(post))
             {
                 string userName = User.Identity.Name;
                 post.UserId = userService.GetUserEntityByEmail(userName).Id;
@@ -102,7 +104,7 @@ namespace MvcPresentationLayer.Controllers
                 postService.CreatePost(post.ToBllPost());
                 return RedirectToAction("GetPosts",new { topicId=post.TopicId});
             }
-            return View(post);
+            return View("Index");
         }
 
         [Authorize(Roles = "admin")]

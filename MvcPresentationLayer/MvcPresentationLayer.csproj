@@ -332,6 +332,7 @@
     <Content Include="Views\Topic\CreateTopic.cshtml" />
     <Content Include="Views\Moderator\Index.cshtml" />
     <Content Include="Views\Home\GetSections.cshtml" />
+    <Content Include="Views\Post\AddPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

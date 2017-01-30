@@ -9,58 +9,59 @@
 {
     if (Model != null)
     {
-        for (int i = 0; i < Model.Count(); i++)
-        {
+        <ul class="list-group table-striped">
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <li class="list-group-item">
+                    @Html.HiddenFor(m => m[i].Id)
+                    @Html.HiddenFor(m => m[i].TopicId)
+                    @Html.HiddenFor(m => m[i].UserId)
+                    @Html.HiddenFor(m => m[i].Date)
+                    @Html.HiddenFor(m => m[i].Text)
+                    @*@Html.DisplayFor(m => m[i].Date)
+                    @Html.DisplayFor(m => m[i].Text)*@
+                    @Html.DropDownListFor(m => m[i].StateId, ViewBag.States as SelectList)
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <small>@Html.DisplayFor(m => m[i].Date)</small>
+                                </div>
+                                <div class="row">
+                                    <small>@Html.DisplayFor(m => m[i].User.Profile.Login)</small>
+                                </div>
+                                <div class="row">
+                                    <div class="img-responsive">
+                                        @if (Model[i].User.Profile.Image != null)
+                                        {
+                                            <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { Model[i].User.Profile.Id })" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div style="word-wrap:break-word;">
+                                        @Html.DisplayFor(m => m[i].Text)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            @Html.HiddenFor(m => m[i].Id)
-            @Html.HiddenFor(m => m[i].TopicId)
-            @Html.HiddenFor(m => m[i].UserId)
-            @Html.HiddenFor(m => m[i].Date)
-            @Html.HiddenFor(m => m[i].Text)
-            @Html.DisplayFor(m => m[i].Date)
-            @Html.DropDownListFor(m=>m[i].StateId,ViewBag.States as SelectList)
-            @Html.DisplayFor(m => m[i].Text)
+                    </div>
 
-            /* <li>
-                 <div class="container">
-                     <div class="row">
-                         <div class="col-md-8">
-                             @item.Date
-                         </div>
-                         <!--<td>
-                             Html.DisplayFor(modelItem => item.TopicId)
-                         </td>-->
-                         <div class="col-md-4">
-                             @Html.DropDownList("StateId", null, htmlAttributes: new { @class = "form-control" })
-                         </div>
-                     </div>
-                     <div class="row">
-                         <div class="col-md-4">
-                             <div class="img-responsive">
-                                 @if (item.User.Profile.Image != null)
-                                 {
-                                     <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
-                                 }
-                                 else
-                                 {
-                                     <img src="~/Content/AvatarImage/2112715.png" alt="Avatar image" />
-                                 }
-                             </div>
-                         </div>
-                         <div class="col-md-8">
-                             @Html.DisplayFor(modelItem => item.Text)
-                         </div>
-                     </div>
-                 </div>
-             </li>
-         }
-     </ul>*/
-
-        }
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    }
-}
+                </li>
+            }
+        </ul>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+               
+            }
+            }

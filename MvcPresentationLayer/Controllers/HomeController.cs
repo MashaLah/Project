@@ -14,20 +14,6 @@ namespace MvcPresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
-        /* List<Section> sections = new List<Section>()
-         {
-             new Section() {Id=1, Name="Technologies",Forums= new List<Forum>()
-             {
-                 new Forum() {Id=1, SectionId=1, Title="Appliances", Date=DateTime.Now},
-                  new Forum() {Id=2, SectionId=1, Title="Mobile", Date=DateTime.Now}
-             } },
-             new Section() {Id=2, Name="Finaces",Forums= new List<Forum>()
-             {new Forum() {Id=3, SectionId=2, Title="Exchange", Date=DateTime.Now} } },
-             new Section() {Id=3, Name="Other",Forums= new List<Forum>() { new Forum() { Id = 4, SectionId = 3, Title = "Christmas", Date = DateTime.Now } } }
-         };
-
-         List<Post> posts = new List<Post>() { };*/
-
         private readonly ISectionService service;
 
         public HomeController(ISectionService service)
@@ -37,8 +23,6 @@ namespace MvcPresentationLayer.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            //var sections = service.GetAllSectionEntities().Select(section => section.ToMvcSection());
-            //return View(sections);
             return View();
         }
 
@@ -46,10 +30,6 @@ namespace MvcPresentationLayer.Controllers
         public ActionResult GetSections()
         {
             var sections = service.GetAllSectionEntities().Select(section => section.ToMvcSection());
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView(sections);
-            }
             return View(sections);
         }
 
@@ -90,12 +70,17 @@ namespace MvcPresentationLayer.Controllers
         public ActionResult ConfirmDelete(int id)
         {
             SectionEntity section = service.GetSectionEntity(id);
-            service.DeleteSection(section);
-            if (Request.IsAjaxRequest())
+            if (section.Topics == null)
             {
-                return RedirectToAction("GetSections");
+                service.DeleteSection(section);
+                if (Request.IsAjaxRequest())
+                {
+                    return RedirectToAction("GetSections");
+                }
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            else ModelState.AddModelError("", "Section has topics.");
+            return PartialView("DeleteSection");
         }
 
          [Authorize(Roles = "admin")]

@@ -29,9 +29,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<td>
-                            Html.DisplayFor(modelItem => item.TopicId)
-                        </td>-->
                         <div class="col-md-10">
                             @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated && Request.RequestContext.HttpContext.User.Identity.Name == item.User.Email)
                             {

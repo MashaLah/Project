@@ -194,13 +194,15 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
 
         public static User ToMvcUser(this UserEntity userEntity)
         {
-            return new User()
+            User user = new User()
             {
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
-                //Role = userEntity.RoleId
-                Profile=userEntity.Profile.ToMvcProfile()
             };
+            if (userEntity.Profile != null)
+                user.Profile = userEntity.Profile.ToMvcProfile();
+            return user;
+
         }
 
         public static UserEntity ToBllUser(this User user)
