@@ -18,7 +18,7 @@
                     @Html.HiddenFor(m => m[i].UserId)
                     @Html.HiddenFor(m => m[i].Date)
                     @Html.HiddenFor(m => m[i].Text)
-                    @Html.DropDownListFor(m => m[i].StateId, ViewBag.States as SelectList)
+                    @Html.DropDownListFor(m => m[i].StateId, ViewBag.States as SelectList,new { id="downList"})
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-2">
@@ -56,3 +56,4 @@
 
     }
 }
+

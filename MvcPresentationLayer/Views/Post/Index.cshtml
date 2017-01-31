@@ -5,19 +5,19 @@
 }
 
 
- <h4>@Html.DisplayFor(modelItem => modelItem.Topic.Title)</h4>
+<h4>@Html.DisplayFor(modelItem => modelItem.Topic.Title)</h4>
 
-
-<div>
-    @Html.DisplayFor(modelItem => modelItem.Topic.Description)
+<div class="text-center">
+    <h4>
+        @Html.DisplayFor(modelItem => modelItem.Topic.Description)
+    </h4>
     @Html.Hidden("topicId", Model.Topic.Id)
 </div>
-<div id="indicator" style="display:none">
-    Wait...
-</div>
+
 <div id="posts">
     @{Html.RenderAction("GetPosts"); }
 </div>
+
 
 @using (Ajax.BeginForm("GetPosts", new AjaxOptions { UpdateTargetId = "posts", OnSuccess = "processData" }))
 {
@@ -28,8 +28,8 @@
         </div>
     </div>
 }
-<p></p>
-<div class="col-md-12">
+
+<div class="col-md-offset-3">
     @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
     {
         using (Ajax.BeginForm("Create", new AjaxOptions { OnSuccess = "showModal" }))
@@ -40,13 +40,13 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextArea("Text", "", 5, 150, new { @class = "form-control", style = "width: 100%; max-width: 100%;" })
+                        @Html.TextArea("Text", "", 5, 150, new { @class = "form-control", style = "width: 100%; max-width: 100%;", id = "text" })
                         @Html.ValidationMessage("MvcPresentationLayer.Models.Post", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-12">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input type="submit" value="Add" class="btn btn-default" />
                     </div>
                 </div>
             </div>
@@ -62,9 +62,9 @@
             .filter(':even:not(.list-group-item-danger)')
             .css("background-color", "#f7f9fa");
 
-        function showModal()
-        {
+        function showModal() {
             alert('Your post is sent to moderator.');
+            $('#text').val("");
         }
 
         function processData(data) {
@@ -80,20 +80,20 @@
                                         + formatDate(post.Date.substring(6, post.Date.length - 2))
                                         + '</small>'
                                    + '</div> '
-                                   +'<div class="row">' + '<small>' + post.User.Profile.Login + '</small> </div>'
+                                   + '<div class="row">' + '<small>' + post.User.Profile.Login + '</small> </div>'
                                          + '<div class="row media-right"> '
-                                                +' <div class="img-responsive"> <img width="75" height="75" src="/Profile/GetImage/?id='
+                                                + ' <div class="img-responsive"> <img width="75" height="75" src="/Profile/GetImage/?id='
                                                     + post.User.Profile.Id + '"/>'
                                                 + ' </div> '
-                                         + ' </div>' +
-                                   +' </div>' +
-                                 +' <div class="col-md-10"> '
-                                         + '<div class="row"> ' +
-                                                      +'<div>' + post.Text + '</div>'
-                                         + '</div>' +
-                                 +' </div>' +
-                           +'</div>' +
-                      +' </div></li>');
+                                         + ' </div>'
+                                   + ' </div>'
+                                 + ' <div class="col-md-10"> '
+                                         + '<div class="row"> '
+                                                      + '<div>' + post.Text + '</div>'
+                                         + '</div>'
+                                 + ' </div>'
+                           + '</div>'
+                      + ' </div></li>');
             }
             $('.list-group-item')
             .filter(':even:not(.list-group-item-danger)')
@@ -105,7 +105,9 @@
             if (stateId == 2) {
                 result = "list-group-item-danger";
             }
-            result = "";
+            else {
+                result = "";
+            }
             return result;
         }
 

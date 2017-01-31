@@ -88,19 +88,6 @@
             });
         })
 
-        /*  $(function () {
-              $.ajaxSetup({ cache: false });
-              $(".topicCreate").click(function (e) {
-
-                  e.preventDefault();
-                  $.get(this.href, function (data) {
-                      $('#dialogContent').html(data);
-                      $('#modDialog').modal('show');
-                  });
-              });
-          })*/
-
-
         $(document).ready(function () {
 
             $.ajaxSetup({ cache: false });
@@ -113,36 +100,8 @@
                     $('#modDialog').modal('show');
 
                     $.validator.unobtrusive.parse("#createTopic");
-
-                    //$.validator.unobtusive.parse('form[action="/Topic/CreateTopic?sectionId=1&amp;_=1485351129648"]');
-
-
                 });
-
-                /* $("#dialogContent")
-                     .load(this.href)
-                     .dialog({
-                         close: function () { $(this).remove() },
-                         modal: true,
-                         buttons: {
-                             "Save": function () {
-                                 $.ajax({
-                                     url: "Url.Action("CreateTopic", "Topic")",
-                                     type: "POST",
-                                     data: $('form').serialize(),
-                                     datatype: "json",
-                                     success: function (result) {
-
-                                         $("#dialogContent").html(result);
-                                     }
-                                 });
-                             }
-                         }
-                     });*/
             });
-
-
-            //$('#modDialog').modal('show');
         });
 
 
