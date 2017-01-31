@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<MvcPresentationLayer.Models.Post>
 
-<!--using MvcPresentationLayer.HTMLHelpers-->
 @if (Model != null)
 {
     <ul class="list-group table-striped">
@@ -35,15 +34,6 @@
             </li>
         }
     </ul>
-
-  @*  using (Ajax.BeginForm(/*"GetPosts",new AjaxOptions { OnSuccess="showPosts"}*/null))
-    {
-       <input type="hidden" name="topicId" value="@Model.Posts.Select(p=>p.TopicId).FirstOrDefault()" />
-       <!--ViewBag.topicId= Model.Posts.Select(p => p.TopicId).FirstOrDefault();-->
-       <div class="btn-group">
-          @Html.PageLinks(Model.PageInfo)
-        </div>
-    }*@
 
 }
 

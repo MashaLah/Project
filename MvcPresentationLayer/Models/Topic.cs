@@ -31,6 +31,7 @@ namespace MvcPresentationLayer.Models
         public int SectionId { get; set; }
 
         [ScaffoldColumn(false)]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy HH:mm}")]
         public DateTime? LastUpdatedDate { get; set; }
 
         public Section Section { get; set; }

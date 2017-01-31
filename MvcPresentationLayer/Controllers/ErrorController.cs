@@ -8,17 +8,16 @@ namespace MvcPresentationLayer.Controllers
 {
     public class ErrorController : Controller
     {
-      /*  public ActionResult NotFound()
+        public ActionResult NotFound()
         {
             Response.StatusCode = 404;
             return View();
-           // return new NotFoundResult();
         }
 
         public ActionResult ServerError()
         {
             Response.StatusCode = 500;
             return View();
-        }*/
+        }
     }
 }

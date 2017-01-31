@@ -52,7 +52,7 @@ namespace MvcPresentationLayer.Controllers
             {
                 return Json(posts, JsonRequestBehavior.AllowGet);
             }
-            return View(posts);
+            return RedirectToAction("Index");
        }
 
         private int getTotalPages(int topicId)

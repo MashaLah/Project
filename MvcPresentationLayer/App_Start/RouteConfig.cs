@@ -19,8 +19,8 @@ namespace MvcPresentationLayer
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-         //   routes.MapRoute("404", "404", new { controller = "Error", action = "NotFound" });
-         //   routes.MapRoute("500", "500", new { controller = "Error", action = "ServerError" });
+            routes.MapRoute("404", "404", new { controller = "Error", action = "NotFound" });
+            routes.MapRoute("500", "500", new { controller = "Error", action = "ServerError" });
         }
     }
 }
