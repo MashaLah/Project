@@ -61,7 +61,9 @@ namespace MvcPresentationLayer.Controllers
         public ActionResult DeleteSection(int id)
         {
             Section section = service.GetSectionEntity(id).ToMvcSection();
-            return PartialView(section);
+            if (section.Topics != null)
+                return PartialView(section);
+            return View("Index");
         }
 
         [HttpPost,ActionName("DeleteSection")]

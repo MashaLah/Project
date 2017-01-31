@@ -22,20 +22,6 @@ namespace MvcPresentationLayer.Controllers
             this.userService = userService;
         }
 
-        /*[AllowAnonymous]
-        public ActionResult Index(int id)
-        {
-            Topic topic = topicService.GetTopicEntity(id).ToMvcTopic();
-            return View(topic);
-        }*/
-
-      /*  [AllowAnonymous]
-        public ActionResult GetPosts(int topicId)
-        {
-            var posts = topicService.GetTopicEntity(topicId).Posts.Select(post=>post.ToMvcPost());
-                return PartialView(posts);
-        }*/
-
         [HttpGet]
         [Authorize]
         public ActionResult CreateTopic(int sectionId)

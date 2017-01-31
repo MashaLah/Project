@@ -43,6 +43,7 @@ namespace MvcPresentationLayer.Controllers
             return View(p);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(List<Post> posts)
         {
             var editedPosts = posts.Where(p => p.StateId != 3);
