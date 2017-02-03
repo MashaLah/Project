@@ -1,0 +1,176 @@
+﻿@model IEnumerable<MvcPresentationLayer.Models.Topic>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<h4>@Html.DisplayFor(modelItem => modelItem.Topic.Title)</h4>
+
+<div class="text-center">
+    <h4>
+        @Html.DisplayFor(modelItem => modelItem.Topic.Description)
+    </h4>
+    @Html.Hidden("topicId", Model.Topic.Id)
+</div>*@
+
+<div id="posts">
+    @if (Model != null)
+    {
+        <ul class="list-group table-striped">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item @(item.StateId == 2 ? "list-group-item-danger" : "")">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <small>@Html.DisplayFor(m => item.Date)</small>
+                                </div>
+                                <div class="row">
+                                    <small>@Html.DisplayFor(m => item.User.Profile.Login)</small>
+                                </div>
+                                <div class="row">
+                                    <div class="img-responsive">
+                                        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div style="word-wrap:break-word;">
+                                        @Html.DisplayFor(modelItem => item.Text)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            }
+        </ul>
+
+    }
+</div>
+
+
+@using (Ajax.BeginForm("GetPosts", new AjaxOptions { UpdateTargetId = "posts", OnSuccess = "processData" }))
+{
+    @Html.Hidden("topicId", Model.Topic.Id)
+    <div class="col-md-12 text-center">
+        <div class="btn-group">
+            @Html.PageLinks(Model)
+        </div>
+    </div>
+}
+
+<div class="col-md-offset-3">
+    @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
+    {
+        using (Ajax.BeginForm("Create", new AjaxOptions { OnSuccess = "showModal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("topicId", Model.Topic.Id)
+            <div class="form-horizontal center-block col-md-10">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextArea("Text", "", 5, 150, new { @class = "form-control", style = "width: 100%; max-width: 100%;", id = "text" })
+                        @Html.ValidationMessage("MvcPresentationLayer.Models.Post", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-12">
+                        <input type="submit" value="Add" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+@section scripts
+    {
+    <script>
+        $('.list-group-item')
+            .filter(':even:not(.list-group-item-danger)')
+            .css("background-color", "#f7f9fa");
+
+        function showModal() {
+            alert('Your post is sent to moderator.');
+            $('#text').val("");
+        }
+
+        function processData(data) {
+            $("#posts").empty();
+            $('#posts').append('<ul class="list-group table-striped"></ul>');
+            for (var i = 0; i < data.length; i++) {
+                var post = data[i];
+                $('#posts>ul').append('<li class="list-group-item ' + isSensored(post.StateId) + ' ">' +
+                     ' <div class="container-fluid">' +
+                          '<div class="row">' +
+                               '<div class="col-md-2">' +
+                                   '<div class="row">' + '<small>'
+                                        + formatDate(post.Date.substring(6, post.Date.length - 2))
+                                        + '</small>'
+                                   + '</div> '
+                                   + '<div class="row">' + '<small>' + post.User.Profile.Login + '</small> </div>'
+                                         + '<div class="row media-right"> '
+                                                + ' <div class="img-responsive"> <img width="75" height="75" src="/Profile/GetImage/?id='
+                                                    + post.User.Profile.Id + '"/>'
+                                                + ' </div> '
+                                         + ' </div>'
+                                   + ' </div>'
+                                 + ' <div class="col-md-10"> '
+                                         + '<div class="row"> '
+                                                      + '<div>' + post.Text + '</div>'
+                                         + '</div>'
+                                 + ' </div>'
+                           + '</div>'
+                      + ' </div></li>');
+            }
+            $('.list-group-item')
+            .filter(':even:not(.list-group-item-danger)')
+            .css("background-color", "#f7f9fa");
+        }
+
+        function isSensored(stateId) {
+            var result;
+            if (stateId == 2) {
+                result = "list-group-item-danger";
+            }
+            else {
+                result = "";
+            }
+            return result;
+        }
+
+        function formatDate(ms) {
+
+            var date = new Date(parseInt(ms));
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var hour = date.getHours();
+            var mins = date.getMinutes() + '';
+
+            if (day.length == 1) {
+                day = "0" + day;
+            }
+
+            if (month.length == 1) {
+                month = "0" + month;
+            }
+
+            if (mins.length == 1) {
+                mins = "0" + mins;
+            }
+
+            return month + "/" + day + "/" + date.getFullYear() + " " + hour + ":" + mins;
+        }
+
+
+
+    </script>
+
+}

@@ -18,6 +18,7 @@ namespace ORM
         public State()
         {
             this.Posts = new HashSet<Post>();
+            this.Topics = new HashSet<Topic>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace ORM
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Topic> Topics { get; set; }
     }
 }

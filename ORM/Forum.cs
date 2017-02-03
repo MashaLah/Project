@@ -12,18 +12,22 @@ namespace ORM
     using System;
     using System.Collections.Generic;
     
-    public partial class Section
+    public partial class Forum
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Section()
+        public Forum()
         {
-            this.Forums = new HashSet<Forum>();
+            this.Topics = new HashSet<Topic>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> LastUpdatedDate { get; set; }
+        public int SectionId { get; set; }
     
+        public virtual Section Section { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Forum> Forums { get; set; }
+        public virtual ICollection<Topic> Topics { get; set; }
     }
 }

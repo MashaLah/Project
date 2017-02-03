@@ -53,7 +53,7 @@ namespace MvcPresentationLayer.Controllers
                 return Json(posts, JsonRequestBehavior.AllowGet);
             }
             return View(posts);
-       }
+        }
 
         private int getTotalPages(int topicId)
         {

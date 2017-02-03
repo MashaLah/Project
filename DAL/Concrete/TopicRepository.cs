@@ -51,6 +51,8 @@ namespace DAL.Concrete
             topic.Title = entity.Title;
             topic.Description = entity.Description;
             topic.LastUpdatedDate = entity.LastUpdatedDate;
+            topic.ForumId = entity.ForumId;
+            topic.StateId = entity.StateId;
         }
 
     }

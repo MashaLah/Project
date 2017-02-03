@@ -10,6 +10,6 @@ namespace BLL.Interface.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<TopicEntity> Topics { get; set; }
+        public ICollection<ForumEntity> Forums { get; set; }
      }
 }

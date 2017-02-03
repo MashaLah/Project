@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\ForumRepository.cs" />
     <Compile Include="Concrete\PostRepository.cs" />
     <Compile Include="Concrete\ProfileRepository.cs" />
     <Compile Include="Concrete\RoleRepositoty.cs" />

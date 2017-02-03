@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ForumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Forums">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="SectionId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Massages">
           <Key>
             <PropertyRef Name="Id" />
@@ -67,8 +77,9 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="SectionId" Type="int" Nullable="false" />
+          <Property Name="ForumId" Type="int" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="StateId" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -79,8 +90,20 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
-          <Property Name="ConfirmedEmail" Type="bit" />
+          <Property Name="IsBanned" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Forums_Sections">
+          <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
+          <End Role="Forums" Type="Self.Forums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Forums">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Massages_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Massages" Type="Self.Massages" Multiplicity="*" />
@@ -142,14 +165,26 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Topics_Sections">
-          <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
+          <End Role="Forums" Type="Self.Forums" Multiplicity="1" />
           <End Role="Topics" Type="Self.Topics" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Sections">
+            <Principal Role="Forums">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Topics">
-              <PropertyRef Name="SectionId" />
+              <PropertyRef Name="ForumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topics_States">
+          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="Topics" Type="Self.Topics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topics">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -178,6 +213,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ForumModelStoreContainer">
+          <EntitySet Name="Forums" EntityType="Self.Forums" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Massages" EntityType="Self.Massages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
@@ -186,6 +222,10 @@
           <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Forums_Sections" Association="Self.FK_Forums_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="Forums" EntitySet="Forums" />
+          </AssociationSet>
           <AssociationSet Name="FK_Massages_Users" Association="Self.FK_Massages_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Massages" EntitySet="Massages" />
@@ -207,7 +247,11 @@
             <End Role="Profiles" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK_Topics_Sections" Association="Self.FK_Topics_Sections">
-            <End Role="Sections" EntitySet="Sections" />
+            <End Role="Forums" EntitySet="Forums" />
+            <End Role="Topics" EntitySet="Topics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topics_States" Association="Self.FK_Topics_States">
+            <End Role="States" EntitySet="States" />
             <End Role="Topics" EntitySet="Topics" />
           </AssociationSet>
           <AssociationSet Name="FK_Topics_Users" Association="Self.FK_Topics_Users">
@@ -224,6 +268,18 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ForumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_Forums_Sections" FromRole="Forums" ToRole="Sections" />
+          <NavigationProperty Name="Topics" Relationship="Self.FK_Topics_Sections" FromRole="Forums" ToRole="Topics" />
+        </EntityType>
         <EntityType Name="Massage">
           <Key>
             <PropertyRef Name="Id" />
@@ -275,7 +331,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Topics" Relationship="Self.FK_Topics_Sections" FromRole="Sections" ToRole="Topics" />
+          <NavigationProperty Name="Forums" Relationship="Self.FK_Forums_Sections" FromRole="Sections" ToRole="Forums" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -284,6 +340,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="State1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_States" FromRole="States" ToRole="Posts" />
+          <NavigationProperty Name="Topics" Relationship="Self.FK_Topics_States" FromRole="States" ToRole="Topics" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -294,10 +351,12 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="ForumId" Type="Int32" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="StateId" Type="Int32" />
+          <NavigationProperty Name="Forum" Relationship="Self.FK_Topics_Sections" FromRole="Topics" ToRole="Forums" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Topics" FromRole="Topics" ToRole="Posts" />
-          <NavigationProperty Name="Section" Relationship="Self.FK_Topics_Sections" FromRole="Topics" ToRole="Sections" />
+          <NavigationProperty Name="State" Relationship="Self.FK_Topics_States" FromRole="Topics" ToRole="States" />
           <NavigationProperty Name="User" Relationship="Self.FK_Topics_Users" FromRole="Topics" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
@@ -309,13 +368,37 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ConfirmedEmail" Type="Boolean" />
+          <Property Name="IsBanned" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Massages" Relationship="Self.FK_Massages_Users" FromRole="Users" ToRole="Massages" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profiles_Users" FromRole="Users" ToRole="Profiles" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Topics" Relationship="Self.FK_Topics_Users" FromRole="Users" ToRole="Topics" />
         </EntityType>
+        <Association Name="FK_Forums_Sections">
+          <End Role="Sections" Type="Self.Section" Multiplicity="1" />
+          <End Role="Forums" Type="Self.Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Forums">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topics_Sections">
+          <End Role="Forums" Type="Self.Forum" Multiplicity="1" />
+          <End Role="Topics" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forums">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topics">
+              <PropertyRef Name="ForumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Massages_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Massages" Type="Self.Massage" Multiplicity="*" />
@@ -388,15 +471,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Topics_Sections">
-          <End Role="Sections" Type="Self.Section" Multiplicity="1" />
+        <Association Name="FK_Topics_States">
+          <End Role="States" Type="Self.State" Multiplicity="0..1" />
           <End Role="Topics" Type="Self.Topic" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Sections">
+            <Principal Role="States">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Topics">
-              <PropertyRef Name="SectionId" />
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -412,7 +495,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ForumEntities6" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ForumEntities9" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Forums" EntityType="Self.Forum" />
           <EntitySet Name="Massages" EntityType="Self.Massage" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
@@ -421,6 +505,14 @@
           <EntitySet Name="States" EntityType="Self.State" />
           <EntitySet Name="Topics" EntityType="Self.Topic" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Forums_Sections" Association="Self.FK_Forums_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="Forums" EntitySet="Forums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topics_Sections" Association="Self.FK_Topics_Sections">
+            <End Role="Forums" EntitySet="Forums" />
+            <End Role="Topics" EntitySet="Topics" />
+          </AssociationSet>
           <AssociationSet Name="FK_Massages_Users" Association="Self.FK_Massages_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Massages" EntitySet="Massages" />
@@ -445,8 +537,8 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Topics_Sections" Association="Self.FK_Topics_Sections">
-            <End Role="Sections" EntitySet="Sections" />
+          <AssociationSet Name="FK_Topics_States" Association="Self.FK_Topics_States">
+            <End Role="States" EntitySet="States" />
             <End Role="Topics" EntitySet="Topics" />
           </AssociationSet>
           <AssociationSet Name="FK_Topics_Users" Association="Self.FK_Topics_Users">
@@ -459,7 +551,18 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities6">
+        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities9">
+          <EntitySetMapping Name="Forums">
+            <EntityTypeMapping TypeName="ForumModel.Forum">
+              <MappingFragment StoreEntitySet="Forums">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Massages">
             <EntityTypeMapping TypeName="ForumModel.Massage">
               <MappingFragment StoreEntitySet="Massages">
@@ -527,8 +630,9 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumId" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -540,7 +644,7 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="ConfirmedEmail" ColumnName="ConfirmedEmail" />
+                <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace DAL.Interface.DTO
+namespace MvcPresentationLayer.Models
 {
-    public class DALForum : IEntity 
+    public class Forum
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public int SectionId { get; set; }
-        public ICollection<DALTopic> Topics { get; set; }
+        public ICollection<Topic> Topics { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace BLL.Interface.Entities
         public DateTime CreationDate { get; set; }
         public int RoleId { get; set; }
         public ProfileEntity Profile { get; set; }
+        public bool IsBanned { get; set; }
     }
 }

@@ -26,15 +26,49 @@ namespace BLL.Mappers
             {
                 Id = dalSection.Id,
                 Name = dalSection.Name,
-                Topics=new List<TopicEntity>(),
+                Forums=new List<ForumEntity>(),
             };
-            var topics = dalSection.Topics;
+            var forums = dalSection.Forums;
+
+            foreach (var forum in forums)
+            {
+                section.Forums.Add(forum.ToBllForum());
+            }
+            return section;
+        }
+
+        public static DALForum ToDalForum(this ForumEntity forumEntity)
+        {
+            DALForum dalForum = new DALForum()
+            {
+                Id = forumEntity.Id,
+                Title = forumEntity.Title,
+                Description = forumEntity.Description,
+                LastUpdatedDate = forumEntity.LastUpdatedDate,
+                SectionId = forumEntity.SectionId,
+            };
+            return dalForum;
+        }
+
+        public static ForumEntity ToBllForum(this DALForum dalForum)
+        {
+            ForumEntity forum = new ForumEntity()
+            {
+                Id = dalForum.Id,
+                Title = dalForum.Title,
+                Description = dalForum.Description,
+                LastUpdatedDate = dalForum.LastUpdatedDate,
+                SectionId = dalForum.SectionId,
+                Topics = new List<TopicEntity>(),
+            };
+
+            var topics = dalForum.Topics.Select(topic => topic.ToBllTopic());
 
             foreach (var topic in topics)
             {
-                section.Topics.Add(topic.ToBllTopic());
+                forum.Topics.Add(topic);
             }
-            return section;
+            return forum;
         }
 
         public static DALTopic ToDalTopic(this TopicEntity topicEntity)
@@ -46,8 +80,9 @@ namespace BLL.Mappers
                 Description = topicEntity.Description,
                 UserId = topicEntity.UserId,
                 Date = topicEntity.Date,
-                SectionId = topicEntity.SectionId,
+                ForumId = topicEntity.ForumId,
                 LastUpdatedDate = topicEntity.LastUpdatedDate,
+                StateId=topicEntity.StateId
             };
             return dalTopic;
         }
@@ -61,10 +96,11 @@ namespace BLL.Mappers
                 Description = dalTopic.Description,
                 UserId = dalTopic.UserId,
                 Date = dalTopic.Date,
-                SectionId = dalTopic.SectionId,
+                ForumId = dalTopic.ForumId,
                 LastUpdatedDate = dalTopic.LastUpdatedDate,
                 Posts = new List<PostEntity>(),
-                User=dalTopic.User.ToBllUser()
+                User=dalTopic.User.ToBllUser(),
+                StateId =dalTopic.StateId
             };
 
             var posts = dalTopic.Posts.Select(post => post.ToBllPost());
@@ -112,7 +148,8 @@ namespace BLL.Mappers
                 Password = userEntity.Password,
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
-                RoleId = userEntity.RoleId
+                RoleId = userEntity.RoleId,
+                IsBanned=userEntity.IsBanned
             };
         }
 
@@ -134,6 +171,7 @@ namespace BLL.Mappers
                 Email = dalUser.Email,
                 CreationDate = dalUser.CreationDate,
                 RoleId = dalUser.RoleId,
+                IsBanned=dalUser.IsBanned
             };
             if (dalUser.Profile != null)
                 userEntity.Profile = dalUser.Profile.ToBllProfile();

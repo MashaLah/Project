@@ -1,5 +1,6 @@
 ﻿using DAL.Interface.DTO;
 using DAL.Interface.Repository;
+using DAL.Mappers;
 using ORM;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace DAL.Concrete
         public DALProfile GetById(int key)
         {
             var ormProfile = context.Set<Profile>().FirstOrDefault(p => p.Id == key);
-            return new DALProfile()
+            /*return new DALProfile()
             {
                 Id = ormProfile.Id,
                 Login = ormProfile.Login,
@@ -30,28 +31,30 @@ namespace DAL.Concrete
                 LastUpdateDate = ormProfile.LastUpdateDate,
                 Image = ormProfile.Image,
                 ImageMimeType=ormProfile.ImageMimeType
-            };
+            };*/
+            return ormProfile.ToDalProfile();
         }
 
         public DALProfile GetByUserId(int key)
         {
             var ormProfile = context.Set<Profile>().FirstOrDefault(p => p.UserId == key);
-            return new DALProfile()
-            {
-                Id = ormProfile.Id,
-                Login = ormProfile.Login,
-                UserId = ormProfile.UserId,
-                LastUpdateDate = ormProfile.LastUpdateDate,
-                Image = ormProfile.Image,
-                ImageMimeType = ormProfile.ImageMimeType
-            };
+            /* return new DALProfile()
+             {
+                 Id = ormProfile.Id,
+                 Login = ormProfile.Login,
+                 UserId = ormProfile.UserId,
+                 LastUpdateDate = ormProfile.LastUpdateDate,
+                 Image = ormProfile.Image,
+                 ImageMimeType = ormProfile.ImageMimeType
+             };*/
+            return ormProfile.ToDalProfile();
         }
 
         public DALProfile GetByUserEmail(string email)
         {
             int ormUserId = context.Set<User>().FirstOrDefault(u => u.Email == email).Id;
             var ormProfile = context.Set<Profile>().FirstOrDefault(p => p.UserId == ormUserId);
-            return new DALProfile()
+            /*return new DALProfile()
             {
                 Id = ormProfile.Id,
                 Login = ormProfile.Login,
@@ -59,12 +62,13 @@ namespace DAL.Concrete
                 LastUpdateDate = ormProfile.LastUpdateDate,
                 Image = ormProfile.Image,
                 ImageMimeType = ormProfile.ImageMimeType
-            };
+            };*/
+            return ormProfile.ToDalProfile();
         }
 
         public void CreateProfile(DALProfile profile)
         {
-            var profileNew = new Profile()
+            /*var profileNew = new Profile()
             {
                 Id = profile.Id,
                 Login = profile.Login,
@@ -72,8 +76,8 @@ namespace DAL.Concrete
                 LastUpdateDate = profile.LastUpdateDate,
                 Image = profile.Image,
                 ImageMimeType = profile.ImageMimeType
-            };
-            context.Set<Profile>().Add(profileNew);
+            };*/
+            context.Set<Profile>().Add(profile.ToOrmProfile());
         }
 
         public void Update(DALProfile profile)

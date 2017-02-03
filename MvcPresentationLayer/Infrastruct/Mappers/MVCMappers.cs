@@ -15,9 +15,9 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = sectionEntity.Id,
                 Name = sectionEntity.Name,
-                Topics = new List<Topic>()
+                Forums = new List<Forum>()
             };
-            var topics = sectionEntity.Topics.Select(topic => topic.ToMvcTopic());/*new Topic()
+            var forums = sectionEntity.Forums.Select(forum => forum.ToMvcForum());/*new Topic()
             {
                 Id = topic.Id,
                 SectionId = topic.SectionId,
@@ -28,9 +28,9 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Description=topic.Description
             });*/
 
-            foreach (var topic in topics)
+            foreach (var forum in forums)
             {
-                section.Topics.Add(topic);
+                section.Forums.Add(forum);
             }
             return section;
         }
@@ -62,18 +62,53 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             return sectionEntity;
         }
 
+        public static Forum ToMvcForum(this ForumEntity forumEntity)
+        {
+            Forum forum = new Forum()
+            {
+                Id = forumEntity.Id,
+                SectionId = forumEntity.SectionId,
+                Title = forumEntity.Title,
+                Description = forumEntity.Description,
+                LastUpdatedDate = forumEntity.LastUpdatedDate,
+                Topics = new List<Topic>(),
+            };
+
+            var topics = forumEntity.Topics.Select(topic => topic.ToMvcTopic());
+
+            foreach (var topic in topics)
+            {
+                forum.Topics.Add(topic);
+            }
+            return forum;
+        }
+
+        public static ForumEntity ToBllForum(this Forum forum)
+        {
+            ForumEntity forumEntity = new ForumEntity()
+            {
+                Id = forum.Id,
+                SectionId = forum.SectionId,
+                Title = forum.Title,
+                Description = forum.Description,
+                LastUpdatedDate = forum.LastUpdatedDate,
+            };
+            return forumEntity;
+        }
+
         public static Topic ToMvcTopic(this TopicEntity topicEntity)
         {
             Topic topic = new Topic()
             {
                 Id = topicEntity.Id,
-                SectionId = topicEntity.SectionId,
+                ForumId = topicEntity.ForumId,
                 Title = topicEntity.Title,
                 Date = topicEntity.Date,
                 Description = topicEntity.Description,
                 LastUpdatedDate = topicEntity.LastUpdatedDate,
                 Posts = new List<Post>(),
-                User = topicEntity.User.ToMvcUser()
+                User = topicEntity.User.ToMvcUser(),
+                StateId=topicEntity.StateId
             };
 
             var posts = topicEntity.Posts.Select(post => post.ToMvcPost());
@@ -90,12 +125,13 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             TopicEntity topicEntity = new TopicEntity()
             {
                 Id = topic.Id,
-                SectionId = topic.SectionId,
+                ForumId = topic.ForumId,
                 UserId = topic.UserId,
                 Title = topic.Title,
                 Date = topic.Date,
                 Description = topic.Description,
                 LastUpdatedDate = topic.LastUpdatedDate,
+                StateId=topic.StateId
             };
             return topicEntity;
         }
@@ -142,6 +178,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
+                IsBanned=userEntity.IsBanned
             };
             if (userEntity.Profile != null)
                 user.Profile = userEntity.Profile.ToMvcProfile();
@@ -155,6 +192,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Email = user.Email,
                 CreationDate = user.CreationDate,
+                IsBanned=user.IsBanned
             };
         }
 

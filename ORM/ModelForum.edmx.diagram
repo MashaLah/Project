@@ -4,22 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="acc8adfe6721455b82f084f5a86da340" Name="Diagram1">
-        <EntityTypeShape EntityType="ForumModel.Massage" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Post" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Profile" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Role" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.Section" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.State" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
+      <Diagram DiagramId="718e35587be3495a9a7fe6b9fb4466f0" Name="Diagram1">
+        <EntityTypeShape EntityType="ForumModel.Forum" Width="1.5" PointX="6" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Massage" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Post" Width="1.5" PointX="8.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Profile" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Role" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.Section" Width="1.5" PointX="3.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.State" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ForumModel.Topic" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumModel.User" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumModel.User" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="ForumModel.FK_Forums_Sections" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumModel.FK_Topics_Sections" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Massages_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Posts_States" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Posts_Topics" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Posts_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Profiles_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Users_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="ForumModel.FK_Topics_Sections" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumModel.FK_Topics_States" ManuallyRouted="false" />
         <AssociationConnector Association="ForumModel.FK_Topics_Users" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

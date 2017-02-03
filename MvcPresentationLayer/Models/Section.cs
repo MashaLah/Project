@@ -15,6 +15,6 @@ namespace MvcPresentationLayer.Models
         [StringLength(250, ErrorMessage = "Message can't contain more than 250 characters")]
         public string Name { get; set; }
 
-        public ICollection<Topic> Topics { get; set; }
+        public ICollection<Forum> Forums { get; set; }
     }
 }

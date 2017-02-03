@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interface.DTO
+namespace BLL.Interface.Entities
 {
-    public class DALForum : IEntity 
+    public class ForumEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public int SectionId { get; set; }
-        public ICollection<DALTopic> Topics { get; set; }
+        public ICollection<TopicEntity> Topics { get; set; }
     }
 }

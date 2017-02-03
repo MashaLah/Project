@@ -29,21 +29,22 @@ namespace DAL.Concrete
                 Email = user.Email,
                 CreationDate = user.CreationDate,
                 RoleId = user.RoleId,
-
+                IsBanned=user.IsBanned
             });
         }
 
         public void CreateUser(DALUser user)
         {
-            var newUser = new User()
+            /*var newUser = new User()
             {
                 Id = user.Id,
                 Password = user.Password,
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                RoleId = user.RoleId
-            };
-            context.Set<User>().Add(newUser);
+                RoleId = user.RoleId,
+                IsBanned=user.IsBanned
+            };*/
+            context.Set<User>().Add(user.ToOrmUser());
         }
 
         public DALUser GetUserByEmail(string email)
@@ -51,17 +52,19 @@ namespace DAL.Concrete
             if (context.Set<User>().Any(u => u.Email == email) == false) return null;
             var ormUser = context.Set<User>().FirstOrDefault(u => u.Email == email);
             if (ormUser == null) return null;
-            DALUser dalUser = new DALUser()
+            /*DALUser dalUser = new DALUser()
             {
                 Id = ormUser.Id,
                 Password = ormUser.Password,
                 Email = ormUser.Email,
                 CreationDate = ormUser.CreationDate,
                 RoleId = ormUser.RoleId,
+                IsBanned=ormUser.IsBanned
             };
             if (ormUser.Profiles.FirstOrDefault() != null)
                 dalUser.Profile = ormUser.Profiles.FirstOrDefault().ToDalProfile();
-            return dalUser;
+            return dalUser;*/
+            return ormUser.ToDalUser();
         }
 
         public void UpdateUser(DALUser user)
@@ -73,19 +76,21 @@ namespace DAL.Concrete
             updatedUser.Email = user.Email;
             updatedUser.CreationDate = user.CreationDate;
             updatedUser.RoleId = user.RoleId;
+            updatedUser.IsBanned = user.IsBanned;
         }
 
         public void RemoveUser(DALUser user)
         {
-            var userToRemove = new User()
+           /* var userToRemove = new User()
             {
                 Id = user.Id,
                 Password = user.Password,
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                RoleId = user.RoleId
-            };
-            userToRemove = context.Set<User>().FirstOrDefault(frm => frm.Id == user.Id);
+                RoleId = user.RoleId,
+                IsBanned=user.IsBanned
+            };*/
+            var userToRemove = context.Set<User>().FirstOrDefault(frm => frm.Id == user.Id);
             context.Set<User>().Remove(userToRemove);
         }
     }

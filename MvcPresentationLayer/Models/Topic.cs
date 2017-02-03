@@ -28,13 +28,16 @@ namespace MvcPresentationLayer.Models
         public DateTime Date { get; set; }
 
         [ScaffoldColumn(false)]
-        public int SectionId { get; set; }
+        public int ForumId { get; set; }
+
+        [ScaffoldColumn(false)]
+        public int StateId { get; set; }
 
         [ScaffoldColumn(false)]
         [DisplayFormat(DataFormatString = "{dd/MM/yyyy HH:mm}")]
         public DateTime? LastUpdatedDate { get; set; }
 
-        public Section Section { get; set; }
+        public Forum Forum { get; set; }
         public User User { get; set; }
         public ICollection<Post> Posts { get; set; }
     }

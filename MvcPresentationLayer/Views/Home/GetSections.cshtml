@@ -16,7 +16,7 @@
                     @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated
 && Request.RequestContext.HttpContext.User.IsInRole("admin"))
                     {
-                        if (item.Topics == null)
+                        if (item.Forums == null)
                         {
                             <div class="col-md-1">
                                 @Html.ActionLink("Delete", "DeleteSection", "Home", new { id = item.Id }, new { @class = "sectionDelete btn btn-default" })
@@ -36,23 +36,23 @@
             </div>
         </div>
 
-        if (item.Topics != null)
+        if (item.Forums != null)
         {
 
-            foreach (var topic in item.Topics)
+            foreach (var forum in item.Forums)
             {
                 <div class="list-group-item">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-10">
                                 <img src="~/Content/AvatarImage/star.PNG" alt="topicImage" />
-                                @Html.ActionLink(topic.Title, "Index", "Post", new { topicId = topic.Id }, null)
-                                <small class="text-muted">@topic.User.Profile.Login</small>
+                                @Html.ActionLink(forum.Title, "Index", "Topic", new { forumId = forum.Id }, null)
+                                @*<small class="text-muted">@topic.User.Profile.Login</small>*@
                             </div>
                             <div class="col-md-2 text-right">
                                 <small>
-                                    @topic.LastUpdatedDate
-                                    @topic.Posts.Count posts
+                                    @forum.LastUpdatedDate
+                                    @forum.Topics.Count topics
                                 </small>
                             </div>
                         </div>

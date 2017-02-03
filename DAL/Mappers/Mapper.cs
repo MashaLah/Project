@@ -16,14 +16,14 @@ namespace DAL.Mappers
             {
                 Id = ormSection.Id,
                 Name = ormSection.Name,
-                Topics = new List<DALTopic>()
+                Forums = new List<DALForum>()
             };
 
-            var topics = ormSection.Topics;
+            var forums = ormSection.Forums;
 
-            foreach (var topic in topics)
+            foreach (var forum in forums)
             {
-                dalSection.Topics.Add(topic.ToDalTopic());
+                dalSection.Forums.Add(forum.ToDalForum());
             }
             return dalSection;
         }
@@ -38,19 +38,54 @@ namespace DAL.Mappers
             return section;
         }
 
+
+        public static DALForum ToDalForum(this Forum ormForum)
+        {
+            DALForum dalForum = new DALForum()
+            {
+                Id = ormForum.Id,
+                SectionId = ormForum.SectionId,
+                Title = ormForum.Title,
+                Description = ormForum.Description,
+                LastUpdatedDate = ormForum.LastUpdatedDate,
+                Topics = new List<DALTopic>(),
+            };
+
+            var topics = ormForum.Topics.Select(topic => topic.ToDalTopic());
+
+            foreach (var topic in topics)
+            {
+                dalForum.Topics.Add(topic);
+            }
+            return dalForum;
+        }
+
+        public static Forum ToOrmForum(this DALForum dalForum)
+        {
+            Forum forum = new Forum()
+            {
+                Id = dalForum.Id,
+                Title = dalForum.Title,
+                Description=dalForum.Description,
+                SectionId=dalForum.SectionId,
+                LastUpdatedDate=dalForum.LastUpdatedDate
+            };
+            return forum;
+        }
+
         public static DALTopic ToDalTopic(this Topic ormTopic)
         {
             DALTopic dalTopic = new DALTopic()
             {
                 Id = ormTopic.Id,
-                SectionId = ormTopic.SectionId,
+                ForumId = ormTopic.ForumId,
                 Title = ormTopic.Title,
                 UserId = ormTopic.UserId,
                 Date = ormTopic.Date,
                 Description = ormTopic.Description,
                 LastUpdatedDate = ormTopic.LastUpdatedDate,
                 Posts = new List<DALPost>(),
-                User=ormTopic.User.ToDalUser()
+                User=ormTopic.User.ToDalUser(),
             };
 
             var posts = ormTopic.Posts.Select(post =>post.ToDALPost());
@@ -73,9 +108,23 @@ namespace DAL.Mappers
                 Date = post.Date,
                 User = post.User.ToDalUser(),
                 StateId = post.StateId,
-                State =post.State.ToDALState()
+                State =post.State.ToDALState(),
             };
             return dalPost;
+        }
+
+        public static Post ToOrmPost(this DALPost dalPost)
+        {
+            Post post = new Post()
+            {
+                Id = dalPost.Id,
+                TopicId = dalPost.TopicId,
+                Text = dalPost.Text,
+                UserId = dalPost.UserId,
+                Date = dalPost.Date,
+                StateId = dalPost.StateId,
+            };
+            return post;
         }
 
         public static DALState ToDALState(this State state)
@@ -93,7 +142,7 @@ namespace DAL.Mappers
             Topic topic = new Topic()
             {
                 Id = dalTopic.Id,
-                SectionId = dalTopic.SectionId,
+                ForumId = dalTopic.ForumId,
                 Title = dalTopic.Title,
                 UserId = dalTopic.UserId,
                 Date = dalTopic.Date,
@@ -112,10 +161,25 @@ namespace DAL.Mappers
                 Email = ormUser.Email,
                 CreationDate = ormUser.CreationDate,
                 RoleId = ormUser.RoleId,
+                IsBanned=ormUser.IsBanned
             };
             if (ormUser.Profiles != null)
                 dalUser.Profile = ormUser.Profiles.FirstOrDefault().ToDalProfile();
             return dalUser;
+        }
+
+        public static User ToOrmUser(this DALUser dalUser)
+        {
+            User user = new User()
+            {
+                Id = dalUser.Id,
+                Password = dalUser.Password,
+                Email = dalUser.Email,
+                CreationDate = dalUser.CreationDate,
+                RoleId = dalUser.RoleId,
+                IsBanned = dalUser.IsBanned
+            };
+            return user;
         }
 
         public static DALProfile ToDalProfile(this Profile ormProfile)
@@ -130,6 +194,20 @@ namespace DAL.Mappers
                 ImageMimeType = ormProfile.ImageMimeType
             };
             return dalProfile;
+        }
+
+        public static Profile ToOrmProfile(this DALProfile dalProfile)
+        {
+            Profile profile = new Profile()
+            {
+                Id = dalProfile.Id,
+                Login = dalProfile.Login,
+                UserId = dalProfile.UserId,
+                LastUpdateDate = dalProfile.LastUpdateDate,
+                Image = dalProfile.Image,
+                ImageMimeType = dalProfile.ImageMimeType
+            };
+            return profile;
         }
     }
 }

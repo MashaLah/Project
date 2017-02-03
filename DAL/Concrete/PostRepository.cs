@@ -51,20 +51,20 @@ namespace DAL.Concrete
 
         public void Create(DALPost e) 
         {
-            var post = new Post()
+            /*var post = new Post()
             {
                 TopicId = e.TopicId,
                 Text = e.Text,
                 UserId = e.UserId,
                 Date = e.Date,
                 StateId=e.StateId
-            };
-            context.Set<Post>().Add(post);
+            };*/
+            context.Set<Post>().Add(e.ToOrmPost());
         }
 
         public void Delete(DALPost e)
         {
-            var post = new Post()
+            /*var post = new Post()
             {
                 Id = e.Id,
                 TopicId = e.TopicId,
@@ -72,8 +72,8 @@ namespace DAL.Concrete
                 UserId = e.UserId,
                 Date = e.Date,
                 StateId=e.StateId
-            };
-            post = context.Set<Post>().Single(p => p.Id == post.Id);
+            };*/
+            var post = context.Set<Post>().Single(p => p.Id == e.Id);
             context.Set<Post>().Remove(post);
         }
 

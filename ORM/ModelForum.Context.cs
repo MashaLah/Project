@@ -13,10 +13,10 @@ namespace ORM
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ForumEntities6 : DbContext
+    public partial class ForumEntities9 : DbContext
     {
-        public ForumEntities6()
-            : base("name=ForumEntities6")
+        public ForumEntities9()
+            : base("name=ForumEntities9")
         {
         }
     
@@ -25,6 +25,7 @@ namespace ORM
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Forum> Forums { get; set; }
         public virtual DbSet<Massage> Massages { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }

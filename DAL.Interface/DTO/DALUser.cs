@@ -9,12 +9,10 @@ namespace DAL.Interface.DTO
     public class DALUser : IEntity 
     {
         public int Id { get; set; }
-       // public string Login { get; set; }
         public DateTime CreationDate { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public bool ConfirmedEmail { get; set; }
-        // public byte[] Image { get; set; }
+        public bool IsBanned { get; set; }
         public int RoleId { get; set; }
         public DALProfile Profile { get; set; }
     }

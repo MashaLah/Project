@@ -24,7 +24,7 @@ namespace DAL.Concrete
 
         public IEnumerable<DALSection> GetAll()
         {
-            var allSections = context.Set<Section>().Include(s => s.Topics);
+            var allSections = context.Set<Section>().Include(s => s.Forums);
             List<DALSection> sections = new List<DALSection>();
             foreach (var section in allSections)
             {
@@ -40,21 +40,21 @@ namespace DAL.Concrete
 
         public void Create(DALSection e)
         {
-            var section = new Section()
+            /*var section = new Section()
             {
                 Name = e.Name,
-            };
-            context.Set<Section>().Add(section);
+            };*/
+            context.Set<Section>().Add(e.ToOrmSection());
         }
 
         public void Delete(DALSection e)
         {
-            var section = new Section()
+            /*var section = new Section()
             {
                 Id = e.Id,
                 Name = e.Name,
-            };
-            section = context.Set<Section>().Single(s => s.Id == section.Id);
+            };*/
+            var section = context.Set<Section>().Single(s => s.Id == e.Id);
             context.Set<Section>().Remove(section);
         }
 

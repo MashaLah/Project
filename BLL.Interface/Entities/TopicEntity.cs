@@ -13,9 +13,10 @@ namespace BLL.Interface.Entities
         public string Description { get; set; }
         public int UserId { get; set; }
         public DateTime Date { get; set; }
-        public int SectionId { get; set; }
+        public int ForumId { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public ICollection<PostEntity> Posts { get; set; }
         public UserEntity User { get; set; }
+        public int StateId { get; set; }
     }
 }
