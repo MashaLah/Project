@@ -4,65 +4,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<h3>@Model.FirstOrDefault().ForumId</h3>
 @*<h4>@Html.DisplayFor(modelItem => modelItem.Topic.Title)</h4>
 
-<div class="text-center">
-    <h4>
-        @Html.DisplayFor(modelItem => modelItem.Topic.Description)
-    </h4>
-    @Html.Hidden("topicId", Model.Topic.Id)
-</div>*@
+    <div class="text-center">
+        <h4>
+            @Html.DisplayFor(modelItem => modelItem.Topic.Description)
+        </h4>
+        @Html.Hidden("topicId", Model.Topic.Id)
+    </div>*@
 
-<div id="posts">
+<div id="topics">
     @if (Model != null)
     {
-        <ul class="list-group table-striped">
+        <div class="list-group">
             @foreach (var item in Model)
             {
-                <li class="list-group-item @(item.StateId == 2 ? "list-group-item-danger" : "")">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="row">
-                                    <small>@Html.DisplayFor(m => item.Date)</small>
-                                </div>
-                                <div class="row">
-                                    <small>@Html.DisplayFor(m => item.User.Profile.Login)</small>
-                                </div>
-                                <div class="row">
-                                    <div class="img-responsive">
-                                        <img width="75" height="75" src="@Url.Action("GetImage", "Profile", new { item.User.Profile.Id })" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="row">
-                                    <div style="word-wrap:break-word;">
-                                        @Html.DisplayFor(modelItem => item.Text)
-                                    </div>
-                                </div>
-                            </div>
+            <div class="list-group-item">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <img src="~/Content/AvatarImage/star.PNG" alt="topicImage" />
+                            @Html.ActionLink(item.Title, "Index", "Post", new { topicId = item.Id }, null)
+                            @*<small class="text-muted">@topic.User.Profile.Login</small>*@
                         </div>
-
+                        <div class="col-md-2 text-right">
+                            <small>
+                                @item.LastUpdatedDate
+                                @item.Posts.Count posts
+                            </small>
+                        </div>
                     </div>
-                </li>
+                </div>
+            </div>
             }
-        </ul>
+            </div>
+            }
 
-    }
-</div>
-
-
-@using (Ajax.BeginForm("GetPosts", new AjaxOptions { UpdateTargetId = "posts", OnSuccess = "processData" }))
-{
-    @Html.Hidden("topicId", Model.Topic.Id)
-    <div class="col-md-12 text-center">
-        <div class="btn-group">
-            @Html.PageLinks(Model)
         </div>
-    </div>
-}
+
+
+@*@using (Ajax.BeginForm("GetPosts", new AjaxOptions { UpdateTargetId = "posts", OnSuccess = "processData" }))
+    {
+        @Html.Hidden("topicId", Model.Topic.Id)
+        <div class="col-md-12 text-center">
+            <div class="btn-group">
+                @Html.PageLinks(Model)
+            </div>
+        </div>
+    }*@
 
 <div class="col-md-offset-3">
     @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
@@ -70,13 +60,13 @@
         using (Ajax.BeginForm("Create", new AjaxOptions { OnSuccess = "showModal" }))
         {
             @Html.AntiForgeryToken()
-            @Html.Hidden("topicId", Model.Topic.Id)
+            @Html.HiddenFor(m=>m.FirstOrDefault().ForumId)
             <div class="form-horizontal center-block col-md-10">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextArea("Text", "", 5, 150, new { @class = "form-control", style = "width: 100%; max-width: 100%;", id = "text" })
-                        @Html.ValidationMessage("MvcPresentationLayer.Models.Post", new { @class = "text-danger" })
+                        @Html.TextArea("Title", "", 5, 150, new { @class = "form-control", style = "width: 100%; max-width: 100%;", id = "title" })
+                        @Html.ValidationMessage("MvcPresentationLayer.Models.Topic", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -93,9 +83,9 @@
 @section scripts
     {
     <script>
-        $('.list-group-item')
+       /* $('.list-group-item')
             .filter(':even:not(.list-group-item-danger)')
-            .css("background-color", "#f7f9fa");
+            .css("background-color", "#f7f9fa");*/
 
         function showModal() {
             alert('Your post is sent to moderator.');

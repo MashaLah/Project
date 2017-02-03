@@ -17,7 +17,9 @@ namespace MvcPresentationLayer.Models
         [Display(Name = "User's role in the system")]
         public string Role { get; set; }
 
-        public bool IsBanned { get; set; }
+        public int RoleId { get; set; }
+
+        public bool IsChanged { get; set; }
 
         public ProfileViewModel Profile { get; set; }
     }

@@ -37,7 +37,6 @@ namespace MvcPresentationLayer.Providers
         {
 
             var roles = new string[] { };
-            //var user = context.Users.FirstOrDefault(u => u.Email == email);
             var user = UserService.GetUserEntityByEmail(email);
             if (user == null) return roles;
 

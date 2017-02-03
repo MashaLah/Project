@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MvcPresentationLayer.Models.User>
+<h4>Users</h4>
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
+{
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profile.Login)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DropDownListFor(modelItem => item.RoleId, ViewBag.Roles as SelectList, new { id = "downListRoles" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profile.Login)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+</div>
+}
+
+@section scripts{
+    <script>
+
+        $("#downListRoles").click(function (e) {
+            alert(this.parent);
+        })
+    </script>
+    }

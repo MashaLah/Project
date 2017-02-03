@@ -61,7 +61,7 @@ namespace MvcPresentationLayer.Controllers
         public ActionResult DeleteSection(int id)
         {
             Section section = service.GetSectionEntity(id).ToMvcSection();
-            if (section.Topics != null)
+            if (section.Forums != null)
                 return PartialView(section);
             return View("Index");
         }
@@ -72,7 +72,7 @@ namespace MvcPresentationLayer.Controllers
         public ActionResult ConfirmDelete(int id)
         {
             SectionEntity section = service.GetSectionEntity(id);
-            if (section.Topics == null)
+            if (section.Forums == null)
             {
                 service.DeleteSection(section);
                 if (Request.IsAjaxRequest())

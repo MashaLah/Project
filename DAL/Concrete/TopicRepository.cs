@@ -23,7 +23,14 @@ namespace DAL.Concrete
 
         public IEnumerable<DALTopic> GetAll()
         {
-            return context.Set<Topic>().Select(topic => topic.ToDalTopic());
+            // return context.Set<Topic>().Select(topic => topic.ToDalTopic());
+            var allTopics = context.Set<Topic>().OrderByDescending(p => p.Date);
+            List<DALTopic> topics = new List<DALTopic>();
+            foreach (var topic in allTopics)
+            {
+                topics.Add(topic.ToDalTopic());
+            }
+            return topics;
         }
 
         public DALTopic GetById(int key)

@@ -22,6 +22,16 @@ namespace MvcPresentationLayer.Controllers
             this.userService = userService;
         }
 
+
+        [AllowAnonymous]
+        public ActionResult Index(int forumId)
+        {
+            var topics = topicService.GetAllTopicEntities()
+                .Where(t => t.ForumId == forumId /*&& t.StateId == 1*/)
+                .Select(t => t.ToMvcTopic());
+            return View(topics);
+        }
+
         [HttpGet]
         [Authorize]
         public ActionResult CreateTopic(int sectionId)

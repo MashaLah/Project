@@ -159,6 +159,16 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Name=stateEntity.State
             };
         }
+
+        public static Role ToMvcRole(this RoleEntity roleEntity)
+        {
+            return new Role()
+            {
+                Id = roleEntity.Id,
+                Name = roleEntity.Name
+            };
+        }
+
         public static PostEntity ToBllPost(this Post post)
         {
             return new PostEntity()
@@ -178,7 +188,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
-                IsBanned=userEntity.IsBanned
+                RoleId=userEntity.RoleId
+                //IsBanned=userEntity.IsBanned
             };
             if (userEntity.Profile != null)
                 user.Profile = userEntity.Profile.ToMvcProfile();
@@ -192,7 +203,8 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                IsBanned=user.IsBanned
+                RoleId=user.RoleId
+                //IsBanned=user.IsBanned
             };
         }
 
