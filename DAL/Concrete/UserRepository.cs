@@ -22,15 +22,23 @@ namespace DAL.Concrete
 
         public IEnumerable<DALUser> GetAllUsers()
         {
-            return context.Set<User>().Select(user => new DALUser()
+            /*  return context.Set<User>().Select(user => user.ToDalUser()); new DALUser()
+              {
+                  Id = user.Id,
+                  Password = user.Password,
+                  Email = user.Email,
+                  CreationDate = user.CreationDate,
+                  RoleId = user.RoleId,
+                  IsBanned=user.IsBanned
+              });*/
+
+            var allUsers = context.Set<User>();
+            List<DALUser> users = new List<DALUser>();
+            foreach (var user in allUsers)
             {
-                Id = user.Id,
-                Password = user.Password,
-                Email = user.Email,
-                CreationDate = user.CreationDate,
-                RoleId = user.RoleId,
-                IsBanned=user.IsBanned
-            });
+                users.Add(user.ToDalUser());
+            }
+            return users;
         }
 
         public void CreateUser(DALUser user)
@@ -76,7 +84,12 @@ namespace DAL.Concrete
             updatedUser.Email = user.Email;
             updatedUser.CreationDate = user.CreationDate;
             updatedUser.RoleId = user.RoleId;
-            updatedUser.IsBanned = user.IsBanned;
+        }
+
+        public void ChangeRole(DALUser user)
+        {
+            var updatedUser = context.Set<User>().FirstOrDefault(u => u.Id == user.Id);
+            updatedUser.RoleId = user.RoleId;
         }
 
         public void RemoveUser(DALUser user)

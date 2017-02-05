@@ -10,8 +10,10 @@
             {
                 <li>@Html.ActionLink("Users edit", "Index", "User")</li>
                 <li>
-                    <span class="badge">@ViewBag.ItemsToApprove</span>
                     @Html.ActionLink("Comments To Approve", "Index", "Moderator")
+                </li>
+                <li>
+                    @Html.ActionLink("Topics To Approve", "ApproveTopics", "Moderator")
                 </li>
             }
             <li>@Html.ActionLink("Profile", "Index", "Profile")</li>

@@ -14,7 +14,7 @@ namespace DAL.Interface.Repository
         DALUser GetUserByEmail(string email);
         void UpdateUser(DALUser user);
         void RemoveUser(DALUser user);
-
+        void ChangeRole(DALUser user);
 
     }
 }

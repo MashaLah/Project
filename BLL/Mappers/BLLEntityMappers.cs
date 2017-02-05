@@ -149,7 +149,6 @@ namespace BLL.Mappers
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
                 RoleId = userEntity.RoleId,
-                IsBanned=userEntity.IsBanned
             };
         }
 
@@ -171,10 +170,13 @@ namespace BLL.Mappers
                 Email = dalUser.Email,
                 CreationDate = dalUser.CreationDate,
                 RoleId = dalUser.RoleId,
-                IsBanned=dalUser.IsBanned
+                //IsBanned=dalUser.IsBanned,
+                //Role=dalUser.Role.ToBllRole()
             };
             if (dalUser.Profile != null)
                 userEntity.Profile = dalUser.Profile.ToBllProfile();
+            if (dalUser.Role != null)
+                userEntity.Role = dalUser.Role.ToBllRole();
             return userEntity;
         }
 

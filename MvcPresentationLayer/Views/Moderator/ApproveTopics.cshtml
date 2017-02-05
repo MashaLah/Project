@@ -1,0 +1,53 @@
+﻿@model List<MvcPresentationLayer.Models.Topic>
+@{
+    ViewBag.Title = "ApproveTopics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ApproveTopics</h2>
+@using (Html.BeginForm("Approve", "Moderator", FormMethod.Post))
+{
+<div id="topics">
+    @if (Model != null)
+    {
+        <div class="list-group">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                @Html.HiddenFor(m => m[i].Id)
+                @Html.HiddenFor(m => m[i].Date)
+                @Html.HiddenFor(m => m[i].UserId)
+                @Html.HiddenFor(m => m[i].Description)
+                @Html.HiddenFor(m => m[i].Title)
+                @Html.DropDownListFor(m => m[i].ForumId, ViewBag.Forums as SelectList)
+                @Html.DropDownListFor(m => m[i].StateId, ViewBag.States as SelectList, new { id = "downList" })
+                <div class="list-group-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <img src="~/Content/AvatarImage/star.PNG" alt="topicImage" />
+                                    @Html.DisplayFor(m => m[i].Title)
+                                </div>
+                                <div class="row">
+                                   <small>@Html.DisplayFor(m => m[i].Description)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <small>
+                                    @Html.DisplayFor(m => m[i].LastUpdatedDate)
+                                    @Html.DisplayFor(m => m[i].Posts.Count) posts
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}

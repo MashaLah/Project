@@ -14,5 +14,6 @@ namespace BLL.Interface.Services
         UserEntity GetUserEntityByEmail(string email);
         void UpdateUser(UserEntity user);
         void RemoveUser(UserEntity user);
+        void ChangeRole(UserEntity user);
     }
 }

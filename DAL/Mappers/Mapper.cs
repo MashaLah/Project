@@ -86,6 +86,7 @@ namespace DAL.Mappers
                 LastUpdatedDate = ormTopic.LastUpdatedDate,
                 Posts = new List<DALPost>(),
                 User=ormTopic.User.ToDalUser(),
+                StateId=ormTopic.StateId
             };
 
             var posts = ormTopic.Posts.Select(post =>post.ToDALPost());
@@ -137,6 +138,16 @@ namespace DAL.Mappers
             return dalState;
         }
 
+        public static DALRole ToDALRole(this Role role)
+        {
+            DALRole dalRole = new DALRole()
+            {
+                Id = role.Id,
+                Name = role.Name,
+            };
+            return dalRole;
+        }
+
         public static Topic ToOrmTopic(this DALTopic dalTopic)
         {
             Topic topic = new Topic()
@@ -148,6 +159,7 @@ namespace DAL.Mappers
                 Date = dalTopic.Date,
                 Description = dalTopic.Description,
                 LastUpdatedDate = dalTopic.LastUpdatedDate,
+                StateId=dalTopic.StateId
             };
             return topic;
         }
@@ -161,7 +173,7 @@ namespace DAL.Mappers
                 Email = ormUser.Email,
                 CreationDate = ormUser.CreationDate,
                 RoleId = ormUser.RoleId,
-                IsBanned=ormUser.IsBanned
+                Role=ormUser.Role.ToDALRole()
             };
             if (ormUser.Profiles != null)
                 dalUser.Profile = ormUser.Profiles.FirstOrDefault().ToDalProfile();
@@ -177,7 +189,6 @@ namespace DAL.Mappers
                 Email = dalUser.Email,
                 CreationDate = dalUser.CreationDate,
                 RoleId = dalUser.RoleId,
-                IsBanned = dalUser.IsBanned
             };
             return user;
         }

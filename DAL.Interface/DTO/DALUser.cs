@@ -12,8 +12,8 @@ namespace DAL.Interface.DTO
         public DateTime CreationDate { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public bool IsBanned { get; set; }//
         public int RoleId { get; set; }
         public DALProfile Profile { get; set; }
+        public DALRole Role { get; set; }
     }
 }

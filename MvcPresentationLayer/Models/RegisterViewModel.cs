@@ -32,12 +32,5 @@ namespace MvcPresentationLayer.Models
         [Required]
         [Display(Name = "Enter the code from the image")]
         public string Captcha { get; set; }
-
-        //don't use
-        [DataType(DataType.Date)]
-        public DateTime AddedDate { get; set; }
-
-        //don't use
-        public string AvatarPath { get; set; }
     }
 }

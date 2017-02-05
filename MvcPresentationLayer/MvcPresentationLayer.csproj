@@ -277,6 +277,8 @@
     <Content Include="Views\Moderator\Index.cshtml" />
     <Content Include="Views\Home\GetSections.cshtml" />
     <Content Include="Views\Topic\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Moderator\ApproveTopics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

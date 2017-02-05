@@ -17,16 +17,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
                 Name = sectionEntity.Name,
                 Forums = new List<Forum>()
             };
-            var forums = sectionEntity.Forums.Select(forum => forum.ToMvcForum());/*new Topic()
-            {
-                Id = topic.Id,
-                SectionId = topic.SectionId,
-                Title = topic.Title,
-                UserId = topic.UserId,
-                Date = topic.Date,
-                LastUpdatedDate=topic.LastUpdatedDate,
-                Description=topic.Description
-            });*/
+            var forums = sectionEntity.Forums.Select(forum => forum.ToMvcForum());
 
             foreach (var forum in forums)
             {
@@ -41,24 +32,7 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
             {
                 Id = section.Id,
                 Name = section.Name,
-                // Topics= new List<TopicEntity>()
-                // RoleId = (int)userViewModel.Role
             };
-            /* var topics = section.Topics.Select(topic => topic.ToBllTopic());*/ /*new TopicEntity()
-             {
-                 Id = topic.Id,
-                 SectionId = topic.SectionId,
-                 Title = topic.Title,
-                 UserId = topic.UserId,
-                 Date = topic.Date,
-                 Description=topic.Description,
-                 LastUpdatedDate=topic.LastUpdatedDate
-             });*/
-
-            /* foreach (var topic in topics)
-             {
-                 sectionEntity.Topics.Add(topic);
-             }*/
             return sectionEntity;
         }
 
@@ -186,10 +160,11 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
         {
             User user = new User()
             {
+                Id=userEntity.Id,
                 Email = userEntity.Email,
                 CreationDate = userEntity.CreationDate,
-                RoleId=userEntity.RoleId
-                //IsBanned=userEntity.IsBanned
+                RoleId=userEntity.RoleId,
+                Role=userEntity.Role.ToMvcRole()         
             };
             if (userEntity.Profile != null)
                 user.Profile = userEntity.Profile.ToMvcProfile();
@@ -201,10 +176,11 @@ namespace MvcPresentationLayer.Infrastruct.Mappers
         {
             return new UserEntity()
             {
+                Id = user.Id,
                 Email = user.Email,
                 CreationDate = user.CreationDate,
-                RoleId=user.RoleId
-                //IsBanned=user.IsBanned
+                RoleId = user.RoleId,
+                Password = user.Password
             };
         }
 

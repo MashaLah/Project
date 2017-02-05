@@ -79,7 +79,7 @@
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="ForumId" Type="int" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" />
-          <Property Name="StateId" Type="int" />
+          <Property Name="StateId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -90,7 +90,6 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
-          <Property Name="IsBanned" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Forums_Sections">
           <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
@@ -177,7 +176,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Topics_States">
-          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="States" Type="Self.States" Multiplicity="1" />
           <End Role="Topics" Type="Self.Topics" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="States">
@@ -353,7 +352,7 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ForumId" Type="Int32" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="StateId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Forum" Relationship="Self.FK_Topics_Sections" FromRole="Topics" ToRole="Forums" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Topics" FromRole="Topics" ToRole="Posts" />
           <NavigationProperty Name="State" Relationship="Self.FK_Topics_States" FromRole="Topics" ToRole="States" />
@@ -368,7 +367,6 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsBanned" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Massages" Relationship="Self.FK_Massages_Users" FromRole="Users" ToRole="Massages" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profiles_Users" FromRole="Users" ToRole="Profiles" />
@@ -472,7 +470,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Topics_States">
-          <End Role="States" Type="Self.State" Multiplicity="0..1" />
+          <End Role="States" Type="Self.State" Multiplicity="1" />
           <End Role="Topics" Type="Self.Topic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="States">
@@ -495,7 +493,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ForumEntities9" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ForumEntities10" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Forums" EntityType="Self.Forum" />
           <EntitySet Name="Massages" EntityType="Self.Massage" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
@@ -551,7 +549,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities9">
+        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities10">
           <EntitySetMapping Name="Forums">
             <EntityTypeMapping TypeName="ForumModel.Forum">
               <MappingFragment StoreEntitySet="Forums">
@@ -644,7 +642,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

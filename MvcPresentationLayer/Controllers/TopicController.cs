@@ -14,12 +14,13 @@ namespace MvcPresentationLayer.Controllers
     { 
         private readonly ITopicService topicService;
         private readonly IUserService userService;
+        private readonly IStateService stateService;
 
-
-        public TopicController(ITopicService topicService, IUserService userService)
+        public TopicController(ITopicService topicService, IUserService userService, IStateService stateService)
         {
             this.topicService = topicService;
             this.userService = userService;
+            this.stateService = stateService;
         }
 
 
@@ -27,17 +28,17 @@ namespace MvcPresentationLayer.Controllers
         public ActionResult Index(int forumId)
         {
             var topics = topicService.GetAllTopicEntities()
-                .Where(t => t.ForumId == forumId /*&& t.StateId == 1*/)
+                .Where(t => t.ForumId == forumId && t.StateId == 1)
                 .Select(t => t.ToMvcTopic());
             return View(topics);
         }
 
-        [HttpGet]
+       /* [HttpGet]
         [Authorize]
         public ActionResult CreateTopic(int sectionId)
         {
             return PartialView();
-        }
+        }*/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -48,10 +49,10 @@ namespace MvcPresentationLayer.Controllers
                 string userName = User.Identity.Name;
                 topic.UserId = userService.GetUserEntityByEmail(userName).Id;
                 topic.Date = DateTime.Now;
+                topic.StateId= stateService.GetStateEntity(3).Id;
                 topicService.CreateTopic(topic.ToBllTopic());
-                return RedirectToAction("Index","Home",null);
             }
-            return PartialView(topic);
+            return RedirectToAction("Index");
         }
     }
 }

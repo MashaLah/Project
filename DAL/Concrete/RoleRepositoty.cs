@@ -1,5 +1,6 @@
 ﻿using DAL.Interface.DTO;
 using DAL.Interface.Repository;
+using DAL.Mappers;
 using ORM;
 using System;
 using System.Collections.Generic;
@@ -30,31 +31,40 @@ namespace DAL.Concrete
 
         public IEnumerable<DALRole> GetAllRoles()
         {
-            return context.Set<Role>().Select(role => new DALRole()
+            /*return context.Set<Role>().Select(role => new DALRole()
             {
                 Id = role.Id,
                 Name = role.Name,
-            });
+            });*/
+            var allRoles = context.Set<Role>();
+            List<DALRole> roles = new List<DALRole>();
+            foreach (var role in allRoles)
+            {
+                roles.Add(role.ToDALRole());
+            }
+            return roles;
         }
 
         public DALRole GetById(int? roleId)
         {
             var ormRole = context.Set<Role>().FirstOrDefault(r => r.Id == roleId);
-            return new DALRole()
-            {
-                Id = ormRole.Id,
-                Name = ormRole.Name,
-            };
+            /* return new DALRole()
+             {
+                 Id = ormRole.Id,
+                 Name = ormRole.Name,
+             };*/
+            return ormRole.ToDALRole();
         }
 
         public DALRole GetByName(string name)
         {
             var ormRole = context.Set<Role>().FirstOrDefault(r => r.Name == name);
-            return new DALRole()
-            {
-                Id = ormRole.Id,
-                Name = ormRole.Name,
-            };
+            /* return new DALRole()
+             {
+                 Id = ormRole.Id,
+                 Name = ormRole.Name,
+             };*/
+            return ormRole.ToDALRole();
         }
     }
 }

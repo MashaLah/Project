@@ -27,7 +27,7 @@ namespace ORM
         public System.DateTime Date { get; set; }
         public int ForumId { get; set; }
         public Nullable<System.DateTime> LastUpdatedDate { get; set; }
-        public Nullable<int> StateId { get; set; }
+        public int StateId { get; set; }
     
         public virtual Forum Forum { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -13,10 +13,10 @@ namespace ORM
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ForumEntities9 : DbContext
+    public partial class ForumEntities10 : DbContext
     {
-        public ForumEntities9()
-            : base("name=ForumEntities9")
+        public ForumEntities10()
+            : base("name=ForumEntities10")
         {
         }
     

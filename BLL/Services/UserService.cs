@@ -53,5 +53,11 @@ namespace BLL.Services
             userRepository.UpdateUser(user.ToDalUser());
             uow.Commit();
         }
+
+        public void ChangeRole(UserEntity user)
+        {
+            userRepository.ChangeRole(user.ToDalUser());
+            uow.Commit();
+        }
     }
 }
